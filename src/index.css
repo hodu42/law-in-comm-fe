@@ -1,0 +1,27 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+  font-family: 'NotoSansKR';
+}
+
+@layer base {
+  * {
+    @apply tracking-tighter;
+    @apply font-NotoSansKR;
+  }
+}
+.slick-arrow:before, .slick-arrow:after {
+  display: none;
+}
+.slick-prev, .slick-next {
+  width: 33px !important;
+  height: 66px !important;
+}
+.slick-current {
+  display: flex !important;
+  justify-content: center !important;
+}
