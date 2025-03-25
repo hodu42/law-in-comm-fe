@@ -5,7 +5,7 @@ import {HeaderTags} from "./HeaderTags";
 
 export const MainHeader = ():React.JSX.Element => {
     return (
-        <div className="fixed flex w-full justify-center border-b-borderGray border-b-[1px]">
+        <div className="z-10 fixed flex w-full justify-center bg-white border-b-borderGray border-b-[1px]">
             <header className="flex-col min-w-[355px] max-w-[1350px] w-[70.31%] h-[72px] min-[960px]:h-[144px] bg-white justify-between items-center border-b-borderGray">
                 <div className="flex w-full h-4.5 items-center">
                     <div className="flex w-full">
