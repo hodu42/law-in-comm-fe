@@ -8,12 +8,12 @@
   font-family: 'NotoSansKR';
   src: url('../public/fonts/NotoSansKR-VariableFont_wght.ttf');
 }
-
 @layer base {
   * {
     @apply font-NotoSansKR;
   }
 }
+
 .recentQuestion-slider-container .slick-arrow:before, .slick-arrow:after {
   @apply hidden
 }
@@ -21,9 +21,6 @@
   width: 33px !important;
   height: 66px !important;
 }
-/*.recentQuestion-slider-container .slick-prev {*/
-/*  left: -px;*/
-/*}*/
 .recentQuestion-slider-container .slick-current {
   display: flex !important;
   justify-content: center !important;
@@ -45,7 +42,6 @@
     display: none !important;
   }
 }
-
 .dots_custom li {
   list-style: none;
   cursor: pointer;
@@ -53,7 +49,6 @@
   margin: 0 6px;
   padding: 0;
 }
-
 .dots_custom li button {
   border: 1px solid #5C6E56;
   background: none;
@@ -65,14 +60,20 @@
   border-radius: 100%;
   padding: 0;
 }
-
 .dots_custom li.slick-active button {
   background-color: #5C6E56;
 }
-
 .questionContents {
   display: -webkit-box;
   -webkit-line-clamp: 7;
   -webkit-box-orient: vertical;
   word-break: break-all;
+}
+.question-categories-container::-webkit-scrollbar {
+  display: none;
+}
+@media (max-width: 960px) {
+  .main-container::-webkit-scrollbar {
+    display: none;
+  }
 }

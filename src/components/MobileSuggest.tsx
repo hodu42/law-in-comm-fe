@@ -2,8 +2,8 @@ import React from "react";
 
 export const MobileSuggest = ():React.JSX.Element => {
     return (
-        <div className="z-20 absolute w-dvw h-[100dvh] bg-white">
-            <div className="flex justify-evenly py-2.5 px-2">
+        <div className="hidden z-20 absolute w-dvw h-[calc(100dvh-30px)] bg-white">
+            <div className="flex h-[71px] justify-evenly py-2.5 px-2">
                 <button>
                     <svg className="fill-black" width="15" height="31" viewBox="0 0 15 31" fill="currentColor">
                         <path fill-rule="evenodd" clip-rule="evenodd" d="M4.17885 15.5L13.0176 24.3388L11.2501 26.1063L1.5276 16.3838C1.29327 16.1493 1.16162 15.8315 1.16162 15.5C1.16162 15.1685 1.29327 14.8507 1.5276 14.6163L11.2501 4.89375L13.0176 6.66125L4.17885 15.5Z"/>

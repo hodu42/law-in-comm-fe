@@ -25,9 +25,9 @@ export const Test = ():React.JSX.Element => {
 
     const handleClick = async () => {
         try {
-            const response = await axios.get(`${BASE_URL}/users/legal-speciality`, {
+            const response = await axios.get(`${BASE_URL}/api/users/legal-speciality`, {
                 headers: {
-                    Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+                    Authorization: `bearer ${localStorage.getItem('accessToken')}`,
                 }
             })
             console.log(response.data)
