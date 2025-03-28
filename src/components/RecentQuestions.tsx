@@ -37,8 +37,8 @@ export const RecentQuestions = ():React.JSX.Element => {
 
     };
     return (
-        <section className="flex flex-col gap-[28px] max-w-1350px min-[960px]:w-full w-[90%] min-[960px]:mt-[144px] mt-[0px] py-[37.6px] bg-[#F7F7FA]">
-            <h1 className="w-full min-[960px]:text-center text-left text-[20px] min-[960px]:text-[26px] text-[#1F2225] font-bold">최근 질문</h1>
+        <section className="flex flex-col gap-[28px] max-w-1350px mobile:w-full w-[90%] mobile:mt-[144px] mt-[0px] py-[37.6px] bg-[#F7F7FA]">
+            <h1 className="w-full mobile:text-center text-left text-[20px] mobile:text-[26px] text-[#1F2225] font-bold">최근 질문</h1>
             <div className="recentQuestion-slider-container">
                 <Slider ref={sliderRef} {...settings}>
                     <RecentQuestionsContent legalSpeciality={testQuestion.legalSpeciality} firstOccurrenceDate={testQuestion.firstOccurrenceDate} title={testQuestion.title} content={testQuestion.content} viewCount={testQuestion.viewCount} url={testQuestion.url}/>
