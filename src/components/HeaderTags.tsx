@@ -7,6 +7,9 @@ export const HeaderTags = ():React.JSX.Element => {
             <a href="#" className="text-[#CECFD3] text-[24px] font-bold py-4 h-full hover:text-black hover:border-b-black hover:border-b-2" aria-current="page">홈</a>
             <a href="#" className="text-[#CECFD3] text-[24px] font-bold py-4 h-full hover:text-black hover:border-b-black hover:border-b-2">질문 목록</a>
             <a href="#" className="text-[#CECFD3] text-[24px] font-bold py-4 h-full hover:text-black hover:border-b-black hover:border-b-2">질문 작성</a>
+            <a href="#" className="text-[#CECFD3] text-[24px] font-bold py-4 h-full hover:text-black hover:border-b-black hover:border-b-2">질문 관리</a>
+            <a href="#" className="text-[#CECFD3] text-[24px] font-bold py-4 h-full hover:text-black hover:border-b-black hover:border-b-2">답변 관리</a>
+            <a href="#" className="text-[#CECFD3] text-[24px] font-bold py-4 h-full hover:text-black hover:border-b-black hover:border-b-2">변호사 가입 관리</a>
         </nav>
     )
 }
