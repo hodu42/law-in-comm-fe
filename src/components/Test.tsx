@@ -15,8 +15,10 @@ export const Test = ():React.JSX.Element => {
                 password: pw,
             })
             const { accessToken } = response.data.data;
+            const { type } = response.data.data;
             console.log(accessToken);
             localStorage.setItem('accessToken', accessToken);
+            localStorage.setItem('tokenType', type);
             setCrtAccessToken(accessToken);
         } catch(e) {
             console.error(e);
@@ -27,7 +29,7 @@ export const Test = ():React.JSX.Element => {
         try {
             const response = await axios.get(`${BASE_URL}/api/users/legal-speciality`, {
                 headers: {
-                    Authorization: `bearer ${localStorage.getItem('accessToken')}`,
+                    'auth-test': `${localStorage.getItem('tokenType')}${localStorage.getItem('accessToken')}`,
                 }
             })
             console.log(response.data)
