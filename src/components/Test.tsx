@@ -1,11 +1,13 @@
 import React from "react";
-import axios from "axios";
+import axios, {AxiosError} from "axios";
 import {BASE_URL} from "../config/Config";
 
 export const Test = ():React.JSX.Element => {
     const [id, setId] = React.useState<string>('');
     const [pw, setPw] = React.useState<string>('');
     const [crtAccessToken, setCrtAccessToken] = React.useState<string>('');
+    const [header, setHeader] = React.useState<string>('');
+    const [nickname, setNickname] = React.useState<string>('');
 
     const handleLogin = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
@@ -16,9 +18,11 @@ export const Test = ():React.JSX.Element => {
             })
             const { accessToken } = response.data.data;
             const { type } = response.data.data;
+            const { header } = response.data.data;
             console.log(accessToken);
             localStorage.setItem('accessToken', accessToken);
             localStorage.setItem('tokenType', type);
+            setHeader(header);
             setCrtAccessToken(accessToken);
         } catch(e) {
             console.error(e);
@@ -27,16 +31,27 @@ export const Test = ():React.JSX.Element => {
 
     const handleClick = async () => {
         try {
-            const response = await axios.get(`${BASE_URL}/api/users/legal-speciality`, {
-                headers: {
-                    'auth-test': `${localStorage.getItem('tokenType')}${localStorage.getItem('accessToken')}`,
-                }
-            })
+            const response = await axios.get(`${BASE_URL}/api/users/legal-speciality`);
             console.log(response.data)
-            localStorage.removeItem('accessToken');
         } catch (error) {
             console.error(error);
-            localStorage.removeItem('accessToken');
+        }
+    }
+
+    const handleDuplicationCheck = async (e:React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        try {
+            const response = await axios.get(`${BASE_URL}/api/users/join/nickname/dupe-check`, {
+                params: {nickname: nickname}
+            });
+            console.log(response.data)
+            alert(`${nickname}은 사용가능합니다.`);
+        } catch (error:any) {
+            if (error.response.status === 404) {
+                console.error(error);
+            } else {
+                alert(`${nickname}은 이미 존재합니다.`);
+            }
         }
     }
 
@@ -51,6 +66,13 @@ export const Test = ():React.JSX.Element => {
                 <button className="bg-green-500" type="submit">로그인</button>
             </form>
             <button className="bg-green-500" onClick={handleClick}>테스트</button>
+            <div>
+                <h1>닉네임 중복체크</h1>
+                <form className="flex flex-col" onSubmit={handleDuplicationCheck}>
+                    <input type={"text"} value={nickname} onChange={(e) => setNickname(e.target.value)} placeholder="중복체크 할 닉네임을 입력하세요"/>
+                    <button className="bg-lightGreen rounded-10px" type={"submit"}>중복체크</button>
+                </form>
+            </div>
         </div>
 
     )
