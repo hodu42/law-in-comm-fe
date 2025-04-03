@@ -19,18 +19,50 @@ export const LawyerRegisterTest = ():React.JSX.Element => {
     const [lawyerSpeciality, setLawyerSpeciality] = useState<LawyerSpecialty[]>([]);
     const [checkedList, setCheckedList] = useState<string[]>([]);
     const [isChecked, setIsChecked] = useState<boolean>(false);
+    const [licenseImage, setLicenseImage] = useState<File | string>("");
+
+    const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        if (e.target.files && e.target.files[0]) {
+            setLicenseImage(e.target.files[0]);
+        } else {
+            setLicenseImage("");
+        }
+    }
 
     const handleRegister = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
+        const formData = {
+            legalSpecialties:
+                checkedList,
+            officeInfo: {
+                officeName: officeName,
+                officeAddress: officeAddress,
+                officePhoneNumber: officePhoneNumber
+            },
+            educations: [
+                education,
+            ],
+            name: name,
+            birthDate: birthDate,
+            careers: [
+                career
+            ],
+            username: username,
+            phoneNumber: phoneNumber,
+            password: password,
+            description: description
+        }
+        const multiPartFormData = new FormData();
+        multiPartFormData.append(
+            'data',
+            new Blob([JSON.stringify(formData)], { type: 'application/json' })
+        );
+        multiPartFormData.append('licenseImage', licenseImage);
+
         try {
-            const response = await axios.post(`${BASE_URL}/api/users/join/general`, {
-                username: username,
-                name: name,
-                password: password,
-                birthDate: birthDate,
-            })
+            const response = await axios.post(`${BASE_URL}/api/users/join/lawyer`, multiPartFormData);
             console.log(response);
-            alert("회원가입 대기중");
+            alert("변호사 회원가입 대기중");
         } catch (error) {
             console.error(error);
         }
@@ -64,11 +96,6 @@ export const LawyerRegisterTest = ():React.JSX.Element => {
         checkedItemHandler(value, e.target.checked);
     }
 
-    const checkboxTest = (e:React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
-        console.log('checkedList', checkedList);
-    }
-
     useEffect(() => {
         fetchLawyerSpeciality();
     }, []);
@@ -80,16 +107,14 @@ export const LawyerRegisterTest = ():React.JSX.Element => {
                 <input className="border-2 border-lightGreen rounded-10px" type={"password"} placeholder="비밀번호 입력" value={password} onChange={(e) => setPassword(e.target.value)} />
                 <input className="border-2 border-lightGreen rounded-10px" type={"text"} placeholder="이름 입력" value={name} onChange={(e) => setName(e.target.value)} />
                 <input className="border-2 border-lightGreen rounded-10px" type={"text"} placeholder="폰번호 입력" value={phoneNumber} onChange={(e) => setPhoneNumber(e.target.value)} />
-                <input type={"file"} />
-                <input className="border-2 border-lightGreen rounded-10px" type={"text"} placeholder="경력을 입력하세요" value={phoneNumber} onChange={(e) => setCareer(e.target.value)} />
-                <input className="border-2 border-lightGreen rounded-10px" type={"text"} placeholder="학력을 입력하세요" value={phoneNumber} onChange={(e) => setEducation(e.target.value)} />
+                <input type={"file"} onChange={handleFileChange} required/>
+                <input className="border-2 border-lightGreen rounded-10px" type={"text"} placeholder="경력을 입력하세요" value={career} onChange={(e) => setCareer(e.target.value)} />
+                <input className="border-2 border-lightGreen rounded-10px" type={"text"} placeholder="학력을 입력하세요" value={education} onChange={(e) => setEducation(e.target.value)} />
+                <input className="border-2 border-lightGreen rounded-10px" type={"text"} placeholder="자기소개를 입력하세요" value={description} onChange={(e) => setDescription(e.target.value)} />
                 <input className="border-2 border-lightGreen rounded-10px" type={"date"} value={birthDate} onChange={(e) => setBirthdate(e.target.value)} />
-                <input className="border-2 border-lightGreen rounded-10px" type={"text"} placeholder="사무실 이름" value={phoneNumber} onChange={(e) => setOfficeName(e.target.value)} />
-                <input className="border-2 border-lightGreen rounded-10px" type={"text"} placeholder="사무실 주소" value={phoneNumber} onChange={(e) => setOfficeAddress(e.target.value)} />
-                <input className="border-2 border-lightGreen rounded-10px" type={"text"} placeholder="사무실 전화번호" value={phoneNumber} onChange={(e) => setOfficePhoneNumber(e.target.value)} />
-                <button className="border-2 bg-lightGreen rounded-10px" type={"submit"}>변호사 회원가입</button>
-            </form>
-            <form onSubmit={checkboxTest}>
+                <input className="border-2 border-lightGreen rounded-10px" type={"text"} placeholder="사무실 이름" value={officeName} onChange={(e) => setOfficeName(e.target.value)} />
+                <input className="border-2 border-lightGreen rounded-10px" type={"text"} placeholder="사무실 주소" value={officeAddress} onChange={(e) => setOfficeAddress(e.target.value)} />
+                <input className="border-2 border-lightGreen rounded-10px" type={"text"} placeholder="사무실 전화번호" value={officePhoneNumber} onChange={(e) => setOfficePhoneNumber(e.target.value)} />
                 <div>
                     {
                         lawyerSpeciality.map((item, idx) => (
@@ -99,8 +124,8 @@ export const LawyerRegisterTest = ():React.JSX.Element => {
                             </div>
                         ))
                     }
-                    <button type={"submit"}>체크박스 테스트</button>
                 </div>
+                <button className="border-2 bg-lightGreen rounded-10px" type={"submit"}>변호사 회원가입</button>
             </form>
         </div>
     )

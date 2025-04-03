@@ -22,10 +22,15 @@ export const Test = ():React.JSX.Element => {
             console.log(accessToken);
             localStorage.setItem('accessToken', accessToken);
             localStorage.setItem('tokenType', type);
+            localStorage.setItem('header', header);
             setHeader(header);
             setCrtAccessToken(accessToken);
-        } catch(e) {
-            console.error(e);
+        } catch(error:any) {
+            if (error.response.status === 401) {
+                alert("잘못된 아이디나 비밀번호 입력");
+            } else {
+                console.error(error);
+            }
         }
     }
 
@@ -45,13 +50,13 @@ export const Test = ():React.JSX.Element => {
                 params: {nickname: nickname}
             });
             console.log(response.data)
-            alert(`${nickname}은 사용가능합니다.`);
-        } catch (error:any) {
-            if (error.response.status === 404) {
-                console.error(error);
-            } else {
+            if (response.data.data) {
                 alert(`${nickname}은 이미 존재합니다.`);
+            } else {
+                alert(`${nickname}은 사용가능합니다.`);
             }
+        } catch (error:any) {
+            console.error(error);
         }
     }
 

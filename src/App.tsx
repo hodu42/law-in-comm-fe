@@ -4,6 +4,7 @@ import {MainPage} from "./pages/MainPage";
 import {Test} from "./components/Test";
 import {RegisterTest} from "./pages/RegisterTest";
 import {LawyerRegisterTest} from "./pages/LawyerRegisterTest";
+import {PendingLawyersPage} from "./pages/PendingLawyersPage";
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
             <Route path="/test" element={<Test/>}/>
             <Route path="/register" element={<RegisterTest/>}/>
             <Route path="/register-lawyer" element={<LawyerRegisterTest/>}/>
+            <Route path="/pending-lawyers" element={<PendingLawyersPage/>}/>
         </Routes>
     </BrowserRouter>
   );
