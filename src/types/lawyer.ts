@@ -1,4 +1,4 @@
-export default interface LawyerSpecialty {
+export default interface LawyerSpeciality {
     legalSpecialtyName: string;
     legalSpecialtyDescription: string;
 }
