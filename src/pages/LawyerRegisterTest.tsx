@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
 import axios from "axios";
 import {BASE_URL} from "../config/Config";
-import LawyerSpecialty from "../types/lawyer";
+import LawyerSpeciality from "../types/lawyer";
 
 export const LawyerRegisterTest = ():React.JSX.Element => {
     const [username, setUsername] = useState("");
@@ -16,7 +16,7 @@ export const LawyerRegisterTest = ():React.JSX.Element => {
     const [officePhoneNumber, setOfficePhoneNumber] = useState("");
     const [description, setDescription] = useState("");
     const [image, setImage] = useState<string | ArrayBuffer | null> (null);
-    const [lawyerSpeciality, setLawyerSpeciality] = useState<LawyerSpecialty[]>([]);
+    const [lawyerSpeciality, setLawyerSpeciality] = useState<LawyerSpeciality[]>([]);
     const [checkedList, setCheckedList] = useState<string[]>([]);
     const [isChecked, setIsChecked] = useState<boolean>(false);
     const [licenseImage, setLicenseImage] = useState<File | string>("");
