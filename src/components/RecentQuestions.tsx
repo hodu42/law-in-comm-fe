@@ -4,7 +4,7 @@ import {PrevArrowComponent} from "./PrevArrowComponent";
 import {NextArrowComponent} from "./NextArrowComponent";
 import {RecentQuestionsContent} from "./RecentQuestionsContent";
 
-const testQuestion:Question = {
+const testQuestion = {
     legalSpeciality: "폭행",
     title: "동료에게 폭행당한 경우의 법적 대응 방법",
     content: "제가 동료한테 3월9일 오후 9시50분이후 동료한테 맞았는데 경찰은 cctv가안나왔다고 합니다 우선 걔랑 길에서 얘기하다 맞은건 분명한데 (상해진단서 고막파열 있음) 문제는 무엇이나면 동료도 발뺌하고 기억이안나는 골치아픈상황입니다 정황상으로봐도 제가 사촌형한테 전화걸고 동료가 날때렸다(이건 제3자가 때렸다고도했지만 처음동료가 절 때렸다함) 고 울면서말했습니다 \n" +
