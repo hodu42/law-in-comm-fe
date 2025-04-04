@@ -22,7 +22,6 @@ export const PendingLawyersPage = ():React.JSX.Element => {
                     size: size,
                 }
             }).then((res) => {
-                setPendingLawyerIds(res.data.data.content.map(item => item.laywerId)); // 수정중
                 setPendingLawyers(res.data.data);
             }).catch((error:any) => {
                 console.error(error);
