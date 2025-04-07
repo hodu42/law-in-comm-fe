@@ -48,7 +48,10 @@ export const QuestionsTest = ():React.JSX.Element => {
                     reason: reason,
                 });
                 alert(response.data);
-            } catch (error) {
+            } catch (error:any) {
+                if (error.response && error.response.status === 409) {
+                    alert("이미 신고한 게시글입니다.");
+                }
                 console.error(error);
             }
         }
