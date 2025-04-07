@@ -1,32 +1,24 @@
 import React from "react";
-import axios, {AxiosError} from "axios";
-import {BASE_URL} from "../config/Config";
+import { api, login } from "../api";
 
 export const Test = ():React.JSX.Element => {
     const [id, setId] = React.useState<string>('');
     const [pw, setPw] = React.useState<string>('');
     const [crtAccessToken, setCrtAccessToken] = React.useState<string>('');
-    const [header, setHeader] = React.useState<string>('');
     const [nickname, setNickname] = React.useState<string>('');
 
     const handleLogin = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         try {
-            const response = await axios.post(`${BASE_URL}/api/login`, {
-                username: id,
-                password: pw,
-            })
-            const { accessToken } = response.data.data;
-            const { type } = response.data.data;
-            const { header } = response.data.data;
-            console.log(accessToken);
+            const response = await login(id, pw);
+            console.log(response.data);
+            const { accessToken, type, header } = response.data;
             localStorage.setItem('accessToken', accessToken);
             localStorage.setItem('tokenType', type);
             localStorage.setItem('header', header);
-            setHeader(header);
             setCrtAccessToken(accessToken);
         } catch(error:any) {
-            if (error.response.status === 401) {
+            if (error.response?.status === 401) {
                 alert("잘못된 아이디나 비밀번호 입력");
             } else {
                 console.error(error);
@@ -36,8 +28,8 @@ export const Test = ():React.JSX.Element => {
 
     const handleClick = async () => {
         try {
-            const response = await axios.get(`${BASE_URL}/api/users/legal-speciality`);
-            console.log(response.data)
+            const response = await api.get<any>('/api/users/legal-speciality');
+            console.log(response.data);
         } catch (error) {
             console.error(error);
         }
@@ -46,11 +38,9 @@ export const Test = ():React.JSX.Element => {
     const handleDuplicationCheck = async (e:React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         try {
-            const response = await axios.get(`${BASE_URL}/api/users/join/nickname/dupe-check`, {
-                params: {nickname: nickname}
-            });
-            console.log(response.data)
-            if (response.data.data) {
+            const response = await api.get<any>('/api/users/join/nickname/dupe-check', { nickname });
+            console.log(response.data);
+            if (response.data) {
                 alert(`${nickname}은 이미 존재합니다.`);
             } else {
                 alert(`${nickname}은 사용가능합니다.`);

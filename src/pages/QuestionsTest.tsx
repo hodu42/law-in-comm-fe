@@ -1,7 +1,7 @@
 import React from "react";
-import axios from "axios";
 import {BASE_URL} from "../config/Config";
 import {Question} from "../types/question";
+import { getQuestions, getQuestion } from "../api";
 
 export const QuestionsTest = ():React.JSX.Element => {
     const [page, setPage] = React.useState<number>(0);
@@ -13,63 +13,44 @@ export const QuestionsTest = ():React.JSX.Element => {
 
     const fetchQuestions = async (e:React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        const header = localStorage.getItem('header');
-        if (header) {
-            await axios.get(`${BASE_URL}/api/questions`, {
-                headers: {
-                    [header]:  `${localStorage.getItem('tokenType')}${localStorage.getItem('accessToken')}`,
-                },
-                params: {
-                    page: page,
-                    size: size
-                }
-            }).then((res) => {
-                setQuestions(res.data.data.content);
-            }).catch((error) => {
-                if (error.response && error.response.status === 409) {
-                    alert("이미 신고한 게시글입니다.");
-                } else {
-                    console.error(error);
-                }
-            })
+        try {
+            const response = await getQuestions(page, size);
+            setQuestions(response.data.content);
+        } catch (error:any) {
+            if (error.response && error.response.status === 409) {
+                alert("이미 신고한 게시글입니다.");
+            } else {
+                console.error(error);
+            }
         }
     }
 
     const fetchSpecificQuestion = async (e:React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        const header = localStorage.getItem('header');
-        if (header) {
-            await axios.get(`${BASE_URL}/api/questions/${questionId}`, {
-                headers: {
-                    [header]:  `${localStorage.getItem('tokenType')}${localStorage.getItem('accessToken')}`,
-                }
-            }).then((res) => {
-                setCurrentQuestion(res.data.data);
-            }).catch((error) => {
-                if (error.response && error.response.status === 409) {
-                    alert("존재하지 않는 질문글입니다.");
-                } else {
-                    console.error(error);
-                }
-            })
+        try {
+            const response = await getQuestion(questionId);
+            setCurrentQuestion(response.data);
+        } catch (error:any) {
+            if (error.response && error.response.status === 409) {
+                alert("존재하지 않는 질문글입니다.");
+            } else {
+                console.error(error);
+            }
         }
     }
 
     const reportQuestion = async (e:React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        const header = localStorage.getItem('header');
-        if (header && currentQuestion) {
-            await axios.post(`${BASE_URL}/api/reports/questions/${currentQuestion.questionId}`, {
-                reason: reason,
-            }, {
-                headers: {
-                    [header]:  `${localStorage.getItem('tokenType')}${localStorage.getItem('accessToken')}`,
-                }
-            }).then((res) => {
-                alert(...res.data.data);
-            }).catch((error) => {
+        if (currentQuestion) {
+            try {
+                const { api } = await import('../api'); // 동적 임포트
+                const response = await api.post<any>(`/api/reports/questions/${currentQuestion.questionId}`, {
+                    reason: reason,
+                });
+                alert(response.data);
+            } catch (error) {
                 console.error(error);
-            })
+            }
         }
     }
 
