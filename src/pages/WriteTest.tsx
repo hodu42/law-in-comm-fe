@@ -1,6 +1,5 @@
 import React, {useEffect} from "react";
-import axios from "axios";
-import {BASE_URL} from "../config/Config";
+import { getLegalSpecialities, createQuestion } from "../api";
 import LawyerSpeciality from "../types/lawyer";
 
 export const WriteTest = ():React.JSX.Element => {
@@ -17,8 +16,8 @@ export const WriteTest = ():React.JSX.Element => {
 
     const fetchLawyerSpeciality = async () => {
         try {
-            const response = await axios.get(`${BASE_URL}/api/users/legal-speciality`);
-            setLawyerSpeciality(response.data.data);
+            const response = await getLegalSpecialities();
+            setLawyerSpeciality(response.data);
         } catch (error) {
             console.error(error);
         }
@@ -35,24 +34,17 @@ export const WriteTest = ():React.JSX.Element => {
 
     const writeQuestion = async (e:React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        const header =  localStorage.getItem('header');
-        const currentDate = new Date();
-        if (header) {
-            await axios.post(`${BASE_URL}/api/questions`, {
+        try {
+            const response = await createQuestion({
                 title: title,
                 legalSpeciality: category,
                 content: content,
                 firstOccurrenceDate: occurenceDate,
                 anonymous: isAnonymous,
-            }, {
-                headers: {
-                    [header]:  `${localStorage.getItem('tokenType')}${localStorage.getItem('accessToken')}`,
-                },
-            }).then((res) => {
-                console.log(res);
-            }).catch((error) => {
-                console.error(error);
-            })
+            });
+            console.log(response);
+        } catch (error) {
+            console.error(error);
         }
     }
 

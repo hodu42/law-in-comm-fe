@@ -1,6 +1,5 @@
 import React, {useEffect, useState} from "react";
-import axios from "axios";
-import {BASE_URL} from "../config/Config";
+import { getLegalSpecialities, registerLawyer } from "../api";
 import LawyerSpeciality from "../types/lawyer";
 
 export const LawyerRegisterTest = ():React.JSX.Element => {
@@ -60,7 +59,7 @@ export const LawyerRegisterTest = ():React.JSX.Element => {
         multiPartFormData.append('licenseImage', licenseImage);
 
         try {
-            const response = await axios.post(`${BASE_URL}/api/users/join/lawyer`, multiPartFormData);
+            const response = await registerLawyer(multiPartFormData);
             console.log(response);
             alert("변호사 회원가입 대기중");
         } catch (error) {
@@ -70,8 +69,8 @@ export const LawyerRegisterTest = ():React.JSX.Element => {
 
     const fetchLawyerSpeciality = async () => {
         try {
-            const response = await axios.get(`${BASE_URL}/api/users/legal-speciality`);
-            setLawyerSpeciality(response.data.data);
+            const response = await getLegalSpecialities();
+            setLawyerSpeciality(response.data);
         } catch (error) {
             console.error(error);
         }

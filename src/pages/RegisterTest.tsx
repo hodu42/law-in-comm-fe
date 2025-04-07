@@ -1,6 +1,5 @@
 import React, {useState} from "react";
-import axios from "axios";
-import {BASE_URL} from "../config/Config";
+import { registerGeneral } from "../api";
 
 export const RegisterTest = ():React.JSX.Element => {
     const [username, setUsername] = useState("");
@@ -12,13 +11,13 @@ export const RegisterTest = ():React.JSX.Element => {
     const handleRegister = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         try {
-            const response = await axios.post(`${BASE_URL}/api/users/join/general`, {
+            const response = await registerGeneral({
                 username: username,
                 name: name,
                 nickname: nickName,
                 password: password,
                 birthDate: birthDate,
-            })
+            });
             console.log(response);
             alert("회원가입 대기중");
         } catch (error) {

@@ -1,46 +1,30 @@
 import React, {useState} from "react";
 import {PendingLawyers, DetailedPendingLawyer} from "../types/admin";
-import axios from "axios";
-import {BASE_URL} from "../config/Config";
+import { getPendingLawyers, getPendingLawyerDetail } from "../api";
 
 export const PendingLawyersPage = ():React.JSX.Element => {
     const [page, setPage] = useState<number>(0);
     const [size, setSize] = useState<number>(0);
     const [pendingLawyerIds, setPendingLawyerIds] = useState<number[]>([]);
     const [pendingLawyers, setPendingLawyers] = React.useState<PendingLawyers>();
-    const headerName = localStorage.getItem('header');
 
     const fetchPendingLawyerIds = async (e:React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        if (headerName) {
-            axios.get(`${BASE_URL}/api/users/admin/confirmations/lawyers`, {
-                headers: {
-                    [headerName]: `${localStorage.getItem('tokenType')}${localStorage.getItem('accessToken')}`,
-                }
-                ,params: {
-                    page: page,
-                    size: size,
-                }
-            }).then((res) => {
-                setPendingLawyers(res.data.data);
-            }).catch((error:any) => {
-                console.error(error);
-            })
+        try {
+            const response = await getPendingLawyers(page, size);
+            setPendingLawyers(response.data);
+        } catch (error:any) {
+            console.error(error);
         }
     }
 
     const fetchDetailedPendingLawyers = async (e:React.FormEvent<HTMLFormElement>, lawyerId:number) => {
         e.preventDefault();
-        if (headerName) {
-            axios.get(`${BASE_URL}/api/users/admin/confirmations/lawyers/${lawyerId}`, {
-                headers: {
-                    [headerName]: `${localStorage.getItem('tokenType')}${localStorage.getItem('accessToken')}`,
-                }
-            }).then((res) => {
-                setPendingLawyers(res.data.data);
-            }).catch((error:any) => {
-                console.error(error);
-            })
+        try {
+            const response = await getPendingLawyerDetail(lawyerId);
+            setPendingLawyers(response.data);
+        } catch (error:any) {
+            console.error(error);
         }
     }
 

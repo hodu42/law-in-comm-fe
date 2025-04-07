@@ -83,3 +83,42 @@
    export const register = async (userData: any) => {
      return api.post<any>('/api/auth/register', userData);
    };
+
+   // 일반 사용자 회원가입
+   export const registerGeneral = async (userData: any) => {
+     return api.post<any>('/api/users/join/general', userData);
+   };
+
+   // 변호사 회원가입
+   export const registerLawyer = async (formData: FormData) => {
+     return api.post<any>('/api/users/join/lawyer', formData, {
+       headers: {
+         'Content-Type': 'multipart/form-data'
+       }
+     });
+   };
+
+   // 닉네임 중복 체크
+   export const checkNicknameDuplication = async (nickname: string) => {
+     return api.get<any>('/api/users/join/nickname/dupe-check', { nickname });
+   };
+
+   // 법률 전문 분야 조회
+   export const getLegalSpecialities = async () => {
+     return api.get<any>('/api/users/legal-speciality');
+   };
+
+   // 변호사 승인 대기 목록 조회
+   export const getPendingLawyers = async (page: number, size: number) => {
+     return api.get<any>('/api/users/admin/confirmations/lawyers', { page, size });
+   };
+
+   // 변호사 승인 대기 상세 조회
+   export const getPendingLawyerDetail = async (lawyerId: number) => {
+     return api.get<any>(`/api/users/admin/confirmations/lawyers/${lawyerId}`);
+   };
+
+   // 질문 신고하기
+   export const reportQuestion = async (questionId: number, reason: string) => {
+     return api.post<any>(`/api/reports/questions/${questionId}`, { reason });
+   };
