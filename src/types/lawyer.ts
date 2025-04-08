@@ -14,3 +14,9 @@ export interface LawyerInfo {
       path: string
     }
 }
+
+export enum ApprovalStatus {
+    WAITING = "WAITING",
+    APPROVED = "APPROVED",
+    REJECTED = "REJECTED"
+}
