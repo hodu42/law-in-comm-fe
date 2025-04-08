@@ -1,5 +1,5 @@
 import React from "react";
-
+import {Question} from "@typings/question";
 export const RecentQuestionsContent = ({legalSpeciality, title, content, firstOccurrenceDate, viewCount, url}:Question):React.JSX.Element => {
     return (
         <article className="max-w-[848px] min-[960px]:h-[396px] rounded-[10px] min-[960px]:border-2 border-[#5C6E56]  bg-white">
