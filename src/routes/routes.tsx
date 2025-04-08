@@ -1,13 +1,13 @@
-import React from 'react';
+
 import { RouteObject } from 'react-router-dom';
-import { MainPage } from '../pages/MainPage';
-import { Test } from '../pages/LoginTest';
-import { RegisterTest } from '../pages/RegisterTest';
-import { LawyerRegisterTest } from '../pages/LawyerRegisterTest';
-import { PendingLawyersPage } from '../pages/PendingLawyersPage';
-import { WriteTest } from '../pages/WriteTest';
-import { QuestionsTest } from '../pages/QuestionsTest';
-import { TestPage } from '../pages/TestPage';
+import { MainPage } from '@/pages/MainPage';
+import { Test } from '@/pages/LoginTest';
+import { RegisterTest } from '@/pages/RegisterTest';
+import { LawyerRegisterTest } from '@/pages/LawyerRegisterTest';
+import { PendingLawyersPage } from '@/pages/PendingLawyersPage';
+import { WriteTest } from '@/pages/WriteTest';
+import { QuestionsTest } from '@/pages/QuestionsTest';
+import { TestPage } from '@/pages/TestPage';
 
 export const routes: RouteObject[] = [
   {

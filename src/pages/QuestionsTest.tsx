@@ -1,5 +1,4 @@
 import React from "react";
-import {BASE_URL} from "../config/Config";
 import {Question} from "../types/question";
 import { getQuestions, getQuestion } from "../api";
 

@@ -1,6 +1,6 @@
    // src/api/index.ts
    import axios, { AxiosInstance, AxiosRequestConfig } from 'axios';
-   import { BASE_URL } from '../config/Config';
+   import { BACKEND_URL } from '@/config/Config';
 
    // API 클라이언트 클래스
    export class ApiClient {
@@ -8,7 +8,7 @@
 
      constructor() {
        this.axiosInstance = axios.create({
-         baseURL: BASE_URL,
+         baseURL: BACKEND_URL,
          headers: {
            'Content-Type': 'application/json'
          }

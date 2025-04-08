@@ -1,6 +1,6 @@
 import React from "react";
-import { api, login, getUserInfo } from "../api";
-import { LawyerInfo } from "@typings/lawyer";
+import { api, login, getUserInfo } from "@/api";
+import { LawyerInfo } from "@/types/lawyer";
 
 export const Test = ():React.JSX.Element => {
     const [id, setId] = React.useState<string>('');

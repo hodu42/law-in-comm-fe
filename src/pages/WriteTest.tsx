@@ -1,6 +1,6 @@
 import React, {useEffect} from "react";
-import { getLegalSpecialities, createQuestion } from "../api";
-import LawyerSpeciality from "../types/lawyer";
+import { getLegalSpecialities, createQuestion } from "@/api";
+import LawyerSpeciality from "@/types/lawyer";
 
 export const WriteTest = ():React.JSX.Element => {
     const [title, setTitle] = React.useState<string>("");

@@ -1,9 +1,9 @@
 import React, {useRef} from "react";
 import Slider, {Settings} from "react-slick";
-import {PrevArrowComponent} from "./PrevArrowComponent";
-import {NextArrowComponent} from "./NextArrowComponent";
-import {RecentQuestionsContent} from "./RecentQuestionsContent";
-import {Question} from "@typings/question";
+import {PrevArrowComponent} from "@/components/PrevArrowComponent";
+import {NextArrowComponent} from "@/components/NextArrowComponent";
+import {RecentQuestionsContent} from "@/components/RecentQuestionsContent";
+import {Question} from "@/types/question";
 
 const testQuestion:Question = {
     questionId: 1,

@@ -1,10 +1,10 @@
 import React from "react";
-import {MainHeader} from "../components/MainHeader";
-import {RecentQuestions} from "../components/RecentQuestions";
-import {QuestionCategories} from "../components/QuestionCategories";
-import {MobileSearch} from "../components/MobileSearch";
-import {MobileNav} from "../components/MobileNav";
-import {MobileSuggest} from "../components/MobileSuggest";
+import {MainHeader} from "@/components/MainHeader";
+import {RecentQuestions} from "@/components/RecentQuestions";
+import {QuestionCategories} from "@/components/QuestionCategories";
+import {MobileSearch} from "@/components/MobileSearch";
+import {MobileNav} from "@/components/MobileNav";
+import {MobileSuggest} from "@/components/MobileSuggest";
 
 export const MainPage= ():React.JSX.Element => {
     return (
