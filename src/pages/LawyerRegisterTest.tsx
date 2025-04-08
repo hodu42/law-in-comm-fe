@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from "react";
-import { getLegalSpecialities, registerLawyer } from "@/api";
+import { registerLawyer } from "@/api/auth/register";
+import { getLegalSpecialities } from "@/api/users";
 import LawyerSpeciality from "@/types/lawyer";
 
 export const LawyerRegisterTest = ():React.JSX.Element => {

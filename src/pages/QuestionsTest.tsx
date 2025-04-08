@@ -1,6 +1,6 @@
 import React from "react";
 import {Question} from "../types/question";
-import { getQuestions, getQuestion } from "../api";
+import { getQuestions, getQuestion } from "@/api/questions";
 
 export const QuestionsTest = ():React.JSX.Element => {
     const [page, setPage] = React.useState<number>(0);

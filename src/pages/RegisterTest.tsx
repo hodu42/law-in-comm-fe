@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import { registerGeneral } from "@/api";
+import { registerGeneral } from "@/api/auth/register";
 
 export const RegisterTest = ():React.JSX.Element => {
     const [username, setUsername] = useState("");

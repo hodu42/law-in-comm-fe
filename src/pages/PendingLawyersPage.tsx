@@ -1,6 +1,6 @@
 import React, {useState} from "react";
 import {PendingLawyers, DetailedPendingLawyer} from "@/types/admin";
-import { getPendingLawyers, getPendingLawyerDetail } from "@/api";
+import { getPendingLawyers, getPendingLawyerDetail } from "@/api/users/admin";
 import { IMAGE_URL } from "@/config/Config";
 
 export const PendingLawyersPage = ():React.JSX.Element => {
@@ -26,7 +26,11 @@ export const PendingLawyersPage = ():React.JSX.Element => {
             const response = await getPendingLawyerDetail(selectedLawyerId);
             setDetailedPendingLawyer(response.data);
         } catch (error:any) {
-            console.error(error);
+            if (error.response && error.response.status === 409) {
+                alert("존재하지 않는 변호사입니다.");
+            } else {
+                console.error(error);
+            }
         }
     }
 

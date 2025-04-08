@@ -1,5 +1,6 @@
 import React, {useEffect} from "react";
-import { getLegalSpecialities, createQuestion } from "@/api";
+import { createQuestion } from "@/api/questions";
+import { getLegalSpecialities } from "@/api/users";
 import LawyerSpeciality from "@/types/lawyer";
 
 export const WriteTest = ():React.JSX.Element => {

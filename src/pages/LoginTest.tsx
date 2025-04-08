@@ -1,5 +1,6 @@
 import React from "react";
-import { api, login, getUserInfo } from "@/api";
+import { login } from "@/api/auth/login";
+import { getUserInfo, checkNicknameDuplication, getLegalSpecialities } from "@/api/users";
 import { LawyerInfo } from "@/types/lawyer";
 
 export const Test = ():React.JSX.Element => {
@@ -31,7 +32,7 @@ export const Test = ():React.JSX.Element => {
 
     const fetchLawyerSpeciality = async () => {
         try {
-            const response = await api.get<any>('/api/users/legal-speciality');
+            const response = await getLegalSpecialities();
             console.log(response.data);
         } catch (error) {
             console.error(error);
@@ -41,7 +42,7 @@ export const Test = ():React.JSX.Element => {
     const handleDuplicationCheck = async (e:React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         try {
-            const response = await api.get<any>('/api/users/join/nickname/dupe-check', { nickname });
+            const response = await checkNicknameDuplication(nickname);
             console.log(response.data);
             if (response.data) {
                 alert(`${nickname}은 이미 존재합니다.`);
