@@ -1,6 +1,7 @@
 import React, {useState} from "react";
 import {PendingLawyers, DetailedPendingLawyer} from "@/types/admin";
-import { getPendingLawyers, getPendingLawyerDetail } from "@/api/users/admin";
+import { ApprovalStatus } from "@/types/lawyer";
+import { getPendingLawyers, getPendingLawyerDetail, approveLawyerRegister } from "@/api/users/admin";
 import { IMAGE_URL } from "@/config/Config";
 
 export const PendingLawyersPage = ():React.JSX.Element => {
@@ -34,6 +35,21 @@ export const PendingLawyersPage = ():React.JSX.Element => {
         }
     }
 
+    const handleApproveLawyer = async (lawyerId: number, isApprove: boolean) => {
+        try {
+            const response = await approveLawyerRegister(lawyerId, isApprove);
+            if (response.isSuccess) {
+                if (isApprove) {
+                    alert("승인 처리가 완료되었습니다.");
+                } else {
+                    alert("거절 처리가 완료되었습니다.");
+                }
+            } 
+        } catch (error:any) {
+            alert("승인 처리에 실패했습니다.");
+            console.error(error);
+        }
+    }
     return (
         <div>
             <div className="flex flex-col gap-10px">
@@ -80,6 +96,7 @@ export const PendingLawyersPage = ():React.JSX.Element => {
                 </form>
                 {
                     detailedPendingLawyer && (
+                        <>
                         <div className="border-2 border-lightGreen rounded-10px flex flex-col">
                             <h1>변호사 상세 정보</h1>
                             <p>{`아이디 : ${detailedPendingLawyer.lawyerId}`}</p>
@@ -96,6 +113,15 @@ export const PendingLawyersPage = ():React.JSX.Element => {
                             <p>{`생성일 : ${detailedPendingLawyer.createdAt}`}</p>
                             <p>{`수정일 : ${detailedPendingLawyer.updatedAt}`}</p>
                         </div>
+                        <div>
+                            {detailedPendingLawyer.approvalStatus === ApprovalStatus.WAITING && (
+                                <>
+                                    <button className="bg-lightGreen rounded-10px" onClick={() => handleApproveLawyer(detailedPendingLawyer.lawyerId, true)}>승인하기</button>
+                                    <button className="bg-red-500 rounded-10px" onClick={() => handleApproveLawyer(detailedPendingLawyer.lawyerId, false)}>거절하기</button>
+                                </>
+                            )}
+                        </div>
+                        </>
                     )
                 }
             </div>

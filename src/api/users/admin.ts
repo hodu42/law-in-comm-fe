@@ -1,7 +1,7 @@
 import { api } from '../index';
 
-export const approveLawyer = async (lawyerId: number, isApprove: boolean) => {
-  return api.post<any>(`/users/admin/confirmations/lawyers/${lawyerId}/approve`, { isApprove });
+export const approveLawyerRegister = async (lawyerId: number, isApprove: boolean) => {
+  return api.post<any>(`/users/admin/confirmations/lawyers/${lawyerId}`, { isApprove });
 };
 
 export const getPendingLawyers = async (page: number, size: number) => {
