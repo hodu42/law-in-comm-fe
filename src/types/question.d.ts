@@ -42,4 +42,5 @@ export interface Question {
     viewCount: number,
     reportCount: number,
     anonymous: boolean,
+    url: string
 }
