@@ -85,7 +85,7 @@ export const Login = (): React.JSX.Element => {
           </button>
         </div>
         {/* 회원가입 링크 */}
-        <div className="flex max-w-full w-auto md:w-[570px] justify-evenly my-[50px]">
+        <div className="flex w-full mobile:w-[570px] justify-evenly my-[50px]">
           <span className="font-NotoSansKR text-[16px] mobile:text-[20px]">아직 회원이 아니신가요?</span>
           <Link to="/register" className="font-NotoSansKR text-[16px] mobile:text-[20px] text-[#A9BE8C] hover:text-[#9CB395] transition-colors font-bold">
             회원가입
