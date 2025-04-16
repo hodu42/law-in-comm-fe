@@ -15,7 +15,7 @@ export const MainHeader = ():React.JSX.Element => {
                         </a>
                         <SearchBoxPC/>
                     </div>
-                    <a className="whitespace-nowrap font-NotoSansKR font-normal text-16px" href="">
+                    <a className="whitespace-nowrap font-NotoSansKR font-normal text-16px" href="/login">
                         로그인 / 회원가입
                     </a>
                 </div>

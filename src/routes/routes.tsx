@@ -8,11 +8,16 @@ import { PendingLawyersPage } from '@/pages/PendingLawyersPage';
 import { WriteTest } from '@/pages/WriteTest';
 import { QuestionsTest } from '@/pages/QuestionsTest';
 import { TestPage } from '@/pages/TestPage';
+import { Login } from '@/pages/Login';
 
 export const routes: RouteObject[] = [
   {
     path: '/',
     element: <MainPage />,
+  },
+  {
+    path: '/login',
+    element: <Login />,
   },
   {
     path: '/test',
