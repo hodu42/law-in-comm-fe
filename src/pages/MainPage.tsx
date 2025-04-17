@@ -18,7 +18,7 @@ export const MainPage= ():React.JSX.Element => {
                     <span className="inline-block text-black text-center text-[18px] font-bold">질문 작성</span>
                 </a>
                 <a href="#" className="w-[155px] flex justify-evenly items-center bg-[#C9D8B7] px-[10px] py-[5px] rounded-10px">
-                    <svg className="text-[#5C6E56]" width="40" height="40"><path fill="currentColor" fill-rule="evenodd" d="M5.417 11.667a1.25 1.25 0 0 1 1.25-1.25h26.666a1.25 1.25 0 0 1 0 2.5H6.667a1.25 1.25 0 0 1-1.25-1.25Zm0 8.333a1.25 1.25 0 0 1 1.25-1.25H25a1.25 1.25 0 1 1 0 2.5H6.666A1.25 1.25 0 0 1 5.416 20Zm0 8.333a1.25 1.25 0 0 1 1.25-1.25H15a1.25 1.25 0 1 1 0 2.5H6.666a1.25 1.25 0 0 1-1.25-1.25Z" clip-rule="evenodd"/></svg>
+                    <svg className="text-[#5C6E56]" width="40" height="40"><path fill="currentColor" fillRule="evenodd" d="M5.417 11.667a1.25 1.25 0 0 1 1.25-1.25h26.666a1.25 1.25 0 0 1 0 2.5H6.667a1.25 1.25 0 0 1-1.25-1.25Zm0 8.333a1.25 1.25 0 0 1 1.25-1.25H25a1.25 1.25 0 1 1 0 2.5H6.666A1.25 1.25 0 0 1 5.416 20Zm0 8.333a1.25 1.25 0 0 1 1.25-1.25H15a1.25 1.25 0 1 1 0 2.5H6.666a1.25 1.25 0 0 1-1.25-1.25Z" clipRule="evenodd"/></svg>
                     <span className="inline-block text-black text-center text-[18px] font-bold">질문 목록</span>
                 </a>
             </div>

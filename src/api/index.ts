@@ -1,6 +1,21 @@
    // src/api/index.ts
-   import axios, { AxiosInstance, AxiosRequestConfig } from 'axios';
+   import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios';
    import { BACKEND_URL } from '@/config/Config';
+   import { getTokens, updateTokens, clearTokens } from './auth/token';
+
+   let isRefreshing = false;
+   let failedQueue: any[] = [];
+
+   const processQueue = (error: any, token: string = '') => {
+     failedQueue.forEach(prom => {
+       if (error) {
+         prom.reject(error);
+       } else {
+         prom.resolve(token);
+       }
+     });
+     failedQueue = [];
+   };
 
    // API 클라이언트 클래스
    export class ApiClient {
@@ -14,19 +29,79 @@
          }
        });
 
-       // 요청 인터셉터 - 인증 토큰 추가
+       this.setupInterceptors();
+     }
+
+     private setupInterceptors() {
+       // 요청 인터셉터
        this.axiosInstance.interceptors.request.use(
          (config) => {
-           const tokenType = localStorage.getItem('tokenType');
-           const accessToken = localStorage.getItem('accessToken');
-           const headerType = localStorage.getItem('header');
-           
-           if (tokenType && accessToken && headerType) {
-             config.headers[headerType] = `${tokenType}${accessToken}`;
+           // 공개 API는 토큰 추가하지 않음
+           if (config.url?.includes('/login') || 
+               config.url?.includes('/register') || 
+               config.url?.includes('/auth/refresh')) {
+             return config;
+           }
+
+           const { accessToken, refreshToken, tokenType, tokenHeader } = getTokens();
+           if (accessToken && refreshToken && tokenType && tokenHeader) {
+             config.headers[tokenHeader] = `${tokenType}${accessToken}`;
            }
            return config;
          },
          (error) => Promise.reject(error)
+       );
+
+       // 응답 인터셉터
+       this.axiosInstance.interceptors.response.use(
+         (response) => response,
+         async (error) => {
+           const originalRequest = error.config;
+
+           // 로그인 요청은 토큰 갱신을 시도하지 않음
+           if (originalRequest.url?.includes('/login')) {
+             return Promise.reject(error);
+           }
+
+           // 401 에러이고 재시도하지 않은 요청인 경우
+           if (error.response?.status === 401 && !originalRequest._retry) {
+             if (isRefreshing) {
+               return new Promise((resolve, reject) => {
+                 failedQueue.push({ resolve, reject });
+               })
+                 .then(token => {
+                   const { tokenType, tokenHeader } = getTokens();
+                   if (tokenHeader) {
+                     originalRequest.headers[tokenHeader] = `${tokenType}${token}`;
+                   }
+                   return this.axiosInstance(originalRequest);
+                 })
+                 .catch(err => Promise.reject(err));
+             }
+
+             originalRequest._retry = true;
+             isRefreshing = true;
+
+             try {
+               const newToken = await updateTokens();
+               processQueue(undefined, newToken || '');
+               const { tokenType, tokenHeader } = getTokens();
+               if (tokenHeader) {
+                 originalRequest.headers[tokenHeader] = `${tokenType}${newToken}`;
+               }
+               return this.axiosInstance(originalRequest);
+             } catch (refreshError) {
+               processQueue(refreshError, '');
+               clearTokens();
+               window.location.href = '/login';
+               return Promise.reject(refreshError);
+             } finally {
+               isRefreshing = false;
+             }
+           }
+
+           return Promise.reject(error);
+         }
        );
      }
 

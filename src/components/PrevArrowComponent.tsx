@@ -8,7 +8,7 @@ export const PrevArrowComponent = (props:any):React.JSX.Element => {
             style={{...style, display: "block", background:"none"}}
             onClick={onClick}
         >
-            <svg xmlns="http://www.w3.org/2000/svg" width="33" height="66" fill="none"><path fill="#5C6E56" fill-rule="evenodd" d="m10.391 32.882 19.41 19.41-3.88 3.882L4.568 34.823a2.745 2.745 0 0 1 0-3.882L25.92 9.59l3.882 3.881-19.41 19.411Z" clip-rule="evenodd"/></svg>
+            <svg xmlns="http://www.w3.org/2000/svg" width="33" height="66" fill="none"><path fill="currentColor" fillRule="evenodd" d="M12.707 5.293a1 1 0 0 1 0 1.414L9.414 10l3.293 3.293a1 1 0 0 1-1.414 1.414l-4-4a1 1 0 0 1 0-1.414l4-4a1 1 0 0 1 1.414 0Z" clipRule="evenodd"/></svg>
         </div>
     )
 }

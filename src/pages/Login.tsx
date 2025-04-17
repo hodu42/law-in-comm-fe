@@ -1,16 +1,37 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import { Logo } from '@/components/Logo';
 import { MobileNav } from '@/components/MobileNav';
+import { login } from '@/api/auth/login';
+import { setTokens } from '@/api/auth/token';
 
 export const Login = (): React.JSX.Element => {
-  const [userId, setUserId] = useState('');
-  const [password, setPassword] = useState('');
+  const navigate = useNavigate();
+  const [userId, setUserId] = useState<string>('');
+  const [password, setPassword] = useState<string>('');
+  const [error, setError] = useState<string>('');
 
-  const handleLogin = (e: React.FormEvent) => {
-    e.preventDefault();
-    // 로그인 로직 구현
-    console.log('로그인 시도:', userId, password);
+  // 아이디 또는 비밀번호가 입력되면 에러 메시지 초기화
+  useEffect(() => {
+    if (userId || password) {
+      setError('');
+    }
+  }, [userId, password]);
+
+  const handleLogin = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    setError('');
+
+    try {
+      await login(userId, password);
+      navigate('/');
+    } catch (error: any) {
+      if (error.response?.status === 401) {
+        setError('잘못된 아이디/비밀번호입니다.');
+      } else {
+        setError('로그인 중 오류가 발생했습니다');
+      }
+    }
   };
 
   return (
@@ -47,7 +68,7 @@ export const Login = (): React.JSX.Element => {
 
       {/* 메인 콘텐츠 */}
       <div className="flex flex-col w-full flex-grow px-6 items-center pt-[36px]">
-        <div className="flex flex-col w-full mobile:max-w-[570px] mobile:mx-auto mt-10 mobile:mt-16 gap-y-20 px-5 py-10 border-b-[1.7px] border-[#B4B4B4]">
+        <form onSubmit={handleLogin} className="flex flex-col w-full mobile:max-w-[570px] mobile:mx-auto mt-10 mobile:mt-16 gap-y-20 px-5 py-[72px] border-b-[1.7px] border-[#B4B4B4]">
           {/* 아이디 입력 필드 */}
           <div className="flex flex-col gap-5 mobile:gap-6">
             <label className="text:black mobile:text-[#656565] text-[20px] font-bold">
@@ -63,7 +84,7 @@ export const Login = (): React.JSX.Element => {
           </div>
 
           {/* 비밀번호 입력 필드 */}
-          <div className="flex flex-col gap-5 mobile:gap-6">
+          <div className="relative flex flex-col gap-5 mobile:gap-6">
             <label className="text:black mobile:text-[#656565] text-[20px] font-bold">
               비밀번호
             </label>
@@ -74,20 +95,25 @@ export const Login = (): React.JSX.Element => {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             />
+            {/* 에러 메시지 표시 */}
+            {error && (
+              <div className="absolute text-red-500 text-sm bottom-[-1.8rem]">
+                {error}
+              </div>
+            )}
           </div>
-
           {/* 로그인 버튼 */}
           <button
-            onClick={handleLogin}
+            type="submit"
             className="inline-block bg-[#CBD8B7] text-black font-bold text-[20px] py-3 rounded-md hover:bg-[#A9BE8C] transition-colors"
           >
             로그인
           </button>
-        </div>
+        </form>
         {/* 회원가입 링크 */}
         <div className="flex w-full mobile:w-[570px] justify-evenly my-[50px]">
           <span className="font-NotoSansKR text-[16px] mobile:text-[20px]">아직 회원이 아니신가요?</span>
-          <Link to="/register" className="font-NotoSansKR text-[16px] mobile:text-[20px] text-[#A9BE8C] hover:text-[#9CB395] transition-colors font-bold">
+          <Link to="/register" className="font-NotoSansKR text-[16px] mobile:text-[20px] text-[#A9BE8C] hover:text-[#9CB395] hover:underline transition-colors font-bold">
             회원가입
           </Link>
         </div>
