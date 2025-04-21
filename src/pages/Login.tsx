@@ -76,7 +76,7 @@ export const Login = (): React.JSX.Element => {
             <input
               type="text"
               placeholder="아이디를 입력해주세요."
-              className="font-NotoSansKR border-b-2 pl-[10px] mobile:pl-4 placeholder:text-[15px] text-[15px] mobile:placeholder:text-[19px] mobile:text-[19px] border-[#E2E4E5] py-[10px] mobile:py-4 focus:outline-none focus:border-[#A9BE8C] placeholder-[#E2E4E5]"
+              className="font-NotoSansKR border-b-2 pl-[10px] mobile:pl-4 placeholder:text-[15px] text-[18px] mobile:placeholder:text-[19px] mobile:text-[19px] border-[#E2E4E5] py-[10px] mobile:py-4 focus:outline-none focus:border-[#A9BE8C] placeholder-[#E2E4E5]"
               value={userId}
               onChange={(e) => setUserId(e.target.value)}
             />
@@ -90,7 +90,7 @@ export const Login = (): React.JSX.Element => {
             <input
               type="password"
               placeholder="비밀번호를 입력해주세요."
-              className="font-NotoSansKR border-b-2 pl-[10px] mobile:pl-4 placeholder:text-[15px] text-[15px] mobile:placeholder:text-[19px] mobile:text-[19px] border-[#E2E4E5] py-[10px] mobile:py-4 focus:outline-none focus:border-[#A9BE8C] placeholder-[#E2E4E5]"
+              className="font-NotoSansKR border-b-2 pl-[10px] mobile:pl-4 placeholder:text-[15px] text-[18px] mobile:placeholder:text-[19px] mobile:text-[19px] border-[#E2E4E5] py-[10px] mobile:py-4 focus:outline-none focus:border-[#A9BE8C] placeholder-[#E2E4E5]"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             />
