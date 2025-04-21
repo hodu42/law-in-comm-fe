@@ -10,4 +10,4 @@ export const getLegalSpecialities = async () => {
 
 export const getUserInfo = async (userId: number) => {
   return api.get<any>(`/users/info/${userId}`);
-}; 
+};
