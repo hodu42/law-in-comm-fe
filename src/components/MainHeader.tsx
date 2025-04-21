@@ -2,8 +2,15 @@ import React from "react";
 import {Logo} from './Logo'
 import {SearchBoxPC} from "./SearchBoxPC";
 import {HeaderTags} from "./HeaderTags";
+import { clearTokens } from '@/api/auth/token';
 
 export const MainHeader = ():React.JSX.Element => {
+
+    const handleLogout = () => {
+        clearTokens();
+        window.location.reload();
+    }
+
     return (
         <div className="z-10 fixed flex w-full justify-center bg-white border-b-borderGray border-b-[1px]">
             <header className="flex-col min-w-[355px] max-w-[1350px] w-[70.31%] h-[72px] mobile:h-[144px] bg-white justify-between items-center border-b-borderGray">
@@ -15,9 +22,23 @@ export const MainHeader = ():React.JSX.Element => {
                         </a>
                         <SearchBoxPC/>
                     </div>
-                    <a className="whitespace-nowrap font-NotoSansKR font-normal text-16px" href="/login">
-                        로그인 / 회원가입
-                    </a>
+                    {
+                        localStorage.getItem('accessToken') ? (
+                            <div className="flex gap-x-5">
+                            <a className="whitespace-nowrap font-NotoSansKR font-normal text-16px" href="/mypage">
+                                마이페이지
+                            </a>
+                            <button className="whitespace-nowrap font-NotoSansKR font-normal text-16px underline" onClick={handleLogout}>
+                                로그아웃
+                            </button>   
+                            </div>
+                            
+                        ) : (
+                            <a className="whitespace-nowrap font-NotoSansKR font-normal text-16px underline" href="/login">
+                                로그인 / 회원가입
+                            </a>
+                        )
+                    }
                 </div>
                 <HeaderTags/>
             </header>

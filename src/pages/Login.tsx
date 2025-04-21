@@ -3,7 +3,6 @@ import { Link, useNavigate } from 'react-router-dom';
 import { Logo } from '@/components/Logo';
 import { MobileNav } from '@/components/MobileNav';
 import { login } from '@/api/auth/login';
-import { setTokens } from '@/api/auth/token';
 
 export const Login = (): React.JSX.Element => {
   const navigate = useNavigate();
