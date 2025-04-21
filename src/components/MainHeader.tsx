@@ -12,7 +12,7 @@ export const MainHeader = ():React.JSX.Element => {
     }
 
     return (
-        <div className="z-10 fixed flex w-full justify-center bg-white border-b-borderGray border-b-[1px]">
+        <div className="z-10 fixed flex w-full justify-center bg-white border-b-borderGray shadow-sm">
             <header className="flex-col min-w-[355px] max-w-[1350px] w-[70.31%] h-[72px] mobile:h-[144px] bg-white justify-between items-center border-b-borderGray">
                 <div className="flex w-full h-4.5 items-center">
                     <div className="flex w-full">
