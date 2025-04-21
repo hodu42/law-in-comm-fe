@@ -77,3 +77,10 @@
     display: none;
   }
 }
+
+/* 모바일에서 하단 네비게이션의 여백을 위한 패딩 추가 */
+@media (max-width: 768px) {
+  .question-form-container {
+    padding-bottom: 4rem;
+  }
+}

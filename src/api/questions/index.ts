@@ -8,6 +8,12 @@ export const getQuestion = async (id: number) => {
   return api.get<any>(`/questions/${id}`);
 };
 
-export const createQuestion = async (data: any) => {
-  return api.post<any>('/questions', data);
+export const createQuestion = async (title: string, legalSpeciality: string, content: string, firstOccurenceDate: string, isAnonymous: boolean) => {
+  return api.post<any>('/questions', {
+    title: title,
+    legalSpeciality: legalSpeciality,
+    content: content,
+    firstOccurrenceDate: firstOccurenceDate,
+    anonymous: isAnonymous,
+  });
 }; 

@@ -3,7 +3,9 @@
 const config = {
   important: true,
   purge: ['./src/**/*.{js,jsx,ts,tsx}'],
-  content: [],
+  content: [
+    "./src/**/*.{js,jsx,ts,tsx}",
+  ],
   theme: {
     extend: {
       width: {
@@ -43,6 +45,7 @@ const config = {
     }
   },
   plugins: [],
+  safelist: ['aria-[current=page]:text-[#9CB395]']
 }
 
 export default config;
