@@ -9,6 +9,7 @@ import { WriteTest } from '@/pages/WriteTest';
 import { QuestionsTest } from '@/pages/QuestionsTest';
 import { TestPage } from '@/pages/TestPage';
 import { Login } from '@/pages/Login';
+import { QuestionWrite } from '@/pages/QuestionForm';
 
 export const routes: RouteObject[] = [
   {
@@ -36,6 +37,10 @@ export const routes: RouteObject[] = [
     element: <PendingLawyersPage />,
   },
   {
+    path: '/question/write',
+    element: <QuestionWrite />,
+  },
+  {
     path: '/write',
     element: <WriteTest />,
   },
@@ -47,4 +52,31 @@ export const routes: RouteObject[] = [
     path: '/test-page',
     element: <TestPage />,
   },
-]; 
+];
+
+export const headerPaths = [
+  {
+    title: '홈',
+    link: '/'
+  },
+  {
+    title: '질문 목록',
+    link: '/question/list'
+  },
+  {
+    title: '질문 작성',
+    link: '/question/write'
+  },
+  {
+    title: '질문 관리',
+    link: '/question/manage'
+  },
+  {
+    title: '답변 관리',
+    link: '/answer/manage'
+  },
+  {
+    title: '변호사 가입 관리',
+    link: '/lawyer/manage',
+  },
+]
