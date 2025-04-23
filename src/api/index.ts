@@ -63,8 +63,10 @@
              return Promise.reject(error);
            }
 
-           // 401 에러이고 재시도하지 않은 요청인 경우
-           if (error.response?.status === 401 && !originalRequest._retry) {
+           // 액세스 토큰 만료 에러이고 재시도하지 않은 요청인 경우
+           const isAccessTokenExpired = error.response?.status === 401 && error.response?.data?.code === 4010605;
+              
+           if (isAccessTokenExpired && !originalRequest._retry) {
              if (isRefreshing) {
                return new Promise((resolve, reject) => {
                  failedQueue.push({ resolve, reject });
