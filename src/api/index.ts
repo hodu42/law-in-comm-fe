@@ -3,6 +3,8 @@
    import { BACKEND_URL } from '@/config/Config';
    import { getTokens, updateTokens } from './auth/token';
 
+   let isRefreshing = false;
+
    // API 클라이언트 클래스
    export class ApiClient {
      private axiosInstance: AxiosInstance;
@@ -25,7 +27,7 @@
            // 공개 API는 토큰 추가하지 않음
            if (config.url?.includes('/login') || 
                config.url?.includes('/register') || 
-               config.url?.includes('/auth/refresh')) {
+               config.url?.includes('/auth/token/refresh')) {
              return config;
            }
 
@@ -48,11 +50,16 @@
            if (originalRequest.url?.includes('/login')) {
              return Promise.reject(error);
            }
-
-           // 액세스 토큰 만료 에러이고 재시도하지 않은 요청인 경우
            const isAccessTokenExpired = error.response?.status === 401 && error.response?.data?.code === 4010605;
-              
-           if (isAccessTokenExpired) {
+           // 액세스 토큰 만료 에러이고 재시도하지 않은 요청인 경우
+           if (isAccessTokenExpired && !originalRequest._retry) {
+            if (isRefreshing) {
+              return Promise.reject(error);
+            }
+
+            originalRequest._retry = true;
+            isRefreshing = true;
+
              try {
                const newToken = await updateTokens();
                const { tokenType, tokenHeader } = getTokens();
@@ -61,8 +68,10 @@
                }
                return this.axiosInstance(originalRequest);
              } catch (refreshError) {
-               window.location.href = '/login';
+              //  window.location.href = '/login';
                return Promise.reject(refreshError);
+             } finally {
+              isRefreshing = false;
              }
            }
 
