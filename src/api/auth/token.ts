@@ -35,12 +35,13 @@ export const updateTokens = async (): Promise<string> => {
     const response: AxiosResponse = await api.post('/auth/token/refresh', {
       refreshToken: currentRefreshToken,
     });
-    const { accessToken, refreshToken: newRefreshToken, tokenType, headerType } = response.data;
-    if (accessToken && newRefreshToken && tokenType && headerType) {
-      setTokens(accessToken, newRefreshToken, tokenType, headerType);
+    const { header, type, accessToken, refreshToken: newRefreshToken } = response.data;
+    if ( header && type && accessToken && newRefreshToken ) {
+      setTokens(accessToken, newRefreshToken, type, header);
     } 
     return accessToken;
   } catch (error) {
+    alert('토큰 삭제');
     clearTokens();
     throw error;
   }
