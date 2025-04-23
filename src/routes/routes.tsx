@@ -1,4 +1,3 @@
-
 import { RouteObject } from 'react-router-dom';
 import { MainPage } from '@/pages/MainPage';
 import { Test } from '@/pages/Test';
@@ -10,6 +9,7 @@ import { QuestionsTest } from '@/pages/QuestionsTest';
 import { TestPage } from '@/pages/TestPage';
 import { Login } from '@/pages/Login';
 import { QuestionWrite } from '@/pages/QuestionForm';
+import { QuestionList } from '@/pages/QuestionList';
 
 export const routes: RouteObject[] = [
   {
@@ -45,8 +45,12 @@ export const routes: RouteObject[] = [
     element: <WriteTest />,
   },
   {
-    path: '/questions',
+    path: '/question/test',
     element: <QuestionsTest />,
+  },
+  {
+    path: '/questions',
+    element: <QuestionList />,
   },
   {
     path: '/test-page',
@@ -61,7 +65,7 @@ export const headerPaths = [
   },
   {
     title: '질문 목록',
-    link: '/question/list'
+    link: '/questions'
   },
   {
     title: '질문 작성',
