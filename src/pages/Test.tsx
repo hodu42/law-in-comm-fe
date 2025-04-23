@@ -2,6 +2,8 @@ import React from "react";
 import { login } from "@/api/auth/login";
 import { getUserInfo, checkNicknameDuplication, getLegalSpecialities } from "@/api/users";
 import { LawyerInfo } from "@/types/lawyer";
+import { api } from "@/api/index";
+import { AxiosResponse } from "axios";
 
 export const Test = ():React.JSX.Element => {
     const [id, setId] = React.useState<string>('');
@@ -27,6 +29,15 @@ export const Test = ():React.JSX.Element => {
             } else {
                 console.error(error);
             }
+        }
+    }
+
+    const inquiryErrorCodes = async () => {
+        try {
+            const response: AxiosResponse = await api.get('common/errors');
+            console.log(response.data);
+        } catch (error) {
+            console.error(error);
         }
     }
 
@@ -111,6 +122,7 @@ export const Test = ():React.JSX.Element => {
                     )
                 }
             </div>
+            <button className="bg-blue-700 rounded-lg p-2 text-white" onClick={inquiryErrorCodes}>오류 코드 조회</button>
         </div>
 
     )
