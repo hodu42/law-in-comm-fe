@@ -1,21 +1,9 @@
    // src/api/index.ts
-   import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios';
+   import axios, { AxiosInstance, AxiosRequestConfig } from 'axios';
    import { BACKEND_URL } from '@/config/Config';
-   import { getTokens, updateTokens, clearTokens } from './auth/token';
+   import { getTokens, updateTokens } from './auth/token';
 
    let isRefreshing = false;
-   let failedQueue: any[] = [];
-
-   const processQueue = (error: any, token: string = '') => {
-     failedQueue.forEach(prom => {
-       if (error) {
-         prom.reject(error);
-       } else {
-         prom.resolve(token);
-       }
-     });
-     failedQueue = [];
-   };
 
    // API 클라이언트 클래스
    export class ApiClient {
@@ -67,35 +55,25 @@
            const isAccessTokenExpired = error.response?.status === 401 && error.response?.data?.code === 4010605;
               
            if (isAccessTokenExpired && !originalRequest._retry) {
+             // 이미 토큰 갱신 중이면 에러 반환
              if (isRefreshing) {
-               return new Promise((resolve, reject) => {
-                 failedQueue.push({ resolve, reject });
-               })
-                 .then(token => {
-                   const { tokenType, tokenHeader } = getTokens();
-                   if (tokenHeader) {
-                     originalRequest.headers[tokenHeader] = `${tokenType}${token}`;
-                   }
-                   return this.axiosInstance(originalRequest);
-                 })
-                 .catch(err => Promise.reject(err));
+               return Promise.reject(error);
              }
 
              originalRequest._retry = true;
              isRefreshing = true;
 
              try {
+              console.log('토큰 업데이트 시작');
                const newToken = await updateTokens();
-               processQueue(undefined, newToken || '');
                const { tokenType, tokenHeader } = getTokens();
-               if (tokenHeader) {
+               if (tokenType && tokenHeader) {
                  originalRequest.headers[tokenHeader] = `${tokenType}${newToken}`;
                }
                return this.axiosInstance(originalRequest);
              } catch (refreshError) {
-               processQueue(refreshError, '');
-               clearTokens();
-               window.location.href = '/login';
+              alert('토큰 갱신 오류 발생');
+              //  window.location.href = '/login';
                return Promise.reject(refreshError);
              } finally {
                isRefreshing = false;
