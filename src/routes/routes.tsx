@@ -1,7 +1,7 @@
 
 import { RouteObject } from 'react-router-dom';
 import { MainPage } from '@/pages/MainPage';
-import { Test } from '@/pages/LoginTest';
+import { Test } from '@/pages/Test';
 import { RegisterTest } from '@/pages/RegisterTest';
 import { LawyerRegisterTest } from '@/pages/LawyerRegisterTest';
 import { PendingLawyersPage } from '@/pages/PendingLawyersPage';
