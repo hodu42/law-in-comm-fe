@@ -41,8 +41,7 @@ export const updateTokens = async (): Promise<string> => {
     } 
     return accessToken;
   } catch (error) {
-    alert('토큰 삭제');
-    clearTokens();
+    // clearTokens();
     throw error;
   }
 }; 
