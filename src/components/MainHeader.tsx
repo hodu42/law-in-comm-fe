@@ -16,7 +16,7 @@ export const MainHeader = ():React.JSX.Element => {
             <header className="flex-col min-w-[355px] max-w-[1350px] w-[70.31%] h-[72px] mobile:h-[144px] bg-white justify-between items-center border-b-borderGray">
                 <div className="flex w-full h-4.5 items-center">
                     <div className="flex w-full">
-                        <a className="flex justify-between items-center gap-x-5" href="">
+                        <a className="flex justify-between items-center gap-x-5" href="/">
                             <Logo/>
                             <p className="hidden mobile:block whitespace-nowrap font-NotoSansKR font-bold text-4xl mr-[50px] text-lightGreen">로인컴</p>
                         </a>
