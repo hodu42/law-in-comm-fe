@@ -1,33 +1,6 @@
 import {Sort} from "./page";
 import {LegalSpeciality} from "./speciality";
-
-export interface QuestionList {
-    totalElements: number,
-    totalPages: number,
-    first: boolean,
-    last: boolean,
-    size: number,
-    content: Question[],
-    number: number,
-    sort: Sort[],
-    numberOfElements: number,
-    pageable: {
-        pageNumber: number,
-        offset: number,
-        sort: [
-            {
-                direction: string,
-                nullHandling: string,
-                ascending: boolean,
-                property: string,
-                ignoreCase: boolean
-            }
-        ],
-        pageSize: number,
-        paged: boolean,
-        unpaged: boolean
-    }
-}
+import { QuestionWithAnswer } from "./questionWithAnswer";
 
 export interface Question {
     questionId: number,

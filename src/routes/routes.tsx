@@ -9,7 +9,7 @@ import { QuestionsTest } from '@/pages/QuestionsTest';
 import { TestPage } from '@/pages/TestPage';
 import { Login } from '@/pages/Login';
 import { QuestionWrite } from '@/pages/QuestionWrite';
-import { QuestionList } from '@/pages/QuestionList';
+import { QuestionListPage } from '@/pages/QuestionListPage';
 
 export const routes: RouteObject[] = [
   {
@@ -50,7 +50,7 @@ export const routes: RouteObject[] = [
   },
   {
     path: '/questions',
-    element: <QuestionList />,
+    element: <QuestionListPage />,
   },
   {
     path: '/test-page',

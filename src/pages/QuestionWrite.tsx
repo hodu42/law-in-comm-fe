@@ -39,7 +39,8 @@ export const QuestionWrite = (): React.JSX.Element => {
         occurenceDate,
         isAnonymous,
       );
-      console.log(response);
+      // navigate(`/question/${response.data.questionId}`);
+      navigate('/questions');
     } catch (error) {
       console.error('질문 생성 오류', error);
     }

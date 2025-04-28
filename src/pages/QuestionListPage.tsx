@@ -3,20 +3,27 @@ import { Link } from 'react-router-dom';
 import { MobileNav } from '@/components/MobileNav';
 import { MainHeader } from '@/components/MainHeader';
 import { QuestionItem } from '@/components/QuestionItem';
-import { QuestionWithAnswer } from '@/types/questionWithAnswer';
-import { fetchQuestionsWithAnswers } from '@/services/questionService';
+import { fetchQuestionsWithAnswers, PageResponse } from '@/services/questionService';
+import { QuestionWithAnswer } from '@/types/questionWithAnswer.d';
 
-export const QuestionList = (): React.JSX.Element => {
-  const [questionsWithAnswers, setQuestionsWithAnswers] = useState<QuestionWithAnswer[]>([]);
+export const QuestionListPage = (): React.JSX.Element => {
+  const [questionList, setQuestionList] = useState<PageResponse<QuestionWithAnswer>>();
+  const [currentPage, setCurrentPage] = useState(0);
+  const [totalPages, setTotalPages] = useState(0);
+  const [isFirstPage, setIsFirstPage] = useState(true);
+  const [isLastPage, setIsLastPage] = useState(false);
 
   useEffect(() => {
     const loadQuestions = async () => {
-      const data = await fetchQuestionsWithAnswers();
-      setQuestionsWithAnswers(data);
+      const response = await fetchQuestionsWithAnswers(currentPage);
+      setQuestionList(response);
+      setTotalPages(response.totalPages);
+      setIsFirstPage(response.first);
+      setIsLastPage(response.last);
     };
 
     loadQuestions();
-  }, []);
+  }, [currentPage]);
 
   return (
     <div className="flex flex-col min-h-screen bg-gray-50">
@@ -41,23 +48,44 @@ export const QuestionList = (): React.JSX.Element => {
       <main className="container mx-auto mt-[30px] px-4 pb-20 flex-grow">
         <div className="flex flex-col justify-between max-w-[800px] mx-auto mt-[144px]">
           {/* 질문 목록 */}
-          {questionsWithAnswers.map(({ question, answer }) => (
+          {questionList?.content.map(({ question, answer }) => (
             <QuestionItem 
               key={question.questionId} 
               question={question}
-              answer={answer} 
+              answer={answer ?? null}
             />
           ))}
 
           {/* 페이지네이션 */}
-          <div className="mt-8 flex justify-center">
-            <div className="bg-[#C9D8B7] rounded-lg p-1 flex">
-              <Link to="#" className="px-2 py-1 mx-1 rounded text-gray-700">
-                &lt; 이전 페이지
-              </Link>
-              <Link to="#" className="px-2 py-1 mx-1 rounded text-gray-700">
-                다음 페이지 &gt;
-              </Link>
+          <div className="mt-8 mb-10 pc:mb-0 flex justify-center">
+            <div className="flex items-center gap-2">
+              <button 
+                onClick={() => setCurrentPage(prev => Math.max(0, prev - 1))}
+                disabled={isFirstPage}
+                className="px-3 py-1 rounded text-gray-700 hover:bg-[#C9D8B7] disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                &lt;
+              </button>
+              {Array.from({ length: totalPages }, (_, i) => i).map((page) => (
+                <button 
+                  key={page}
+                  onClick={() => setCurrentPage(page)}
+                  className={`px-3 py-1 rounded ${
+                    page === currentPage 
+                      ? 'bg-[#C9D8B7] text-gray-700' 
+                      : 'text-gray-700 hover:bg-[#C9D8B7]'
+                  }`}
+                >
+                  {page + 1}
+                </button>
+              ))}
+              <button 
+                onClick={() => setCurrentPage(prev => Math.min(totalPages - 1, prev + 1))}
+                disabled={isLastPage}
+                className="px-3 py-1 rounded text-gray-700 hover:bg-[#C9D8B7] disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                &gt;
+              </button>
             </div>
           </div>
         </div>
