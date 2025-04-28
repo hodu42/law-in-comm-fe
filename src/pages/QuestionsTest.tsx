@@ -1,6 +1,6 @@
 import React from "react";
 import {Question} from "../types/question";
-import { getQuestions, getQuestion } from "@/api/questions";
+import { getQuestionList, getQuestion } from "@/api/questions";
 
 export const QuestionsTest = ():React.JSX.Element => {
     const [page, setPage] = React.useState<number>(0);
@@ -13,7 +13,8 @@ export const QuestionsTest = ():React.JSX.Element => {
     const fetchQuestions = async (e:React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         try {
-            const response = await getQuestions(page, size);
+            const response = await getQuestionList(page, size);
+            console.log(response.data);
             setQuestions(response.data.content);
         } catch (error:any) {
             if (error.response && error.response.status === 409) {
@@ -69,7 +70,7 @@ export const QuestionsTest = ():React.JSX.Element => {
                     questions.map((item:Question, idx) => (
                         <div className="border-2 border-black bg-lightGreen flex flex-col" key={idx}>
                             <p>{`질문 id : ${item.questionId}`}</p>
-                            <p>{`익명 여부 : ${item.anonymous}`}</p>
+                            <p>{`익명 여부 : ${item.isAnonymous}`}</p>
                             <p>{`작성자 id : ${item.authorId}`}</p>
                             <p>{`작성자 이름 : ${item.authorName}`}</p>
                             <p>{`생성일 : ${item.createdAt}`}</p>
@@ -98,7 +99,7 @@ export const QuestionsTest = ():React.JSX.Element => {
                         currentQuestion ? (
                             <div className="border-2 border-black bg-lightGreen flex flex-col">
                                 <p>{`질문 id : ${currentQuestion.questionId}`}</p>
-                                <p>{`익명 여부 : ${currentQuestion.anonymous}`}</p>
+                                <p>{`익명 여부 : ${currentQuestion.isAnonymous}`}</p>
                                 <p>{`작성자 id : ${currentQuestion.authorId}`}</p>
                                 <p>{`작성자 이름 : ${currentQuestion.authorName}`}</p>
                                 <p>{`생성일 : ${currentQuestion.createdAt}`}</p>

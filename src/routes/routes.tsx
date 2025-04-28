@@ -8,7 +8,7 @@ import { WriteTest } from '@/pages/WriteTest';
 import { QuestionsTest } from '@/pages/QuestionsTest';
 import { TestPage } from '@/pages/TestPage';
 import { Login } from '@/pages/Login';
-import { QuestionWrite } from '@/pages/QuestionForm';
+import { QuestionWrite } from '@/pages/QuestionWrite';
 import { QuestionList } from '@/pages/QuestionList';
 
 export const routes: RouteObject[] = [

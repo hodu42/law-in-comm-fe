@@ -18,7 +18,7 @@ const testQuestion:Question = {
     firstOccurrenceDate: "2025-02-27",
     viewCount: 64,
     reportCount: 0,
-    anonymous: false,
+    isAnonymous: false,
     url: "abcde"
 }
 

@@ -33,14 +33,14 @@ export interface Question {
     questionId: number,
     title: string,
     content: string,
-    authorName: string,
     authorId: string,
+    authorName: string,
     createdAt: string,
     updatedAt: string,
     legalSpeciality: LegalSpeciality,
     firstOccurrenceDate: string,
     viewCount: number,
     reportCount: number,
-    anonymous: boolean,
+    isAnonymous: boolean,
     url: string
 }

@@ -23,6 +23,7 @@ export const QuestionWrite = (): React.JSX.Element => {
   const fetchLawyerSpeciality = async () => {
     try {
       const response = await getLegalSpecialities();
+      console.log(response.data);
       setLawyerSpeciality(response.data);
     } catch (error) {
       console.error('법률 분야 조회 오류', error);
