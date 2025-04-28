@@ -33,8 +33,8 @@ export interface Question {
     questionId: number,
     title: string,
     content: string,
-    authorId: string,
-    authorName: string,
+    authorId: string | null,
+    authorName: string | null,
     createdAt: string,
     updatedAt: string,
     legalSpeciality: LegalSpeciality,
@@ -42,5 +42,4 @@ export interface Question {
     viewCount: number,
     reportCount: number,
     isAnonymous: boolean,
-    url: string
 }
