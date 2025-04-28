@@ -37,7 +37,7 @@ export const QuestionItem: React.FC<{ question: Question; answer: Answer | null 
             <span className="text-[0.81rem] pc:text-[1rem] mr-[6px]">
               신고 {question.reportCount}
             </span>
-            <svg className="w-[13px] h-[14px] pc:w-[16px] pc:h-[17px]" fill="none">
+            <svg className="w-[13px] h-[14px] pc:w-[16px] pc:h-[17px] flex-shrink-0 translate-y-[1px]" fill="none">
               <path fill="#EF4242" stroke="#EF4242" d="M12 12.167H4V7.5a4 4 0 0 1 8 0v4.667Z"/>
               <path stroke="#EF4242" d="M2.667 14.5h10.666m-12-9.666 1 .333m2-3.333.334 1m-1.333 1-1-1"/>
             </svg>

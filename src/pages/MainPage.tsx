@@ -1,17 +1,30 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {MainHeader} from "@/components/MainHeader";
 import {RecentQuestions} from "@/components/RecentQuestions";
 import {QuestionCategories} from "@/components/QuestionCategories";
 import {MobileSearch} from "@/components/MobileSearch";
 import {MobileNav} from "@/components/MobileNav";
 import {MobileSuggest} from "@/components/MobileSuggest";
+import { getQuestionList } from "@/api/questions";
+import { Question } from "@/types/question";
 
 export const MainPage= ():React.JSX.Element => {
+    const [recentQuestions, setRecentQuestions] = useState<Question[]>([]);
+
+    useEffect(() => {
+        const fetchRecentQuestions = async () => {
+            const response = await getQuestionList("0", "5");
+            setRecentQuestions(response.data.content);
+            console.log(response.data.content);
+        };
+        fetchRecentQuestions();
+    }, []);
+
     return (
         <div className="main-container flex flex-col items-center bg-[#F7F7FA]">
             <MainHeader/>
             <MobileSearch/>
-            <RecentQuestions/>
+            <RecentQuestions recentQuestions={recentQuestions}/>
             <div className="w-[90%] pc:hidden flex justify-between px-[20px]">
                 <a href="/question/write" className="w-[155px] flex justify-evenly items-center bg-[#C9D8B7] px-[10px] py-[5px] rounded-10px">
                     <svg className="text-[#5C6E56]" width="40" height="40"><path fill="currentColor" d="M21.667 10 30 18.333 14.155 34.178a2.943 2.943 0 0 1-.02-4.141l-.005-.005a2.94 2.94 0 0 1-4.202-4.112l-.013-.013a2.942 2.942 0 0 1-4.092-.06L21.667 10Zm12.643-.69-3.62-3.62a3.333 3.333 0 0 0-4.713 0l-2.644 2.643 8.334 8.334 2.643-2.644a3.333 3.333 0 0 0 0-4.713ZM5 30v5h5a5 5 0 0 0-5-5Z"/></svg>
