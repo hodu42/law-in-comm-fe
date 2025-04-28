@@ -41,7 +41,7 @@ const config = {
       NotoSansKR: ['NotoSansKR'],
     },
     screens: {
-      'mobile': '960px'
+      'pc': '960px'
     }
   },
   plugins: [],

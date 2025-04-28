@@ -38,15 +38,15 @@ export const Login = (): React.JSX.Element => {
       
       {/* 헤더 영역 */}
       <header className="fixed top-0 left-0 right-0 w-full h-[72px] flex items-center justify-center bg-white z-20">
-        <div className="relative w-full min-w-[355px] max-w-[1350px] mobile:w-[70.31%] h-full flex items-center">
+        <div className="relative w-full min-w-[355px] max-w-[1350px] pc:w-[70.31%] h-full flex items-center">
           {/* 모바일 뒤로가기 버튼 */}
-          <Link to="/" className="mobile:hidden flex items-center text-black z-10 ml-6">
+          <Link to="/" className="pc:hidden flex items-center text-black z-10 ml-6">
               <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 19l-7-7 7-7"></path>
               </svg>
           </Link>
           {/* 데스크탑 로고 */}
-          <Link to="/" className="hidden mobile:flex items-center absolute left-4 z-10">
+          <Link to="/" className="hidden pc:flex items-center absolute left-4 z-10">
             <div className="text-[#A9BE8C] font-bold text-2xl flex items-center">
               <Logo />
               <span className="ml-5 text-[#9CB395] text-[36px]">로인컴</span>
@@ -60,37 +60,37 @@ export const Login = (): React.JSX.Element => {
             </div>
             
             {/* 균형을 위한 빈 공간 */}
-            <div className="mobile:hidden w-6"></div>
+            <div className="pc:hidden w-6"></div>
           </div>
         </div>
       </header>
 
       {/* 메인 콘텐츠 */}
       <div className="flex flex-col w-full flex-grow px-6 items-center pt-[36px]">
-        <form onSubmit={handleLogin} className="flex flex-col w-full mobile:max-w-[570px] mobile:mx-auto mt-10 mobile:mt-16 gap-y-20 px-5 py-[72px] border-b-[1.7px] border-[#B4B4B4]">
+        <form onSubmit={handleLogin} className="flex flex-col w-full pc:max-w-[570px] pc:mx-auto mt-10 pc:mt-16 gap-y-20 px-5 py-[72px] border-b-[1.7px] border-[#B4B4B4]">
           {/* 아이디 입력 필드 */}
-          <div className="flex flex-col gap-5 mobile:gap-6">
-            <label className="text:black mobile:text-[#656565] text-[20px] font-bold">
+          <div className="flex flex-col gap-5 pc:gap-6">
+            <label className="text:black pc:text-[#656565] text-[20px] font-bold">
               아이디
             </label>
             <input
               type="text"
               placeholder="아이디를 입력해주세요."
-              className="font-NotoSansKR border-b-2 pl-[10px] mobile:pl-4 placeholder:text-[15px] text-[18px] mobile:placeholder:text-[19px] mobile:text-[19px] border-[#E2E4E5] py-[10px] mobile:py-4 focus:outline-none focus:border-[#A9BE8C] placeholder-[#E2E4E5]"
+              className="font-NotoSansKR border-b-2 pl-[10px] pc:pl-4 placeholder:text-[15px] text-[18px] pc:placeholder:text-[19px] pc:text-[19px] border-[#E2E4E5] py-[10px] pc:py-4 focus:outline-none focus:border-[#A9BE8C] placeholder-[#E2E4E5]"
               value={userId}
               onChange={(e) => setUserId(e.target.value)}
             />
           </div>
 
           {/* 비밀번호 입력 필드 */}
-          <div className="relative flex flex-col gap-5 mobile:gap-6">
-            <label className="text:black mobile:text-[#656565] text-[20px] font-bold">
+          <div className="relative flex flex-col gap-5 pc:gap-6">
+            <label className="text:black pc:text-[#656565] text-[20px] font-bold">
               비밀번호
             </label>
             <input
               type="password"
               placeholder="비밀번호를 입력해주세요."
-              className="font-NotoSansKR border-b-2 pl-[10px] mobile:pl-4 placeholder:text-[15px] text-[18px] mobile:placeholder:text-[19px] mobile:text-[19px] border-[#E2E4E5] py-[10px] mobile:py-4 focus:outline-none focus:border-[#A9BE8C] placeholder-[#E2E4E5]"
+              className="font-NotoSansKR border-b-2 pl-[10px] pc:pl-4 placeholder:text-[15px] text-[18px] pc:placeholder:text-[19px] pc:text-[19px] border-[#E2E4E5] py-[10px] pc:py-4 focus:outline-none focus:border-[#A9BE8C] placeholder-[#E2E4E5]"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             />
@@ -110,9 +110,9 @@ export const Login = (): React.JSX.Element => {
           </button>
         </form>
         {/* 회원가입 링크 */}
-        <div className="flex w-full mobile:w-[570px] justify-evenly my-[50px]">
-          <span className="font-NotoSansKR text-[16px] mobile:text-[20px]">아직 회원이 아니신가요?</span>
-          <Link to="/register" className="font-NotoSansKR text-[16px] mobile:text-[20px] text-[#A9BE8C] hover:text-[#9CB395] hover:underline transition-colors font-bold">
+        <div className="flex w-full pc:w-[570px] justify-evenly my-[50px]">
+          <span className="font-NotoSansKR text-[16px] pc:text-[20px]">아직 회원이 아니신가요?</span>
+          <Link to="/register" className="font-NotoSansKR text-[16px] pc:text-[20px] text-[#A9BE8C] hover:text-[#9CB395] hover:underline transition-colors font-bold">
             회원가입
           </Link>
         </div>

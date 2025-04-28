@@ -13,9 +13,9 @@ export const QuestionCategories = ():React.JSX.Element => {
     ];
 
     return (
-        <div className="flex w-[90%] justify-center py-[30px] mb-[80px] mobile:m-0">
+        <div className="flex w-[90%] justify-center py-[30px] mb-[80px] pc:m-0">
             <nav className="flex flex-col gap-[28px] w-full justify-center max-w-1350px">
-                <h1 className="text-[#1F2225] text-[20px] mobile:text-[28px] font-bold">분야별 질문글 찾기</h1>
+                <h1 className="text-[#1F2225] text-[20px] pc:text-[28px] font-bold">분야별 질문글 찾기</h1>
                 <ul className="question-categories-container flex w-full gap-[20px] justify-between px-[19px] pb-[20px] overflow-auto">
                     {categories.map((category, index) => (
                         <CategoryItem 

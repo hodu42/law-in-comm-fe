@@ -50,13 +50,13 @@ export const QuestionWrite = (): React.JSX.Element => {
       <header className="fixed shadow-md top-0 left-0 right-0 w-full h-[72px] flex items-center justify-center bg-white z-20">
         <div className="container mx-auto px-4 py-4 flex justify-between items-center">
           {/* 모바일 뒤로가기 버튼 */}
-          <Link to="/" className="mobile:hidden flex items-center text-black z-10">
+          <Link to="/" className="pc:hidden flex items-center text-black z-10">
               <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 19l-7-7 7-7"></path>
               </svg>
           </Link>
-          <div className="relative w-full min-w-[355px] max-w-[1350px] mobile:w-[70.31%] h-full flex items-center">
-            <Link to="/" className="hidden mobile:flex items-center absolute left-4 z-10">
+          <div className="relative w-full min-w-[355px] max-w-[1350px] pc:w-[70.31%] h-full flex items-center">
+            <Link to="/" className="hidden pc:flex items-center absolute left-4 z-10">
               <div className="text-[#A9BE8C] font-bold text-2xl flex items-center">
                 <Logo />
                 <span className="ml-5 text-[#9CB395] text-[36px]">로인컴</span>
@@ -67,12 +67,12 @@ export const QuestionWrite = (): React.JSX.Element => {
               질문 작성
           </div>
           {/* PC 등록하기 버튼 */}
-          <button onClick={handleSubmit} className="hidden mobile:flex items-center group">
+          <button onClick={handleSubmit} className="hidden pc:flex items-center group">
             <svg className='text-[#9CB395] group-hover:text-[#7D9277]' xmlns="http://www.w3.org/2000/svg" width="38" height="38" viewBox="0 0 48 48" fill="none"><path fill="currentColor" d="m26 12 10 10-19.014 19.014a3.532 3.532 0 0 1-.024-4.97l-.006-.006a3.527 3.527 0 0 1-5.042-4.934l-.016-.016a3.53 3.53 0 0 1-4.91-.072L26 12Zm15.172-.828-4.344-4.344a4 4 0 0 0-5.656 0L28 10l10 10 3.172-3.172a4 4 0 0 0 0-5.656ZM6 36v6h6a6 6 0 0 0-6-6Z"/></svg>      
             <span className="text-[#9CB395] text-[21px] font-bold ml-2 group-hover:text-[#7D9277]">등록하기</span>
           </button>
           {/* 모바일 등록하기 버튼 */}
-          <button onClick={handleSubmit} className="mobile:hidden items-center bg-[#C9D8B7] text-black px-4 py-2 rounded-[10px] text-nowrap text-[16px] hover:bg-[#A9BE8C] font-medium">등록</button>
+          <button onClick={handleSubmit} className="pc:hidden items-center bg-[#C9D8B7] text-black px-4 py-2 rounded-[10px] text-nowrap text-[16px] hover:bg-[#A9BE8C] font-medium">등록</button>
         </div>
       </header>
 

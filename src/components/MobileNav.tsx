@@ -2,7 +2,7 @@ import React from "react";
 
 export const MobileNav = ():React.JSX.Element => {
     return (
-        <nav className="fixed bottom-0 flex justify-between items-center mobile:hidden w-full h-[80px] px-[30px] border-t border-t-[#CFCFCF] bg-white">
+        <nav className="fixed bottom-0 flex justify-between items-center pc:hidden w-full h-[80px] px-[30px] border-t border-t-[#CFCFCF] bg-white">
             <a href="/" 
                className="text-[#848484] aria-[current=page]:text-[#9CB395]" 
                aria-current={window.location.pathname === '/' ? 'page' : undefined}>
