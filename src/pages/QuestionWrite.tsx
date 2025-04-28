@@ -51,11 +51,11 @@ export const QuestionWrite = (): React.JSX.Element => {
       <header className="fixed shadow-md top-0 left-0 right-0 w-full h-[72px] flex items-center justify-center bg-white z-20">
         <div className="container mx-auto px-4 py-4 flex justify-between items-center">
           {/* 모바일 뒤로가기 버튼 */}
-          <Link to="/" className="pc:hidden flex items-center text-black z-10">
-              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 19l-7-7 7-7"></path>
-              </svg>
-          </Link>
+          <button onClick={() => navigate(-1)} className="pc:hidden flex items-center text-black z-10">
+            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 19l-7-7 7-7"></path>
+            </svg>
+          </button>
           <div className="relative w-full min-w-[355px] max-w-[1350px] pc:w-[70.31%] h-full flex items-center">
             <Link to="/" className="hidden pc:flex items-center absolute left-4 z-10">
               <div className="text-[#A9BE8C] font-bold text-2xl flex items-center">
