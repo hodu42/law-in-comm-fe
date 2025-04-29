@@ -27,6 +27,7 @@
            // 공개 API는 토큰 추가하지 않음
            if (config.url?.includes('/login') || 
                config.url?.includes('/register') || 
+               config.url?.includes('/register-lawyer') ||
                config.url?.includes('/auth/token/refresh')) {
              return config;
            }

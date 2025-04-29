@@ -8,7 +8,7 @@ export const getAnswers = async (questionId: string, page: string, size: string)
   return api.get<any>(`/question/${questionId}/answers`, { page, size });
 };
 
-export const createAnswer = async (questionId: number, content: string) => {
+export const createAnswer = async (questionId: string, content: string) => {
   return api.post<any>(`/question/${questionId}/answers`, { content });
 };
 

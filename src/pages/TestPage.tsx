@@ -12,6 +12,7 @@ export const TestPage = (): React.JSX.Element => {
     { path: "/pending-lawyers", name: "대기 중인 변호사" },
     { path: "/write", name: "글쓰기" },
     { path: "/questions", name: "질문 목록" },
+    { path: "/answer/write", name: "답변 작성" },
   ];
 
   return (

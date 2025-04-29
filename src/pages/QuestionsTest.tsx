@@ -13,7 +13,7 @@ export const QuestionsTest = ():React.JSX.Element => {
     const fetchQuestions = async (e:React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         try {
-            const response = await getQuestionList(page, size);
+            const response = await getQuestionList(String(page), String(size));
             console.log(response.data);
             setQuestions(response.data.content);
         } catch (error:any) {
