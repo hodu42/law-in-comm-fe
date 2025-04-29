@@ -36,8 +36,12 @@ export interface PageResponse<T> {
 }
 
 /* TODO: 답변들 조회가 작동 안함 확인 필요*/
-export const fetchQuestionsWithAnswers = async (page: number = DEFAULT_PAGE): Promise<PageResponse<QuestionWithAnswer>> => {
-  const questionResponse = await getQuestionList(String(page), String(DEFAULT_SIZE));
+export const fetchQuestionsWithAnswers = async (
+  page: number = DEFAULT_PAGE,
+  legalSpeciality?: string,
+  keyword?: string
+): Promise<PageResponse<QuestionWithAnswer>> => {
+  const questionResponse = await getQuestionList(String(page), String(DEFAULT_SIZE), legalSpeciality, keyword);
   const questions = questionResponse.data.content;
 
   const questionsWithAnswers = await Promise.all(
@@ -57,5 +61,4 @@ export const fetchQuestionsWithAnswers = async (page: number = DEFAULT_PAGE): Pr
       content: questionsWithAnswers
     }
   )
-
 }; 

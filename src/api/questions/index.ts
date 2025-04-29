@@ -8,8 +8,8 @@ export const getQuestion = async (id: number) => {
   return api.get<any>(`/questions/${id}`);
 };
 
-export const getQuestionList = async (page: string, size: string) => {
-  return api.get<any>('/questions', { page, size });
+export const getQuestionList = async (page: string, size: string, legalSpeciality?: string, keyword?: string) => {
+  return api.get<any>('/questions', { legalSpeciality, keyword, page, size });
 };
 
 export const searchQuestion = async (keyword: string, page: number, size: number) => {

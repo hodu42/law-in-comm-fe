@@ -1,10 +1,9 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Logo } from '@/components/Logo';
 import { MobileNav } from '@/components/MobileNav';
 import { createQuestion } from '@/api/questions';
-import { getLegalSpecialities } from "@/api/users";
-import LawyerSpeciality from '@/types/lawyer';
+import { LegalSpecialityLabels } from '@/types/speciality';
 
 export const QuestionWrite = (): React.JSX.Element => {
   const navigate = useNavigate();
@@ -14,21 +13,7 @@ export const QuestionWrite = (): React.JSX.Element => {
   const [content, setContent] = useState<string>('');
   const [isAnonymous, setIsAnonymous] = useState<boolean>(false);
   const dateInputRef = useRef<HTMLInputElement>(null);
-  const [lawyerSpeciality, setLawyerSpeciality] = React.useState<LawyerSpeciality[]>([]);
 
-  useEffect(() => {
-    fetchLawyerSpeciality();
-  }, []);
-
-  const fetchLawyerSpeciality = async () => {
-    try {
-      const response = await getLegalSpecialities();
-      console.log(response.data);
-      setLawyerSpeciality(response.data);
-    } catch (error) {
-      console.error('법률 분야 조회 오류', error);
-    }
-  }
   // 응답 받고 해당 질문 id를 자세히보는 페이지로 넘어가도록 만들 예정
   const handleSubmit = async () => {
     try {
@@ -103,8 +88,8 @@ export const QuestionWrite = (): React.JSX.Element => {
                 className="appearance-none w-full px-4 py-3 text-[18px] border border-gray-300 rounded-2xl bg-white focus:outline-none focus:ring-2 focus:ring-[#9CB395]"
               >
                 {
-                    lawyerSpeciality.map((item, idx) => (
-                        <option key={idx} value={item.legalSpecialtyName}>{item.legalSpecialtyDescription}</option>
+                    Object.entries(LegalSpecialityLabels).map(([key, label]) => (
+                        <option key={key} value={key}>{label}</option>
                     ))
                 }
               </select>
