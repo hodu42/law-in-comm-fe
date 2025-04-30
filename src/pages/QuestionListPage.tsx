@@ -3,9 +3,12 @@ import { Link } from 'react-router-dom';
 import { MobileNav } from '@/components/MobileNav';
 import { MainHeader } from '@/components/MainHeader';
 import { QuestionItem } from '@/components/QuestionItem';
-import { fetchQuestionsWithAnswers, PageResponse } from '@/services/questionService';
-import { QuestionWithAnswer } from '@/types/questionWithAnswer.d';
-import { LegalSpeciality, LegalSpecialityLabels } from '@/types/speciality';
+import { fetchQuestionsWithAnswers } from '@/services/questionService';
+import { QuestionWithAnswer } from '@/types/questionWithAnswer';
+import { PageResponse } from '@/types/page';
+import { LegalSpecialityLabels } from '@/types/speciality';
+import { useAppSelector } from '@/hooks/useAppSelector';
+import { useAppDispatch } from '@/hooks/useAppDispatch';
 
 export const QuestionListPage = (): React.JSX.Element => {
   const [questionList, setQuestionList] = useState<PageResponse<QuestionWithAnswer>>();
@@ -13,24 +16,28 @@ export const QuestionListPage = (): React.JSX.Element => {
   const [totalPages, setTotalPages] = useState(0);
   const [isFirstPage, setIsFirstPage] = useState(true);
   const [isLastPage, setIsLastPage] = useState(false);
-  const [selectedSpeciality, setSelectedSpeciality] = useState<string>('');
-  const [searchKeyword, setSearchKeyword] = useState<string>('');
+  const { category: selectedSpeciality, keyword: searchKeyword } = useAppSelector();
+  const { setKeyword, setCategory } = useAppDispatch();
+  const [localKeyword, setLocalKeyword] = useState<string>(searchKeyword);
+
+  const loadQuestions = async () => {
+    const response = await fetchQuestionsWithAnswers(currentPage, selectedSpeciality, searchKeyword);
+    console.log(response);
+    setQuestionList(response);
+    setTotalPages(response.totalPages);
+    setIsFirstPage(response.first);
+    setIsLastPage(response.last);
+  };
 
   useEffect(() => {
-    const loadQuestions = async () => {
-      const response = await fetchQuestionsWithAnswers(currentPage, selectedSpeciality, searchKeyword);
-      setQuestionList(response);
-      setTotalPages(response.totalPages);
-      setIsFirstPage(response.first);
-      setIsLastPage(response.last);
-    };
-
     loadQuestions();
   }, [currentPage, selectedSpeciality, searchKeyword]);
 
-  const handleSearch = (e: React.FormEvent) => {
+  const handleSearch = async (e: React.FormEvent) => {
     e.preventDefault();
     setCurrentPage(0); // 검색 시 첫 페이지로 이동
+    setKeyword(localKeyword);
+    loadQuestions();
   };
 
   return (
@@ -43,8 +50,8 @@ export const QuestionListPage = (): React.JSX.Element => {
         <form onSubmit={handleSearch} className="relative">
           <input
             type="text"
-            value={searchKeyword}
-            onChange={(e) => setSearchKeyword(e.target.value)}
+            value={localKeyword}
+            onChange={(e) => setLocalKeyword(e.target.value)}
             placeholder="검색어를 입력하세요"
             className="w-full p-2 pl-10 border-2 border-[#9CB395] rounded-full text-sm focus:border-[#5C6E56] focus:outline-none"
           />
@@ -68,7 +75,7 @@ export const QuestionListPage = (): React.JSX.Element => {
               <select
                 id="speciality"
                 value={selectedSpeciality}
-                onChange={(e) => setSelectedSpeciality(e.target.value)}
+                onChange={(e) => setCategory(e.target.value)}
                 className="appearance-none w-full px-4 py-2 border-2 border-[#CFCFCF] rounded-[10px] bg-white focus:outline-none focus:border-[#9CB395]"
               >
                 <option value="">전체</option>

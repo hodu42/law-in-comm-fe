@@ -60,7 +60,7 @@ export const routes: RouteObject[] = [
   {
     path: '/answer/write',
     element: <AnswerWriteTest />,
-  },
+  }
 ];
 
 export const headerPaths = [

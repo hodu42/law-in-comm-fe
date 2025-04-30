@@ -13,6 +13,7 @@ export const TestPage = (): React.JSX.Element => {
     { path: "/write", name: "글쓰기" },
     { path: "/questions", name: "질문 목록" },
     { path: "/answer/write", name: "답변 작성" },
+    { path: "/counter", name: "redux toolkit 테스트"},
   ];
 
   return (
