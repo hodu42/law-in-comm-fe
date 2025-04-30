@@ -21,6 +21,7 @@ export const QuestionListPage = (): React.JSX.Element => {
   const [localKeyword, setLocalKeyword] = useState<string>(searchKeyword);
 
   const loadQuestions = async () => {
+    console.log(currentPage, selectedSpeciality, searchKeyword);
     const response = await fetchQuestionsWithAnswers(currentPage, selectedSpeciality, searchKeyword);
     console.log(response);
     setQuestionList(response);

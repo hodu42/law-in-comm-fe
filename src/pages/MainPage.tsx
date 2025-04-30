@@ -5,7 +5,7 @@ import {QuestionCategories} from "@/components/QuestionCategories";
 import {MobileSearch} from "@/components/MobileSearch";
 import {MobileNav} from "@/components/MobileNav";
 import {MobileSuggest} from "@/components/MobileSuggest";
-import { getQuestionList } from "@/api/questions";
+import { searchQuestion } from "@/api/questions";
 import { Question } from "@/types/question";
 
 export const MainPage= ():React.JSX.Element => {
@@ -13,7 +13,7 @@ export const MainPage= ():React.JSX.Element => {
 
     useEffect(() => {
         const fetchRecentQuestions = async () => {
-            const response = await getQuestionList("0", "5");
+            const response = await searchQuestion("", "", 0, 5);
             setRecentQuestions(response.data.content);
             console.log(response.data.content);
         };

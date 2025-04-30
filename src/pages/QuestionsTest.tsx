@@ -1,6 +1,6 @@
 import React from "react";
 import {Question} from "../types/question";
-import { getQuestionList, getQuestion } from "@/api/questions";
+import { searchQuestion, getQuestion } from "@/api/questions";
 
 export const QuestionsTest = ():React.JSX.Element => {
     const [page, setPage] = React.useState<number>(0);
@@ -13,7 +13,7 @@ export const QuestionsTest = ():React.JSX.Element => {
     const fetchQuestions = async (e:React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         try {
-            const response = await getQuestionList(String(page), String(size));
+            const response = await searchQuestion('', '', page, size);
             console.log(response.data);
             setQuestions(response.data.content);
         } catch (error:any) {
