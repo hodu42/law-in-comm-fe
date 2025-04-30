@@ -32,7 +32,12 @@ export const QuestionListPage = (): React.JSX.Element => {
 
   useEffect(() => {
     loadQuestions();
-  }, [currentPage, selectedSpeciality, searchKeyword]);
+  }, [currentPage]);
+
+  useEffect(() => {
+    setCurrentPage(0);
+    loadQuestions();
+  }, [selectedSpeciality, searchKeyword]);
 
   const handleSearch = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -69,15 +74,15 @@ export const QuestionListPage = (): React.JSX.Element => {
         <div className="flex flex-col justify-between max-w-[800px] mx-auto mt-[144px]">
           {/* 분야 필터 */}
           <div className="mb-6">
-            <label htmlFor="speciality" className="block text-sm font-medium text-[#555555] mb-2">
-              법률 분야
+            <label htmlFor="speciality" className="block text-[1.5rem] font-bold text-[#9CB395] mb-3 pl-4">
+              분야 선택
             </label>
             <div className="relative">
               <select
                 id="speciality"
                 value={selectedSpeciality}
                 onChange={(e) => setCategory(e.target.value)}
-                className="appearance-none w-full px-4 py-2 border-2 border-[#CFCFCF] rounded-[10px] bg-white focus:outline-none focus:border-[#9CB395]"
+                className="appearance-none w-full px-4 py-2 border-2 text-[1.1rem] border-[#CFCFCF] rounded-[10px] bg-white focus:outline-none focus:border-[#9CB395]"
               >
                 <option value="">전체</option>
                 {Object.entries(LegalSpecialityLabels).map(([key, label]) => (
@@ -113,7 +118,7 @@ export const QuestionListPage = (): React.JSX.Element => {
               >
                 &lt;
               </button>
-              {Array.from({ length: totalPages }, (_, i) => i).map((page) => (
+              {Array.from({ length: Math.max(1, totalPages) }, (_, i) => i).map((page) => (
                 <button 
                   key={page}
                   onClick={() => setCurrentPage(page)}
