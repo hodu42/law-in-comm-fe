@@ -14,7 +14,7 @@ import { AnswerWriteTest } from '@/pages/AnswerWriteTest';
 
 export const routes: RouteObject[] = [
   {
-    path: '/',
+    path: '/main',
     element: <MainPage />,
   },
   {
@@ -66,26 +66,32 @@ export const routes: RouteObject[] = [
 export const headerPaths = [
   {
     title: '홈',
-    link: '/'
+    link: '/main',
+    currentCheck: '/main'
   },
   {
     title: '질문 목록',
-    link: '/questions?keyword=&category=&page=0'
+    link: '/questions?keyword=&category=&page=0',
+    currentCheck: '/questions'
   },
   {
     title: '질문 작성',
-    link: '/question/write'
+    link: '/question/write',
+    currentCheck: '/question/write'
   },
   {
     title: '질문 관리',
-    link: '/question/manage'
+    link: '/question/manage',
+    currentCheck: '/question/manage'
   },
   {
     title: '답변 관리',
-    link: '/answer/manage'
+    link: '/answer/manage',
+    currentCheck: '/answer/manage'
   },
   {
     title: '변호사 가입 관리',
     link: '/lawyer/manage',
+    currentCheck: '/lawyer/manage'
   },
 ]

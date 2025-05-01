@@ -18,8 +18,8 @@ export const HeaderTags = ():React.JSX.Element => {
                     key={idx} 
                     to={path.link}
                     onClick={handleQuestionListClick}
-                    className={`text-[#CECFD3] text-[24px] font-bold py-4 h-full hover:text-black hover:border-b-black hover:border-b-2`}
-                >
+                    className={`text-[#CECFD3] text-[24px] font-bold py-4 h-full hover:text-black hover:border-b-black hover:border-b-2 aria-[current=page]:text-black aria-[current=page]:border-b-black aria-[current=page]:border-b-2`}
+                    aria-current={window.location.pathname.includes(path.currentCheck) ? 'page' : undefined}>
                     {path.title}
                 </Link>
             ))}

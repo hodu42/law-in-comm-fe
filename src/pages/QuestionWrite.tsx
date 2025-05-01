@@ -43,7 +43,7 @@ export const QuestionWrite = (): React.JSX.Element => {
             </svg>
           </button>
           <div className="relative w-full min-w-[355px] max-w-[1350px] pc:w-[70.31%] h-full flex items-center">
-            <Link to="/" className="hidden pc:flex items-center absolute left-4 z-10">
+            <Link to="/main" className="hidden pc:flex items-center absolute left-4 z-10">
               <div className="text-[#A9BE8C] font-bold text-2xl flex items-center">
                 <Logo />
                 <span className="ml-5 text-[#9CB395] text-[36px]">로인컴</span>
