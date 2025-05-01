@@ -11,6 +11,7 @@ import { Login } from '@/pages/Login';
 import { QuestionWrite } from '@/pages/QuestionWrite';
 import { QuestionListPage } from '@/pages/QuestionListPage';
 import { AnswerWriteTest } from '@/pages/AnswerWriteTest';
+import { QuestionDetailPage } from '@/pages/QuestionDetailPage';
 
 export const routes: RouteObject[] = [
   {
@@ -60,6 +61,10 @@ export const routes: RouteObject[] = [
   {
     path: '/answer/write',
     element: <AnswerWriteTest />,
+  },
+  {
+    path: '/question/detail',
+    element: <QuestionDetailPage />,
   }
 ];
 
