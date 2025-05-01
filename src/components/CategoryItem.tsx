@@ -1,7 +1,6 @@
 import React from "react";
 import { CategoryIcon } from "./CategoryIcon";
-import { useNavigation } from "@/hooks/useNavigation";
-import { useAppDispatch } from "@/hooks/useAppDispatch";
+import { Link } from "react-router-dom";
 
 interface CategoryItemProps {
   title: string;
@@ -9,21 +8,15 @@ interface CategoryItemProps {
 }
 
 export const CategoryItem = ({ title, value }: CategoryItemProps): React.JSX.Element => {
-  const navigate = useNavigation();
-  const {setCategory} = useAppDispatch();
-
   const content = (
-    <button className="flex gap-[11px] pc:gap-[28px] flex-col items-center group" onClick={() => {
-      setCategory(value);
-      navigate.goToQuestionList();
-    }}>
+    <Link className="flex gap-[11px] pc:gap-[28px] flex-col items-center group" to={`/questions?keyword=&category=${value}&page=0`}>
       <div className="w-[48px] h-[48px] pc:w-[72px] pc:h-[72px]">
         <CategoryIcon type={title} className="text-[#656565] group-hover:text-[#9CB395]" />
       </div>
       <span className="block whitespace-nowrap font-normal pc:font-bold text-[13px] pc:text-[19px] text-[#656565] group-hover:text-[#9CB395]">
         {title}
       </span>
-    </button>
+    </Link>
   );
 
   return (

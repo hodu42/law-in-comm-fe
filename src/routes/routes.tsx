@@ -70,7 +70,7 @@ export const headerPaths = [
   },
   {
     title: '질문 목록',
-    link: '/questions'
+    link: '/questions?keyword=&category=&page=0'
   },
   {
     title: '질문 작성',

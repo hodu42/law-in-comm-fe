@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useSearchParams } from 'react-router-dom';
 import { MobileNav } from '@/components/MobileNav';
 import { MainHeader } from '@/components/MainHeader';
 import { QuestionItem } from '@/components/QuestionItem';
@@ -11,39 +11,55 @@ import { useAppSelector } from '@/hooks/useAppSelector';
 import { useAppDispatch } from '@/hooks/useAppDispatch';
 
 export const QuestionListPage = (): React.JSX.Element => {
+  const [searchParams, setSearchParams] = useSearchParams();
+  const {keyword: currentKeyword} = useAppSelector();
+  const {setKeyword} = useAppDispatch();
   const [questionList, setQuestionList] = useState<PageResponse<QuestionWithAnswer>>();
-  const [currentPage, setCurrentPage] = useState(0);
   const [totalPages, setTotalPages] = useState(0);
   const [isFirstPage, setIsFirstPage] = useState(true);
   const [isLastPage, setIsLastPage] = useState(false);
-  const { category: selectedSpeciality, keyword: searchKeyword } = useAppSelector();
-  const { setKeyword, setCategory } = useAppDispatch();
-  const [localKeyword, setLocalKeyword] = useState<string>(searchKeyword);
+  
+  // URL 파라미터에서 값 가져오기
+  const prevKeyword = searchParams.get('keyword') || '';
+  const category = searchParams.get('category') || '';
+  const currentPage = Number(searchParams.get('page')) || 0;
 
   const loadQuestions = async () => {
-    console.log(currentPage, selectedSpeciality, searchKeyword);
-    const response = await fetchQuestionsWithAnswers(currentPage, selectedSpeciality, searchKeyword);
-    console.log(response);
+    const response = await fetchQuestionsWithAnswers(currentPage, category, prevKeyword);
     setQuestionList(response);
     setTotalPages(response.totalPages);
     setIsFirstPage(response.first);
     setIsLastPage(response.last);
   };
 
+  // URL 파라미터 변경 시 데이터 로드
   useEffect(() => {
     loadQuestions();
-  }, [currentPage]);
-
-  useEffect(() => {
-    setCurrentPage(0);
-    loadQuestions();
-  }, [selectedSpeciality, searchKeyword]);
+  }, [searchParams]);
 
   const handleSearch = async (e: React.FormEvent) => {
     e.preventDefault();
-    setCurrentPage(0); // 검색 시 첫 페이지로 이동
-    setKeyword(localKeyword);
-    loadQuestions();
+    setSearchParams({
+      keyword: currentKeyword,
+      category: category,
+      page: '0'
+    });
+  };
+
+  const handleCategoryChange = (newCategory: string) => {
+    setSearchParams({
+      keyword: currentKeyword,
+      category: newCategory,
+      page: '0'
+    });
+  };
+
+  const handlePageChange = (newPage: number) => {
+    setSearchParams({
+      keyword: prevKeyword,
+      category: category,
+      page: String(newPage),
+    });
   };
 
   return (
@@ -56,8 +72,8 @@ export const QuestionListPage = (): React.JSX.Element => {
         <form onSubmit={handleSearch} className="relative">
           <input
             type="text"
-            value={localKeyword}
-            onChange={(e) => setLocalKeyword(e.target.value)}
+            value={prevKeyword}
+            onChange={(e) => setKeyword(e.target.value)}
             placeholder="검색어를 입력하세요"
             className="w-full p-2 pl-10 border-2 border-[#9CB395] rounded-full text-sm focus:border-[#5C6E56] focus:outline-none"
           />
@@ -80,8 +96,8 @@ export const QuestionListPage = (): React.JSX.Element => {
             <div className="relative">
               <select
                 id="speciality"
-                value={selectedSpeciality}
-                onChange={(e) => setCategory(e.target.value)}
+                value={category}
+                onChange={(e) => handleCategoryChange(e.target.value)}
                 className="appearance-none w-full px-4 py-2 border-2 text-[1.1rem] border-[#CFCFCF] rounded-[10px] bg-white focus:outline-none focus:border-[#9CB395]"
               >
                 <option value="">전체</option>
@@ -112,27 +128,27 @@ export const QuestionListPage = (): React.JSX.Element => {
           <div className="mt-8 mb-10 pc:mb-0 flex justify-center">
             <div className="flex items-center gap-2">
               <button 
-                onClick={() => setCurrentPage(prev => Math.max(0, prev - 1))}
+                onClick={() => handlePageChange(Math.max(0, currentPage - 1))}
                 disabled={isFirstPage}
                 className="px-3 py-1 rounded text-gray-700 hover:bg-[#C9D8B7] disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 &lt;
               </button>
-              {Array.from({ length: Math.max(1, totalPages) }, (_, i) => i).map((page) => (
+              {Array.from({ length: Math.max(1, totalPages) }, (_, i) => i).map((pageNum) => (
                 <button 
-                  key={page}
-                  onClick={() => setCurrentPage(page)}
+                  key={pageNum}
+                  onClick={() => handlePageChange(pageNum)}
                   className={`px-3 py-1 rounded ${
-                    page === currentPage 
+                    pageNum === currentPage 
                       ? 'bg-[#C9D8B7] text-gray-700' 
                       : 'text-gray-700 hover:bg-[#C9D8B7]'
                   }`}
                 >
-                  {page + 1}
+                  {pageNum + 1}
                 </button>
               ))}
               <button 
-                onClick={() => setCurrentPage(prev => Math.min(totalPages - 1, prev + 1))}
+                onClick={() => handlePageChange(Math.min(totalPages - 1, currentPage + 1))}
                 disabled={isLastPage}
                 className="px-3 py-1 rounded text-gray-700 hover:bg-[#C9D8B7] disabled:opacity-50 disabled:cursor-not-allowed"
               >
