@@ -72,7 +72,7 @@ export const QuestionListPage = (): React.JSX.Element => {
         <form onSubmit={handleSearch} className="relative">
           <input
             type="text"
-            value={prevKeyword}
+            value={currentKeyword}
             onChange={(e) => setKeyword(e.target.value)}
             placeholder="검색어를 입력하세요"
             className="w-full p-2 pl-10 border-2 border-[#9CB395] rounded-full text-sm focus:border-[#5C6E56] focus:outline-none"
