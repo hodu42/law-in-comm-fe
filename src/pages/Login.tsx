@@ -3,9 +3,10 @@ import { Link, useNavigate } from 'react-router-dom';
 import { Logo } from '@/components/Logo';
 import { MobileNav } from '@/components/MobileNav';
 import { login } from '@/api/auth/login';
+import { useNavigation } from '@/hooks/useNavigation';
 
 export const Login = (): React.JSX.Element => {
-  const navigate = useNavigate();
+  const {goToMain} = useNavigation();
   const [userId, setUserId] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   const [error, setError] = useState<string>('');
@@ -23,7 +24,7 @@ export const Login = (): React.JSX.Element => {
 
     try {
       await login(userId, password);
-      navigate('/');
+      goToMain();
     } catch (error: any) {
       if (error.response?.status === 401) {
         setError('잘못된 아이디/비밀번호입니다.');
