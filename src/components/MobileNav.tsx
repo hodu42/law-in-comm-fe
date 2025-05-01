@@ -10,7 +10,7 @@ export const MobileNav = ():React.JSX.Element => {
                     <path d="M20.0002 38V28H28.0002V38C28.0002 39.1 28.9002 40 30.0002 40H36.0002C37.1002 40 38.0002 39.1 38.0002 38V24H41.4002C42.3202 24 42.7602 22.86 42.0602 22.26L25.3402 7.2C24.5802 6.52 23.4202 6.52 22.6602 7.2L5.9402 22.26C5.2602 22.86 5.6802 24 6.6002 24H10.0002V38C10.0002 39.1 10.9002 40 12.0002 40H18.0002C19.1002 40 20.0002 39.1 20.0002 38Z" fill="currentColor"/>
                 </svg>
             </a>
-            <a href="/questions" 
+            <a href="/questions?keyword=&category=&page=0" 
                className="text-[#848484] aria-[current=page]:text-[#9CB395]" 
                aria-current={window.location.pathname.includes('/questions') ? 'page' : undefined}>
                 <svg className="text-current" width="48" height="48" viewBox="0 0 49 48">
