@@ -36,7 +36,8 @@ export const QuestionListPage = (): React.JSX.Element => {
   useEffect(() => {
     loadQuestions();
   }, [searchParams]);
-
+  
+  // 모바일 검색용
   const handleSearch = async (e: React.FormEvent) => {
     e.preventDefault();
     setSearchParams({
@@ -45,7 +46,7 @@ export const QuestionListPage = (): React.JSX.Element => {
       page: '0'
     });
   };
-
+  // 카테고리 변경 시
   const handleCategoryChange = (newCategory: string) => {
     setSearchParams({
       keyword: currentKeyword,
@@ -53,7 +54,7 @@ export const QuestionListPage = (): React.JSX.Element => {
       page: '0'
     });
   };
-
+  // 페이지 변경 시
   const handlePageChange = (newPage: number) => {
     setSearchParams({
       keyword: prevKeyword,

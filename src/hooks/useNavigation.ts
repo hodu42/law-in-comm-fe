@@ -7,7 +7,11 @@ export const useNavigation = () => {
         navigate('/main');
     }
     const goToQuestionList = (keyword: string = '', category: string = '', page: string = '0') => {
-        navigate(`/questions?keyword=${keyword}&category=${category}&page=${page}`);
+        const searchParams = new URLSearchParams();
+        searchParams.set('keyword', keyword);
+        searchParams.set('category', category);
+        searchParams.set('page', page);
+        navigate(`/questions?${searchParams.toString()}`);
     }
     const goToQuestionWrite = () => {
         navigate('/question/write');
