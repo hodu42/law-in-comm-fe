@@ -1,10 +1,10 @@
 import { api } from '../index';
 
-export const deleteQuestion = async (id: number) => {
+export const deleteQuestion = async (id: string) => {
   return api.delete<any>(`/questions/${id}`);
 };
 
-export const getQuestion = async (id: number) => {
+export const getQuestion = async (id: string) => {
   return api.get<any>(`/questions/${id}`);
 };
 
@@ -22,7 +22,6 @@ export const createQuestion = async (title: string, legalSpeciality: string, con
   });
 };
 
-{/*제대로 작동하는지 확인 필요*/}
 export const updateQuestion = async (id: number, title: string, legalSpeciality: string, content: string, firstOccurenceDate: string, isAnonymous: boolean) => {
   return api.put<any>(`/questions/${id}`, {
     title: title,

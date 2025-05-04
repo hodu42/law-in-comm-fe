@@ -63,7 +63,7 @@ export const routes: RouteObject[] = [
     element: <AnswerWriteTest />,
   },
   {
-    path: '/question/detail',
+    path: '/question/:questionId',
     element: <QuestionDetailPage />,
   },
 ];

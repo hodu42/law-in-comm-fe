@@ -3,13 +3,13 @@ import {Question} from "@/types/question";
 import { LegalSpecialityLabels } from "@/types/speciality";
 import { Link } from "react-router-dom";
 
-export const RecentQuestionsContent = ({isAnonymous, authorId, authorName, questionId, legalSpeciality, title, content, createdAt, firstOccurrenceDate, viewCount, reportCount}:Question):React.JSX.Element => {
+export const RecentQuestionsContent = ({isAnonymous, authorName, questionId, legalSpeciality, title, content, createdAt, viewCount, reportCount}:Question):React.JSX.Element => {
     return (
         <Link to={`/question/${questionId}`} className="block w-[350px] min-h-[250px] pc:w-[848px] pc:h-[396px] bg-white rounded-[10px] p-[20px] pc:p-[30px] border-2 border-[#5C6E56] transition-all relative">
             <div className="flex flex-col gap-[15px] h-full">
                 <div className="flex items-center justify-between text-sm px-2">
                     <span className="text-[0.9rem] pc:text-[1.1rem] text-[#848484]">{LegalSpecialityLabels[legalSpeciality]}</span>
-                    <span className="text-[0.8rem] pc:text-[1rem] text-[#999999] whitespace-nowrap">{firstOccurrenceDate}</span>
+                    <span className="text-[0.8rem] pc:text-[1.1rem] text-[#999999] whitespace-nowrap">{createdAt.split('T')[0]}</span>
                 </div>
 
                 {!isAnonymous && authorName && (
