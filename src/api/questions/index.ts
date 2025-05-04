@@ -31,3 +31,7 @@ export const updateQuestion = async (id: number, title: string, legalSpeciality:
     anonymous: isAnonymous,
   });
 };
+
+export const reportQuestion = async (id: number, reason: string) => {
+  return api.post<any>(`/reports/questions/${id}`, { reason });
+};
