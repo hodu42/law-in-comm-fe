@@ -4,7 +4,7 @@ import { LegalSpecialityLabels } from '@/types/speciality';
 import { Question } from '@/types/question';
 import { Answer } from '@/types/answer';
 
-export const QuestionItem: React.FC<{ question: Question; answer: Answer | null }> = ({ question, answer }) => {
+export const QuestionItem: React.FC<{ question: Question; answers: Answer[] | null }> = ({ question, answers }) => {
   return (
     <Link to={`/question/${question.questionId}`} className="bg-white rounded-[10px] shadow-sm mb-10 p-[20px] pc:p-[30px] border-2 border-transparent hover:border-[#9CB395]">
       <div className="flex flex-col justify-between gap-[15px]">
@@ -21,13 +21,13 @@ export const QuestionItem: React.FC<{ question: Question; answer: Answer | null 
         
         <h3 className="text-[1.12rem] pc:text-[1.31rem]">{question.title}</h3>
         {/* 답변 있는 경우 */}
-        {answer && (
+        {answers && answers.length > 0 && (
           <>
             <div className="text-[0.81rem] pc:text-[1.06rem] text-[#555555]">
-              <span className="mr-1 text-[0.81rem] pc:text-[1rem] text-[#5C6E56] font-bold">답변</span> {answer.authorName}
+              <span className="mr-1 text-[0.81rem] pc:text-[1rem] text-[#5C6E56] font-bold">답변</span> {answers[0].authorName}
             </div>
             <p className="text-[0.81rem] pc:text-[1.06rem] text-[#848484] line-clamp-2 mb-2">
-              {answer.content}
+              {answers[0].content}
             </p>
           </>
         )}

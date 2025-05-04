@@ -3,5 +3,5 @@ import { Answer } from './answer.d';
 
 export interface QuestionWithAnswer {
   question: Question;
-  answer: Answer | null;
+  answers: Answer[] | null;
 } 

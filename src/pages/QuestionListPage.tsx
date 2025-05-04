@@ -117,11 +117,11 @@ export const QuestionListPage = (): React.JSX.Element => {
           </div>
 
           {/* 질문 목록 */}
-          {questionList?.content.map(({ question, answer }) => (
+          {questionList?.content.map(({ question, answers }) => (
             <QuestionItem 
               key={question.questionId} 
               question={question}
-              answer={answer ?? null}
+              answers={answers ?? null}
             />
           ))}
 

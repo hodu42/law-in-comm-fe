@@ -32,11 +32,11 @@ export const fetchQuestionsWithAnswers = async (
         String(DEFAULT_PAGE), 
         String(DEFAULT_SIZE)
       );
-      const answer = answerResponse.data.content[0];
+      const answers = answerResponse.data.content;
 
       return {
         question,
-        answer: answer || null
+        answers: answers || null
       };
     })
   );
