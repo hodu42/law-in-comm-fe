@@ -1,6 +1,6 @@
 import { api } from '../index';
 
-export const deleteAnswer = async (answerId: number) => {
+export const deleteAnswer = async (answerId: string) => {
   return api.delete<any>(`/answers/${answerId}`);
 };
 

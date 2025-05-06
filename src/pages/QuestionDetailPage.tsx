@@ -1,21 +1,20 @@
 import React, { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
 import { MainHeader } from '@/components/MainHeader';
 import { MobileNav } from '@/components/MobileNav';
-import { useParams } from 'react-router-dom';
 import { Question } from '@/types/question';
 import { Answer } from '@/types/answer';
-import { getQuestion } from '@/api/questions';
-import { LegalSpecialityLabels } from '@/types/speciality';
-import { reportQuestion } from '@/api/questions';
-import { reportAnswer } from '@/api/answers'
 import { PageResponse } from '@/types/page';
-import { getAnswers } from '@/api/answers';
-import { ReportingItem } from '@/types/report';
+import { TargetItemInfo } from '@/types/targetItemInfo';
+import { LegalSpecialityLabels } from '@/types/speciality';
+import { getQuestion, reportQuestion, deleteQuestion } from '@/api/questions';
+import { getAnswers, reportAnswer, deleteAnswer } from '@/api/answers'
 import { DEFAULT_SIZE } from '@/services/questionService';
 
 export const QuestionDetailPage = (): React.JSX.Element => {
     const { questionId } = useParams();
     const [showReportModal, setShowReportModal] = useState(false);
+    const [showDeleteModal, setShowDeleteModal] = useState(false);
     const [reportReason, setReportReason] = useState('');
     const [question, setQuestion] = useState<Question>();
     const [answers, setAnswers] = useState<PageResponse<Answer>>();
@@ -23,8 +22,9 @@ export const QuestionDetailPage = (): React.JSX.Element => {
     const [totalPages, setTotalPages] = useState(0);
     const [isFirstPage, setIsFirstPage] = useState(true);
     const [isLastPage, setIsLastPage] = useState(false);
-    const [reportErrorMsg, setReportErrorMsg] = useState('');
-    const [reportingItem, setReportingItem] = useState<ReportingItem>({ type: null, id: null });
+    const [errorMsg, setErrorMsg] = useState('');
+    const [targetItem, setTargetItem] = useState<TargetItemInfo>({ type: null, id: null });
+    const [refreshTrigger, setRefreshTrigger] = useState(0);
 
     const fetchQuestion = async () => {
         const response = await getQuestion(String(questionId));
@@ -33,7 +33,6 @@ export const QuestionDetailPage = (): React.JSX.Element => {
 
     const fetchAnswers = async () => {
         const response = await getAnswers(String(questionId), String(currentPage), String(DEFAULT_SIZE));
-        console.log(response);
         setAnswers(response.data);
         setTotalPages(response.data.totalPages);
         setIsFirstPage(response.data.first);
@@ -49,57 +48,99 @@ export const QuestionDetailPage = (): React.JSX.Element => {
         fetchAnswers();
     }, [currentPage]);
 
-    const openReportModal = (reportingItem: ReportingItem) => {
+    const openReportModal = (reportingItem: TargetItemInfo) => {
         setShowReportModal(true);
         setReportReason('');
-        setReportErrorMsg('');
-        setReportingItem(reportingItem);
+        setErrorMsg('');
+        setTargetItem(reportingItem);
     };
 
     const closeReportModal = () => {
         setShowReportModal(false);
-        setReportingItem({ type: null, id: null });
+        setTargetItem({ type: null, id: null });
+    }
+
+    const openDeleteModal = (deletingItem: TargetItemInfo) => {
+        setShowDeleteModal(true);
+        setErrorMsg('');
+        setTargetItem(deletingItem);
+    };
+
+    const closeDeleteModal = () => {
+        setShowDeleteModal(false);
+        setTargetItem({ type: null, id: null });
     }
 
     const handleQuestionReportSubmit = async () => {
         try {
-            await reportQuestion(Number(reportingItem.id), reportReason);
+            await reportQuestion(Number(targetItem.id), reportReason);
             fetchQuestion(); // 질문 다시 불러오기
             alert('신고 처리가 완료되었습니다.');
             setShowReportModal(false);
-            setReportingItem({ type: null, id: null });
+            setTargetItem({ type: null, id: null });
         } catch (error: any) {
-            console.log(error);
             if (error.response.data.code === 4290703) {
-                setReportErrorMsg(error.response.data.message);
+                setErrorMsg(error.response.data.message);
             } else {
-                setReportErrorMsg('신고 처리 중 오류가 발생했습니다.');
+                setErrorMsg('신고 처리 중 오류가 발생했습니다.');
             }
         }
     };
 
+    const handleQuestionDelete = async () => {
+        try {
+            await deleteQuestion(String(targetItem.id));
+            alert('삭제가 완료되었습니다.');
+            setShowDeleteModal(false);
+            setTargetItem({ type: null, id: null });
+        } catch (error: any) {
+            setErrorMsg(error.response.data.message);
+        }
+    }
+
+    const handleAnswerDelete = async () => {
+        try {
+            await deleteAnswer(String(targetItem.id));
+            fetchAnswers(); // 답변 다시 불러오기
+            alert('삭제가 완료되었습니다.');
+            setShowDeleteModal(false);
+            setTargetItem({ type: null, id: null });
+        } catch (error: any) {
+            console.log(error);
+            setErrorMsg(error.reponse.data.message);
+        }
+    }
+
     const handleAnswerReportSubmit = async () => {
         try {
-            await reportAnswer(Number(reportingItem.id), reportReason);
+            await reportAnswer(Number(targetItem.id), reportReason);
             fetchAnswers(); // 답변 다시 불러오기
             alert('신고 처리가 완료되었습니다.');
             setShowReportModal(false);
-            setReportingItem({ type: null, id: null });
+            setTargetItem({ type: null, id: null });
         } catch (error: any) {
             console.log(error);
             if (error.response.data.code === 4290703) {
-                setReportErrorMsg(error.response.data.message);
+                setErrorMsg(error.response.data.message);
             } else {
-                setReportErrorMsg('신고 처리 중 오류가 발생했습니다.');
+                setErrorMsg('신고 처리 중 오류가 발생했습니다.');
             }
         }
     }
 
     const handleReportSubmit = async () => {
-        if (reportingItem.type === 'question') {
+        if (targetItem.type === 'question') {
             handleQuestionReportSubmit();
         } else {
             handleAnswerReportSubmit();
+        }
+    }
+
+    const handleDelete = async () => {
+        if (targetItem.type === 'question') {
+            handleQuestionDelete();
+        } else {
+            handleAnswerDelete();
         }
     }
 
@@ -122,7 +163,7 @@ export const QuestionDetailPage = (): React.JSX.Element => {
                                         </svg>
                                     </button>
                                     {/*TODO:질문 삭제 기능 만들기*/}
-                                    <button>
+                                    <button onClick={() => openDeleteModal({type: 'question', id: question.questionId})}>
                                         <svg className="w-7 h-7 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
                                         </svg>
@@ -133,10 +174,12 @@ export const QuestionDetailPage = (): React.JSX.Element => {
                                 <span className="">최초 사건 발생일</span>
                                 <p>{question.firstOccurrenceDate}</p>
                             </div>
-                            <div className='flex text-[20px]'>
-                                <span className="font-bold text-[#5C6E56] mr-2">작성자</span>
-                                <h1 className='font-bold text-[#555]'>{question.authorName}</h1>
-                            </div>
+                            {question.authorName && (
+                                <div className='flex text-[20px]'>
+                                    <span className="font-bold text-[#5C6E56] mr-2">작성자</span>
+                                    <h1 className='font-bold text-[#555]'>{question.authorName}</h1>
+                                </div>
+                            )}
                             <h2 className="text-[21px] pc:text-[23px] font-bold">{question.title}</h2>
                             <p className="text-[#656565] text-[17px] pc:text-[19px] whitespace-pre-line">{question.content}</p>
                             <div className='flex text-[18px] pc:text-[20px] text-[#B4B4B4] justify-end'>
@@ -190,7 +233,7 @@ export const QuestionDetailPage = (): React.JSX.Element => {
                                                     </svg>
                                                 </button>
                                                 {/*TODO:답변 삭제 기능 만들기*/}
-                                                <button>
+                                                <button onClick={() => openDeleteModal({type: 'answer', id: answer.answerId})}>
                                                     <svg className="w-7 h-7 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
                                                     </svg>
@@ -269,7 +312,7 @@ export const QuestionDetailPage = (): React.JSX.Element => {
                             placeholder="신고 사유를 입력하세요"
                         />
                         <div className="text-red-500 text-sm">
-                            {reportErrorMsg}
+                            {errorMsg}
                         </div>
                         <div className="flex justify-end gap-2">
                             <button
@@ -282,6 +325,31 @@ export const QuestionDetailPage = (): React.JSX.Element => {
                                 onClick={handleReportSubmit}
                             >
                                 신고하기
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
+
+            {/* 삭제 확인 모달 */}
+            {showDeleteModal && (
+                <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
+                    <div className="bg-white rounded-lg p-6 w-full max-w-md">
+                        <h2 className="text-lg font-bold mb-4">정말로 삭제하시겠습니까?</h2>
+                        <div className="text-red-500 text-sm">
+                            {errorMsg}
+                        </div>
+                        <div className="flex justify-end gap-2">
+                            <button
+                                className="px-4 py-2 text-gray-600 hover:bg-gray-100 rounded"
+                                onClick={closeDeleteModal}>
+                                취소
+                            </button>
+                            <button
+                                className="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600"
+                                onClick={handleDelete}
+                            >
+                                삭제
                             </button>
                         </div>
                     </div>
