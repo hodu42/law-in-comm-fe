@@ -43,7 +43,11 @@ export const QuestionDetailPage = (): React.JSX.Element => {
     useEffect(() => {
         fetchQuestion();
         fetchAnswers();
-    }, [questionId, answers]);
+    }, [questionId]);
+
+    useEffect(() => {
+        fetchAnswers();
+    }, [currentPage]);
 
     const openReportModal = (reportingItem: ReportingItem) => {
         setShowReportModal(true);
