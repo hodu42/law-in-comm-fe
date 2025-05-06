@@ -5,7 +5,7 @@ import { getAnswers } from '@/api/answers';
 import { PageResponse } from '@/types/page';
 
 const DEFAULT_PAGE = 0;
-const DEFAULT_SIZE = 10;
+export const DEFAULT_SIZE = 10;
 
 export const fetchQuestionsWithAnswers = async (
   page: number = DEFAULT_PAGE,

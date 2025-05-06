@@ -11,6 +11,7 @@ import { reportAnswer } from '@/api/answers'
 import { PageResponse } from '@/types/page';
 import { getAnswers } from '@/api/answers';
 import { ReportingItem } from '@/types/report';
+import { DEFAULT_SIZE } from '@/services/questionService';
 
 export const QuestionDetailPage = (): React.JSX.Element => {
     const { questionId } = useParams();
@@ -18,6 +19,10 @@ export const QuestionDetailPage = (): React.JSX.Element => {
     const [reportReason, setReportReason] = useState('');
     const [question, setQuestion] = useState<Question>();
     const [answers, setAnswers] = useState<PageResponse<Answer>>();
+    const [currentPage, setCurrentPage] = useState(0);
+    const [totalPages, setTotalPages] = useState(0);
+    const [isFirstPage, setIsFirstPage] = useState(true);
+    const [isLastPage, setIsLastPage] = useState(false);
     const [reportErrorMsg, setReportErrorMsg] = useState('');
     const [reportingItem, setReportingItem] = useState<ReportingItem>({ type: null, id: null });
 
@@ -27,15 +32,18 @@ export const QuestionDetailPage = (): React.JSX.Element => {
     };
 
     const fetchAnswers = async () => {
-        const response = await getAnswers(String(questionId), '0', '10');
+        const response = await getAnswers(String(questionId), String(currentPage), String(DEFAULT_SIZE));
         console.log(response);
         setAnswers(response.data);
+        setTotalPages(response.data.totalPages);
+        setIsFirstPage(response.data.first);
+        setIsLastPage(response.data.last);
     };
 
     useEffect(() => {
         fetchQuestion();
         fetchAnswers();
-    }, [questionId]);
+    }, [questionId, answers]);
 
     const openReportModal = (reportingItem: ReportingItem) => {
         setShowReportModal(true);
@@ -46,7 +54,7 @@ export const QuestionDetailPage = (): React.JSX.Element => {
 
     const closeReportModal = () => {
         setShowReportModal(false);
-        setReportingItem({type: null, id: null});
+        setReportingItem({ type: null, id: null });
     }
 
     const handleQuestionReportSubmit = async () => {
@@ -55,7 +63,7 @@ export const QuestionDetailPage = (): React.JSX.Element => {
             fetchQuestion(); // 질문 다시 불러오기
             alert('신고 처리가 완료되었습니다.');
             setShowReportModal(false);
-            setReportingItem({type: null, id: null});
+            setReportingItem({ type: null, id: null });
         } catch (error: any) {
             console.log(error);
             if (error.response.data.code === 4290703) {
@@ -65,14 +73,14 @@ export const QuestionDetailPage = (): React.JSX.Element => {
             }
         }
     };
-    
+
     const handleAnswerReportSubmit = async () => {
         try {
             await reportAnswer(Number(reportingItem.id), reportReason);
             fetchAnswers(); // 답변 다시 불러오기
             alert('신고 처리가 완료되었습니다.');
             setShowReportModal(false);
-            setReportingItem({type: null, id: null});
+            setReportingItem({ type: null, id: null });
         } catch (error: any) {
             console.log(error);
             if (error.response.data.code === 4290703) {
@@ -132,7 +140,7 @@ export const QuestionDetailPage = (): React.JSX.Element => {
                                 <span className='mr-3'>조회수 {question.viewCount}</span>
                                 <div className='flex items-center gap-2'>
                                     <span>신고 {question.reportCount}</span>
-                                    <button onClick={() => openReportModal({type: 'question', id: question.questionId})}>
+                                    <button onClick={() => openReportModal({ type: 'question', id: question.questionId })}>
                                         <svg
                                             className="w-[13px] h-[14px] pc:w-[20px] pc:h-[20px] flex-shrink-0"
                                             fill="none"
@@ -192,7 +200,7 @@ export const QuestionDetailPage = (): React.JSX.Element => {
                                 <div className='flex text-[20px] text-[#B4B4B4] justify-end items-center gap-2'>
                                     <div className='flex mr-3 gap-2'>
                                         <span>신고 {answer.reportCount}</span>
-                                        <button onClick={() => openReportModal({type: 'answer', id: answer.answerId})}>
+                                        <button onClick={() => openReportModal({ type: 'answer', id: answer.answerId })}>
                                             <svg
                                                 className="w-[13px] h-[14px] pc:w-[20px] pc:h-[20px] flex-shrink-0"
                                                 fill="none"
@@ -211,6 +219,37 @@ export const QuestionDetailPage = (): React.JSX.Element => {
                             </div>
                         ))
                     )}
+                </div>
+                {/* 페이지네이션 */}
+                <div className="mt-8 mb-10 flex justify-center">
+                    <div className="flex items-center gap-2">
+                        <button
+                            onClick={() => setCurrentPage(Math.max(0, currentPage - 1))}
+                            disabled={isFirstPage}
+                            className="px-3 py-1 rounded text-gray-700 hover:bg-[#C9D8B7] disabled:opacity-50 disabled:cursor-not-allowed"
+                        >
+                            &lt;
+                        </button>
+                        {Array.from({ length: Math.max(1, totalPages) }, (_, i) => i).map((pageNum) => (
+                            <button
+                                key={pageNum}
+                                onClick={() => setCurrentPage(pageNum)}
+                                className={`px-3 py-1 rounded ${pageNum === currentPage
+                                    ? 'bg-[#C9D8B7] text-gray-700'
+                                    : 'text-gray-700 hover:bg-[#C9D8B7]'
+                                    }`}
+                            >
+                                {pageNum + 1}
+                            </button>
+                        ))}
+                        <button
+                            onClick={() => setCurrentPage(Math.min(totalPages - 1, currentPage + 1))}
+                            disabled={isLastPage}
+                            className="px-3 py-1 rounded text-gray-700 hover:bg-[#C9D8B7] disabled:opacity-50 disabled:cursor-not-allowed"
+                        >
+                            &gt;
+                        </button>
+                    </div>
                 </div>
             </main>
 
