@@ -16,3 +16,6 @@ export const updateAnswer = async (answerId: number, content: string) => {
   return api.put<any>(`/answers/${answerId}`, { content });
 };
 
+export const reportAnswer = async (id: number, reason: string) => {
+  return api.post<any>(`/reports/answers/${id}`, { reason });
+};
