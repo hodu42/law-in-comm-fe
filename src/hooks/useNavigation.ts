@@ -16,11 +16,15 @@ export const useNavigation = () => {
     const goToQuestionWrite = () => {
         navigate('/question/write');
     }
+    const goToQuestionDetail = (id: string) => {
+        navigate(`/question/${id}`);
+    }
 
     return {
         goToMain,
         goToQuestionList,
         goToQuestionWrite,
+        goToQuestionDetail,
     }
 }
 
