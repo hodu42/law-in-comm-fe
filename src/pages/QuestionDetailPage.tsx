@@ -10,8 +10,10 @@ import { LegalSpecialityLabels } from '@/types/speciality';
 import { getQuestion, reportQuestion, deleteQuestion } from '@/api/questions';
 import { getAnswers, reportAnswer, deleteAnswer } from '@/api/answers'
 import { DEFAULT_SIZE } from '@/services/questionService';
+import { useNavigation } from '@/hooks/useNavigation';
 
 export const QuestionDetailPage = (): React.JSX.Element => {
+    const navigate = useNavigation();
     const { questionId } = useParams();
     const [showReportModal, setShowReportModal] = useState(false);
     const [showDeleteModal, setShowDeleteModal] = useState(false);
@@ -24,7 +26,6 @@ export const QuestionDetailPage = (): React.JSX.Element => {
     const [isLastPage, setIsLastPage] = useState(false);
     const [errorMsg, setErrorMsg] = useState('');
     const [targetItem, setTargetItem] = useState<TargetItemInfo>({ type: null, id: null });
-    const [refreshTrigger, setRefreshTrigger] = useState(0);
 
     const fetchQuestion = async () => {
         const response = await getQuestion(String(questionId));
@@ -93,6 +94,7 @@ export const QuestionDetailPage = (): React.JSX.Element => {
             alert('삭제가 완료되었습니다.');
             setShowDeleteModal(false);
             setTargetItem({ type: null, id: null });
+            navigate.goToQuestionList(); // 질문 목록으로 페이지 이동
         } catch (error: any) {
             setErrorMsg(error.response.data.message);
         }
@@ -106,7 +108,6 @@ export const QuestionDetailPage = (): React.JSX.Element => {
             setShowDeleteModal(false);
             setTargetItem({ type: null, id: null });
         } catch (error: any) {
-            console.log(error);
             setErrorMsg(error.reponse.data.message);
         }
     }
@@ -119,7 +120,6 @@ export const QuestionDetailPage = (): React.JSX.Element => {
             setShowReportModal(false);
             setTargetItem({ type: null, id: null });
         } catch (error: any) {
-            console.log(error);
             if (error.response.data.code === 4290703) {
                 setErrorMsg(error.response.data.message);
             } else {
