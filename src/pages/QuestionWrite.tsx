@@ -8,13 +8,12 @@ import { LegalSpecialityLabels } from '@/types/speciality';
 export const QuestionWrite = (): React.JSX.Element => {
   const navigate = useNavigate();
   const [title, setTitle] = useState<string>('');
-  const [legalSpeciality, setLegalSpeciality] = useState<string>('');
+  const [legalSpeciality, setLegalSpeciality] = useState<string>(Object.keys(LegalSpecialityLabels)[0]);
   const [occurenceDate, setEventDate] = useState<string>(new Date().toISOString().split('T')[0]);
   const [content, setContent] = useState<string>('');
   const [isAnonymous, setIsAnonymous] = useState<boolean>(false);
   const dateInputRef = useRef<HTMLInputElement>(null);
 
-  // 응답 받고 해당 질문 id를 자세히보는 페이지로 넘어가도록 만들 예정
   const handleSubmit = async () => {
     try {
       const response = await createQuestion(
@@ -24,8 +23,7 @@ export const QuestionWrite = (): React.JSX.Element => {
         occurenceDate,
         isAnonymous,
       );
-      // navigate(`/question/${response.data.questionId}`);
-      navigate('/questions');
+      navigate(`/question/${response.data.questionId}`);
     } catch (error) {
       console.error('질문 생성 오류', error);
     }
