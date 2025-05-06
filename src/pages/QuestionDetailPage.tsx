@@ -211,7 +211,7 @@ export const QuestionDetailPage = (): React.JSX.Element => {
                         </div>
                     </article>
                 )}
-                {/*TODO:답변 작성 영역, 권한에 따라 안보이도록 하기 */}
+                {/*TODO:답변 작성 영역, 변호사 권한을 가진 사람만 보이도록 변경시키기 */}
                 <form onSubmit={handleAnswerSubmit} className="flex flex-col max-w-3xl mx-auto mt-9 justify-end border-t-[1px] py-10 border-[#CFCFCF]">
                     <div className="mb-6">
                         <label htmlFor="content" className="block text-[22px] font-medium mb-5 px-4">답변 내용</label>
