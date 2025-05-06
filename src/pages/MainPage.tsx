@@ -18,7 +18,6 @@ export const MainPage= ():React.JSX.Element => {
         const fetchRecentQuestions = async () => {
             const response = await searchQuestion("", "", 0, 5);
             setRecentQuestions(response.data.content);
-            console.log(response.data.content);
         };
         fetchRecentQuestions();
     }, []);

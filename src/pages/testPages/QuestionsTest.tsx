@@ -1,5 +1,5 @@
 import React from "react";
-import {Question} from "../types/question";
+import {Question} from "@/types/question";
 import { searchQuestion, getQuestion } from "@/api/questions";
 
 export const QuestionsTest = ():React.JSX.Element => {
@@ -28,7 +28,7 @@ export const QuestionsTest = ():React.JSX.Element => {
     const fetchSpecificQuestion = async (e:React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         try {
-            const response = await getQuestion(questionId);
+            const response = await getQuestion(String(questionId));
             setCurrentQuestion(response.data);
         } catch (error:any) {
             if (error.response && error.response.status === 409) {
@@ -43,7 +43,7 @@ export const QuestionsTest = ():React.JSX.Element => {
         e.preventDefault();
         if (currentQuestion) {
             try {
-                const { api } = await import('../api'); // 동적 임포트
+                const { api } = await import('../../api'); // 동적 임포트
                 const response = await api.post<any>(`/api/reports/questions/${currentQuestion.questionId}`, {
                     reason: reason,
                 });

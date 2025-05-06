@@ -1,16 +1,16 @@
 import { RouteObject } from 'react-router-dom';
 import { MainPage } from '@/pages/MainPage';
-import { Test } from '@/pages/Test';
-import { RegisterTest } from '@/pages/RegisterTest';
-import { LawyerRegisterTest } from '@/pages/LawyerRegisterTest';
-import { PendingLawyersPage } from '@/pages/PendingLawyersPage';
-import { WriteTest } from '@/pages/WriteTest';
-import { QuestionsTest } from '@/pages/QuestionsTest';
-import { TestPage } from '@/pages/TestPage';
+import { Test } from '@/pages/testPages/Test';
+import { RegisterTest } from '@/pages/testPages/RegisterTest';
+import { LawyerRegisterTest } from '@/pages/testPages/LawyerRegisterTest';
+import { PendingLawyersPage } from '@/pages/testPages/PendingLawyersPage';
+import { WriteTest } from '@/pages/testPages/WriteTest';
+import { QuestionsTest } from '@/pages/testPages/QuestionsTest';
+import { TestPage } from '@/pages/testPages/TestPage';
 import { Login } from '@/pages/Login';
 import { QuestionWrite } from '@/pages/QuestionWrite';
 import { QuestionListPage } from '@/pages/QuestionListPage';
-import { AnswerWriteTest } from '@/pages/AnswerWriteTest';
+import { AnswerWriteTest } from '@/pages/testPages/AnswerWriteTest';
 import { QuestionDetailPage } from '@/pages/QuestionDetailPage';
 
 export const routes: RouteObject[] = [
