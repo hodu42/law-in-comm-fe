@@ -65,7 +65,7 @@ export const routes: RouteObject[] = [
   {
     path: '/question/:questionId',
     element: <QuestionDetailPage />,
-  },
+  }
 ];
 
 export const headerPaths = [

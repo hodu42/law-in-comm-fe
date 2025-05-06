@@ -8,7 +8,7 @@ import { PageResponse } from '@/types/page';
 import { TargetItemInfo } from '@/types/targetItemInfo';
 import { LegalSpecialityLabels } from '@/types/speciality';
 import { getQuestion, reportQuestion, deleteQuestion } from '@/api/questions';
-import { getAnswers, reportAnswer, deleteAnswer } from '@/api/answers'
+import { getAnswers, reportAnswer, deleteAnswer, createAnswer } from '@/api/answers'
 import { DEFAULT_SIZE } from '@/services/questionService';
 import { useNavigation } from '@/hooks/useNavigation';
 
@@ -26,6 +26,7 @@ export const QuestionDetailPage = (): React.JSX.Element => {
     const [isLastPage, setIsLastPage] = useState(false);
     const [errorMsg, setErrorMsg] = useState('');
     const [targetItem, setTargetItem] = useState<TargetItemInfo>({ type: null, id: null });
+    const [answerContent, setAnswerContent] = useState('');
 
     const fetchQuestion = async () => {
         const response = await getQuestion(String(questionId));
@@ -144,6 +145,15 @@ export const QuestionDetailPage = (): React.JSX.Element => {
         }
     }
 
+    const handleAnswerSubmit = async () => {
+        try {
+            await createAnswer(String(questionId), answerContent);
+            window.location.reload();
+        } catch (error: any) {
+            setErrorMsg(error.reponse.data.message);
+        }
+    }
+
     return (
         <div className="flex flex-col min-h-screen bg-gray-50">
             <MainHeader />
@@ -162,8 +172,7 @@ export const QuestionDetailPage = (): React.JSX.Element => {
                                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
                                         </svg>
                                     </button>
-                                    {/*TODO:질문 삭제 기능 만들기*/}
-                                    <button onClick={() => openDeleteModal({type: 'question', id: question.questionId})}>
+                                    <button onClick={() => openDeleteModal({ type: 'question', id: question.questionId })}>
                                         <svg className="w-7 h-7 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
                                         </svg>
@@ -202,20 +211,30 @@ export const QuestionDetailPage = (): React.JSX.Element => {
                         </div>
                     </article>
                 )}
-
-                {/* 답변 작성 버튼, 권한에 따라 안보이도록 하기 */}
-                {false && (
-                    <button className="w-full bg-[#9CB395] text-white py-3 rounded-lg mb-4">
+                {/*TODO:답변 작성 영역, 권한에 따라 안보이도록 하기 */}
+                <form onSubmit={handleAnswerSubmit} className="flex flex-col max-w-3xl mx-auto mt-9 justify-end border-t-[1px] py-10 border-[#CFCFCF]">
+                    <div className="mb-6">
+                        <label htmlFor="content" className="block text-[22px] font-medium mb-5 px-4">답변 내용</label>
+                        <textarea
+                            id="content"
+                            rows={8}
+                            placeholder="답변을 입력하세요."
+                            className="w-full px-4 py-3 text-[18px] border border-gray-300 rounded-2xl bg-white focus:outline-none focus:ring-2 focus:ring-[#9CB395]"
+                            value={answerContent}
+                            onChange={(e) => setAnswerContent(e.target.value)}
+                        ></textarea>
+                    </div>
+                    <button type='submit' className="bg-[#9CB395] hover:bg-[#8AA082] text-white text-[16px] pc:text-[18px] p-3 rounded-lg m-4">
                         답변 작성
                     </button>
-                )}
+                </form>
                 {/* 답변 영역 */}
                 <div>
                     <h3 className="pl-5 py-10 text-[26px] pc:text-[30px] font-bold border-t-[1px] border-[#CFCFCF]">답변 <span className='text-[#9CB395]'>{answers?.totalElements || 0}</span>개</h3>
                     {/* 답변이 있을 때만 렌더링*/}
                     {answers && answers.content.length > 0 && (
                         answers.content.map((answer) => (
-                            <div key={answer.answerId} className="flex flex-col gap-8 bg-white p-10 rounded-[10px] shadow-sm border-2 border-[#9CB395] mb-10">
+                            <div key={answer.answerId} className="flex flex-col gap-4 bg-white p-10 rounded-[10px] shadow-sm border-2 border-[#9CB395] mb-24">
                                 <div className="flex items-center gap-6 mb-4">
                                     <img
                                         src={'/images/default-profile.png'}
@@ -232,8 +251,7 @@ export const QuestionDetailPage = (): React.JSX.Element => {
                                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
                                                     </svg>
                                                 </button>
-                                                {/*TODO:답변 삭제 기능 만들기*/}
-                                                <button onClick={() => openDeleteModal({type: 'answer', id: answer.answerId})}>
+                                                <button onClick={() => openDeleteModal({ type: 'answer', id: answer.answerId })}>
                                                     <svg className="w-7 h-7 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
                                                     </svg>
