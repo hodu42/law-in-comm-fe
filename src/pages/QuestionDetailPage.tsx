@@ -107,13 +107,13 @@ export const QuestionDetailPage = (): React.JSX.Element => {
         <div className="flex flex-col min-h-screen bg-gray-50">
             <MainHeader />
             {/* 메인 콘텐츠 */}
-            <main className="w-full max-w-[800px] mx-auto mt-[200px]">
+            <main className="w-full px-4 max-w-[800px] mx-auto mt-24 pc:mt-[200px]">
                 {/* 질문 영역 */}
                 {question && (
                     <article className="bg-white mb-12 rounded-[10px] shadow-sm">
                         <div className="flex flex-col gap-[30px] p-10">
                             <div className="flex justify-between items-start">
-                                <span className="text-[22px] text-[#848484]">{LegalSpecialityLabels[question.legalSpeciality]}</span>
+                                <span className="text-[20px] pc:text-[22px] text-[#848484]">{LegalSpecialityLabels[question.legalSpeciality]}</span>
                                 <div className="flex gap-2">
                                     {/*TODO:질문 수정 기능 만들기*/}
                                     <button className='mr-2'>
@@ -129,17 +129,17 @@ export const QuestionDetailPage = (): React.JSX.Element => {
                                     </button>
                                 </div>
                             </div>
-                            <div className="flex justify-between text-[20px] text-[#999]">
-                                <span className="">최초 시간발생일</span>
+                            <div className="flex justify-between text-[18px] pc:text-[20px] text-[#999]">
+                                <span className="">최초 사건 발생일</span>
                                 <p>{question.firstOccurrenceDate}</p>
                             </div>
                             <div className='flex text-[20px]'>
                                 <span className="font-bold text-[#5C6E56] mr-2">작성자</span>
                                 <h1 className='font-bold text-[#555]'>{question.authorName}</h1>
                             </div>
-                            <h2 className="text-[23px] font-bold">{question.title}</h2>
-                            <p className="text-[#656565] text-[19px] whitespace-pre-line">{question.content}</p>
-                            <div className='flex text-[20px] text-[#B4B4B4] justify-end'>
+                            <h2 className="text-[21px] pc:text-[23px] font-bold">{question.title}</h2>
+                            <p className="text-[#656565] text-[17px] pc:text-[19px] whitespace-pre-line">{question.content}</p>
+                            <div className='flex text-[18px] pc:text-[20px] text-[#B4B4B4] justify-end'>
                                 <span className='mr-3'>{question.createdAt.split('T')[0]}</span>
                                 <span className='mr-3'>조회수 {question.viewCount}</span>
                                 <div className='flex items-center gap-2'>
@@ -168,7 +168,7 @@ export const QuestionDetailPage = (): React.JSX.Element => {
                 )}
                 {/* 답변 영역 */}
                 <div>
-                    <h3 className="pl-5 py-10 text-[30px] font-bold border-t-[1px] border-[#CFCFCF]">답변 <span className='text-[#9CB395]'>{answers?.totalElements || 0}</span>개</h3>
+                    <h3 className="pl-5 py-10 text-[26px] pc:text-[30px] font-bold border-t-[1px] border-[#CFCFCF]">답변 <span className='text-[#9CB395]'>{answers?.totalElements || 0}</span>개</h3>
                     {/* 답변이 있을 때만 렌더링*/}
                     {answers && answers.content.length > 0 && (
                         answers.content.map((answer) => (
@@ -177,11 +177,11 @@ export const QuestionDetailPage = (): React.JSX.Element => {
                                     <img
                                         src={'/images/default-profile.png'}
                                         alt={`프로필 사진`}
-                                        className="w-20 h-20 rounded-full bg-gray-200"
+                                        className="w-16 h-16 pc:w-20 pc:h-20 rounded-full bg-gray-200"
                                     />
                                     <div className="flex-grow">
                                         <div className="flex justify-between items-center">
-                                            <h4 className="text-[25px] font-bold">{answer.authorName}</h4>
+                                            <h4 className="text-[23px] pc:text-[25px] font-bold">{answer.authorName}</h4>
                                             <div className="flex gap-2">
                                                 {/*TODO:답변 수정 기능 만들기*/}
                                                 <button className='mr-2'>
@@ -197,11 +197,11 @@ export const QuestionDetailPage = (): React.JSX.Element => {
                                                 </button>
                                             </div>
                                         </div>
-                                        <p className="text-[20px] text-gray-500">{answer.createdAt.split('T')[0]}</p>
+                                        <p className="text-[18px] pc:text-[20px] text-gray-500">{answer.createdAt.split('T')[0]}</p>
                                     </div>
                                 </div>
-                                <p className="text-[19px] text-[#555] whitespace-pre-line">{answer.content}</p>
-                                <div className='flex text-[20px] text-[#B4B4B4] justify-end items-center gap-2'>
+                                <p className="text-[17px] pc:text-[19px] text-[#555] whitespace-pre-line">{answer.content}</p>
+                                <div className='flex text-[18px] pc:text-[20px] text-[#B4B4B4] justify-end items-center gap-2'>
                                     <div className='flex mr-3 gap-2'>
                                         <span>신고 {answer.reportCount}</span>
                                         <button onClick={() => openReportModal({ type: 'answer', id: answer.answerId })}>
@@ -216,8 +216,8 @@ export const QuestionDetailPage = (): React.JSX.Element => {
                                         </button>
                                     </div>
                                     <button className="flex items-center gap-2 bg-[#9CB395] p-2 rounded-[10px] text-white">
-                                        <svg className='w-8 h-8' fill="none" viewBox="0 0 50 50"><path fill="currentColor" d="M25 6.25c11.459 0 20.834 7.458 20.834 16.667 0 9.208-9.375 16.666-20.834 16.666-2.583 0-5.062-.375-7.354-1.041C11.563 43.75 4.167 43.75 4.167 43.75c4.854-4.854 5.625-8.125 5.73-9.375-3.543-2.98-5.73-7.02-5.73-11.458C4.167 13.708 13.542 6.25 25 6.25Z" /></svg>
-                                        <span className='text-[19px]'>채팅 신청</span>
+                                        <svg className='w-6 h-6 pc:w-8 pc:h-8' fill="none" viewBox="0 0 50 50"><path fill="currentColor" d="M25 6.25c11.459 0 20.834 7.458 20.834 16.667 0 9.208-9.375 16.666-20.834 16.666-2.583 0-5.062-.375-7.354-1.041C11.563 43.75 4.167 43.75 4.167 43.75c4.854-4.854 5.625-8.125 5.73-9.375-3.543-2.98-5.73-7.02-5.73-11.458C4.167 13.708 13.542 6.25 25 6.25Z" /></svg>
+                                        <span className='text-[17px] pc:text-[19px]'>채팅 신청</span>
                                     </button>
                                 </div>
                             </div>
@@ -225,7 +225,7 @@ export const QuestionDetailPage = (): React.JSX.Element => {
                     )}
                 </div>
                 {/* 페이지네이션 */}
-                <div className="mt-8 mb-10 flex justify-center">
+                <div className="mt-8 mb-32 pc:mb-10 flex justify-center">
                     <div className="flex items-center gap-2">
                         <button
                             onClick={() => setCurrentPage(Math.max(0, currentPage - 1))}
