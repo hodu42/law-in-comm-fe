@@ -30,6 +30,15 @@ export const QuestionDetailPage = (): React.JSX.Element => {
     const [editingAnswerId, setEditingAnswerId] = useState<number>(-1);
     const [editedAnswer, setEditedAnswer] = useState('');
 
+    useEffect(() => {
+        fetchQuestion();
+        fetchAnswers();
+    }, [questionId]);
+
+    useEffect(() => {
+        fetchAnswers();
+    }, [currentPage]);
+
     const fetchQuestion = async () => {
         const response = await getQuestion(String(questionId));
         console.log('자세히보기', response.data);
@@ -44,14 +53,6 @@ export const QuestionDetailPage = (): React.JSX.Element => {
         setIsLastPage(response.data.last);
     };
 
-    useEffect(() => {
-        fetchQuestion();
-        fetchAnswers();
-    }, [questionId]);
-
-    useEffect(() => {
-        fetchAnswers();
-    }, [currentPage]);
 
     const openReportModal = (reportingItem: TargetItemInfo) => {
         setShowReportModal(true);
@@ -169,10 +170,13 @@ export const QuestionDetailPage = (): React.JSX.Element => {
     const handleAnswerEdit = async () => {
         try {
             await updateAnswer(editingAnswerId, editedAnswer);
+            setEditInfo(-1, '');
+            fetchAnswers();
         } catch (error: any) {
             console.log(error);
         }
     }
+
     return (
         <div className="flex flex-col min-h-screen bg-gray-50">
             <MainHeader />
@@ -271,7 +275,7 @@ export const QuestionDetailPage = (): React.JSX.Element => {
                                 {answer.answerId === editingAnswerId ? (
                                     <textarea
                                         id="content"
-                                        rows={8}
+                                        rows={4}
                                         placeholder="내용을 입력하세요."
                                         className="w-full px-4 py-3 text-[18px] border border-gray-300 rounded-2xl bg-white focus:outline-none focus:ring-2 focus:ring-[#9CB395]"
                                         value={editedAnswer || ''}
@@ -279,6 +283,22 @@ export const QuestionDetailPage = (): React.JSX.Element => {
                                     ></textarea>
                                 ) : (
                                     <p className="text-[15px] pc:text-[17px] text-[#555] whitespace-pre-line">{answer.content}</p>
+                                )}
+                                {/*답변 수정 id와 답변의 id의 일치 여부에 따른 조건부 렌더링*/}
+                                {answer.answerId === editingAnswerId && (
+                                    <div className="flex justify-end gap-2 mt-3 mb-9">
+                                        <button
+                                            className="px-4 py-2 text-gray-600 bg-gray-100 hover:bg-[#e5e7eb] rounded"
+                                            onClick={cancelEdit}>
+                                            취소
+                                        </button>
+                                        <button
+                                            className="px-4 py-2 bg-[#9CB395] text-white rounded hover:bg-[#8AA082]"
+                                            onClick={handleAnswerEdit}
+                                        >
+                                            수정
+                                        </button>
+                                    </div>
                                 )}
                                 <div className='flex text-[16px] pc:text-[18px] text-[#B4B4B4] justify-end items-center gap-2'>
                                     <div className='flex mr-3 gap-2'>
@@ -299,22 +319,6 @@ export const QuestionDetailPage = (): React.JSX.Element => {
                                         <span className='text-[15px] pc:text-[17px]'>채팅 신청</span>
                                     </button>
                                 </div>
-                                {/*답변 수정 id와 답변의 id의 일치 여부에 따른 조건부 렌더링*/}
-                                {answer.answerId === editingAnswerId && (
-                                    <div className="flex justify-end gap-2">
-                                        <button
-                                            className="px-4 py-2 text-gray-600 hover:bg-gray-100 rounded"
-                                            onClick={cancelEdit}>
-                                            취소
-                                        </button>
-                                        <button
-                                            className="px-4 py-2 bg-[#9CB395] text-white rounded hover:bg-[#8AA082]"
-                                            onClick={handleAnswerEdit}
-                                        >
-                                            수정하기
-                                        </button>
-                                    </div>
-                                )}
                             </div>
                         ))
                     )}
