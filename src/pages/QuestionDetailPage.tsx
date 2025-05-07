@@ -11,6 +11,7 @@ import { getQuestion, reportQuestion, deleteQuestion } from '@/api/questions';
 import { getAnswers, reportAnswer, deleteAnswer, createAnswer, updateAnswer } from '@/api/answers'
 import { DEFAULT_SIZE } from '@/services/questionService';
 import { useNavigation } from '@/hooks/useNavigation';
+import { getCurrentRole } from '@/hooks/tokenDecoder';
 
 export const QuestionDetailPage = (): React.JSX.Element => {
     const navigate = useNavigation();
@@ -354,23 +355,24 @@ export const QuestionDetailPage = (): React.JSX.Element => {
                         </button>
                     </div>
                 </div>
-                {/*TODO:답변 작성 영역, 변호사 권한을 가진 사람만 보이도록 변경시키기 */}
-                <form onSubmit={handleAnswerSubmit} className="flex flex-col max-w-3xl mx-auto mt-9 justify-end border-t-[1px] py-10 border-[#CFCFCF]">
-                    <div className="mb-6">
-                        <label htmlFor="content" className="block text-[22px] font-medium mb-5 px-4">답변 내용</label>
-                        <textarea
-                            id="content"
-                            rows={8}
-                            placeholder="답변을 입력하세요."
-                            className="w-full px-4 py-3 text-[18px] border border-gray-300 rounded-2xl bg-white focus:outline-none focus:ring-2 focus:ring-[#9CB395]"
-                            value={answerContent}
-                            onChange={(e) => setAnswerContent(e.target.value)}
-                        ></textarea>
-                    </div>
-                    <button type='submit' className="bg-[#9CB395] hover:bg-[#8AA082] text-white text-[14px] pc:text-[16px] p-3 rounded-lg m-4">
-                        답변 작성
-                    </button>
-                </form>
+                {getCurrentRole() === 'ROLE_LAWYER' && (
+                    <form onSubmit={handleAnswerSubmit} className="flex flex-col max-w-3xl mx-auto mt-9 justify-end border-t-[1px] py-10 border-[#CFCFCF]">
+                        <div className="mb-6">
+                            <label htmlFor="content" className="block text-[22px] font-medium mb-5 px-4">답변 내용</label>
+                            <textarea
+                                id="content"
+                                rows={8}
+                                placeholder="답변을 입력하세요."
+                                className="w-full px-4 py-3 text-[18px] border border-gray-300 rounded-2xl bg-white focus:outline-none focus:ring-2 focus:ring-[#9CB395]"
+                                value={answerContent}
+                                onChange={(e) => setAnswerContent(e.target.value)}
+                            ></textarea>
+                        </div>
+                        <button type='submit' className="bg-[#9CB395] hover:bg-[#8AA082] text-white text-[14px] pc:text-[16px] p-3 rounded-lg m-4">
+                            답변 작성
+                        </button>
+                    </form>
+                )}
             </main>
 
             {/* 신고 모달 */}
