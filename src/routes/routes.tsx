@@ -13,6 +13,7 @@ import { QuestionListPage } from '@/pages/QuestionListPage';
 import { AnswerWriteTest } from '@/pages/testPages/AnswerWriteTest';
 import { QuestionDetailPage } from '@/pages/QuestionDetailPage';
 import { QuestionModify } from '@/pages/QuestionModify';
+import { Role } from '@/types/role';
 
 export const routes: RouteObject[] = [
   {
@@ -87,21 +88,25 @@ export const headerPaths = [
   {
     title: '질문 작성',
     link: '/question/write',
-    currentCheck: '/question/write'
+    currentCheck: '/question/write',
+    roles: [Role.USER, Role.ADMIN]
   },
   {
     title: '질문 관리',
     link: '/question/manage',
-    currentCheck: '/question/manage'
+    currentCheck: '/question/manage',
+    roles: [Role.ADMIN]
   },
   {
     title: '답변 관리',
     link: '/answer/manage',
-    currentCheck: '/answer/manage'
+    currentCheck: '/answer/manage',
+    roles: [Role.ADMIN]
   },
   {
     title: '변호사 가입 관리',
     link: '/lawyer/manage',
-    currentCheck: '/lawyer/manage'
+    currentCheck: '/lawyer/manage',
+    roles: [Role.ADMIN]
   },
 ]
