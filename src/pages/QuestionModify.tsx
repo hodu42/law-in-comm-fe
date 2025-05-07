@@ -92,7 +92,7 @@ export const QuestionModify = (): React.JSX.Element => {
                         <input
                             type="text"
                             id="title"
-                            value={question?.title}
+                            value={question?.title || ''}
                             onChange={(e) => changePrevQuestion({title: e.target.value})}
                         placeholder="제목을 입력하세요."
                         className="w-full px-4 py-3 border border-gray-300 rounded-2xl focus:outline-none focus:ring-2 focus:ring-[#9CB395] placeholder:text-[18px] text-[18px]"
@@ -104,7 +104,7 @@ export const QuestionModify = (): React.JSX.Element => {
                         <div className="relative">
                             <select
                                 id="category"
-                                value={question?.legalSpeciality}
+                                value={question?.legalSpeciality || ''}
                                 onChange={(e) => changePrevQuestion({legalSpeciality: e.target.value as LegalSpeciality})}
                                 className="appearance-none w-full px-4 py-3 text-[18px] border border-gray-300 rounded-2xl bg-white focus:outline-none focus:ring-2 focus:ring-[#9CB395]"
                             >
@@ -129,7 +129,7 @@ export const QuestionModify = (): React.JSX.Element => {
                                 type="date"
                                 id="eventDate"
                                 ref={dateInputRef}
-                                value={question?.firstOccurrenceDate}
+                                value={question?.firstOccurrenceDate || ''}
                                 onChange={(e) => changePrevQuestion({firstOccurrenceDate: e.target.value})}
                                 className="w-full px-4 py-3 text-[18px] border border-gray-300 rounded-2xl bg-white focus:outline-none focus:ring-2 focus:ring-[#9CB395] cursor-pointer"
                                 onClick={() => dateInputRef.current?.showPicker()}
@@ -144,7 +144,7 @@ export const QuestionModify = (): React.JSX.Element => {
                             rows={8}
                             placeholder="내용을 입력하세요."
                             className="w-full px-4 py-3 text-[18px] border border-gray-300 rounded-2xl bg-white focus:outline-none focus:ring-2 focus:ring-[#9CB395]"
-                            value={question?.content}
+                            value={question?.content || ''}
                             onChange={(e) => changePrevQuestion({content: e.target.value})}
                         ></textarea>
                     </div>

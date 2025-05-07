@@ -22,13 +22,13 @@ export const createQuestion = async (title: string, legalSpeciality: string, con
   });
 };
 
-export const updateQuestion = async (id: string, title: string, legalSpeciality: string, content: string, firstOccurenceDate: string, isAnonymous: boolean) => {
+export const updateQuestion = async (id: string, title: string, legalSpeciality: string, content: string, firstOccurenceDate: string, anonymous: boolean) => {
   return api.put<any>(`/questions/${id}`, {
     title: title,
     legalSpeciality: legalSpeciality,
     content: content,
     firstOccurrenceDate: firstOccurenceDate,
-    anonymous: isAnonymous,
+    anonymous: anonymous,
   });
 };
 
