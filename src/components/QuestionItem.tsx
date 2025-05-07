@@ -13,7 +13,7 @@ export const QuestionItem: React.FC<{ question: Question; answers: Answer[] | nu
           <span className="ml-auto text-[0.81rem] pc:text-[1rem] text-[#999999]">{question.firstOccurrenceDate}</span>
         </div>
 
-        {!question.isAnonymous && question.authorName && (
+        {!question.anonymous && question.authorName && (
           <div className="text-[14px] pc:text-[1.06rem] font-bold text-[#555555]">
             <span className="mr-1 text-[#5C6E56]">작성자</span> {question.authorName}
           </div>

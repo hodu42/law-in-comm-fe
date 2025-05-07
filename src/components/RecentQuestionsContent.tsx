@@ -3,7 +3,7 @@ import {Question} from "@/types/question";
 import { LegalSpecialityLabels } from "@/types/speciality";
 import { Link } from "react-router-dom";
 
-export const RecentQuestionsContent = ({isAnonymous, authorName, questionId, legalSpeciality, title, content, createdAt, viewCount, reportCount}:Question):React.JSX.Element => {
+export const RecentQuestionsContent = ({anonymous: isAnonymous, authorName, questionId, legalSpeciality, title, content, createdAt, viewCount, reportCount}:Question):React.JSX.Element => {
     return (
         <Link to={`/question/${questionId}`} className="block w-[350px] min-h-[250px] pc:w-[848px] pc:h-[396px] bg-white rounded-[10px] p-[20px] pc:p-[30px] border-2 border-[#5C6E56] transition-all relative">
             <div className="flex flex-col gap-[15px] h-full">

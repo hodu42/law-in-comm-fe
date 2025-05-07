@@ -14,5 +14,5 @@ export interface Question {
     firstOccurrenceDate: string,
     viewCount: number,
     reportCount: number,
-    isAnonymous: boolean,
+    anonymous: boolean,
 }
