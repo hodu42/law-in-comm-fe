@@ -8,7 +8,7 @@ import { PageResponse } from '@/types/page';
 import { TargetItemInfo } from '@/types/targetItemInfo';
 import { LegalSpecialityLabels } from '@/types/speciality';
 import { getQuestion, reportQuestion, deleteQuestion } from '@/api/questions';
-import { getAnswers, reportAnswer, deleteAnswer, createAnswer } from '@/api/answers'
+import { getAnswers, reportAnswer, deleteAnswer, createAnswer, updateAnswer } from '@/api/answers'
 import { DEFAULT_SIZE } from '@/services/questionService';
 import { useNavigation } from '@/hooks/useNavigation';
 
@@ -27,6 +27,8 @@ export const QuestionDetailPage = (): React.JSX.Element => {
     const [errorMsg, setErrorMsg] = useState('');
     const [targetItem, setTargetItem] = useState<TargetItemInfo>({ type: null, id: null });
     const [answerContent, setAnswerContent] = useState('');
+    const [editingAnswerId, setEditingAnswerId] = useState<number>(-1);
+    const [editedAnswer, setEditedAnswer] = useState('');
 
     const fetchQuestion = async () => {
         const response = await getQuestion(String(questionId));
@@ -155,6 +157,22 @@ export const QuestionDetailPage = (): React.JSX.Element => {
         }
     }
 
+    const setEditInfo = (answerId: number, content: string) => {
+        setEditingAnswerId(answerId);
+        setEditedAnswer(content);
+    }
+
+    const cancelEdit = () => {
+        setEditInfo(-1, '');
+    }
+
+    const handleAnswerEdit = async () => {
+        try {
+            await updateAnswer(editingAnswerId, editedAnswer);
+        } catch (error: any) {
+            console.log(error);
+        }
+    }
     return (
         <div className="flex flex-col min-h-screen bg-gray-50">
             <MainHeader />
@@ -233,7 +251,7 @@ export const QuestionDetailPage = (): React.JSX.Element => {
                                             {answer.author && (
                                                 <div className="flex gap-2">
                                                     {/*TODO:답변 수정 기능 만들기*/}
-                                                    <button className='mr-2'>
+                                                    <button onClick={() => setEditInfo(answer.answerId, answer.content)} className='mr-2'>
                                                         <svg className="w-6 h-6 text-[#9CB395]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
                                                         </svg>
@@ -249,7 +267,19 @@ export const QuestionDetailPage = (): React.JSX.Element => {
                                         <p className="text-[16px] pc:text-[18px] text-gray-500">{answer.createdAt.split('T')[0]}</p>
                                     </div>
                                 </div>
-                                <p className="text-[15px] pc:text-[17px] text-[#555] whitespace-pre-line">{answer.content}</p>
+                                {/*답변 수정 id와 답변의 id가 일치하면*/}
+                                {answer.answerId === editingAnswerId ? (
+                                    <textarea
+                                        id="content"
+                                        rows={8}
+                                        placeholder="내용을 입력하세요."
+                                        className="w-full px-4 py-3 text-[18px] border border-gray-300 rounded-2xl bg-white focus:outline-none focus:ring-2 focus:ring-[#9CB395]"
+                                        value={editedAnswer || ''}
+                                        onChange={(e) => setEditedAnswer(e.target.value)}
+                                    ></textarea>
+                                ) : (
+                                    <p className="text-[15px] pc:text-[17px] text-[#555] whitespace-pre-line">{answer.content}</p>
+                                )}
                                 <div className='flex text-[16px] pc:text-[18px] text-[#B4B4B4] justify-end items-center gap-2'>
                                     <div className='flex mr-3 gap-2'>
                                         <span>신고 {answer.reportCount}</span>
@@ -269,6 +299,22 @@ export const QuestionDetailPage = (): React.JSX.Element => {
                                         <span className='text-[15px] pc:text-[17px]'>채팅 신청</span>
                                     </button>
                                 </div>
+                                {/*답변 수정 id와 답변의 id의 일치 여부에 따른 조건부 렌더링*/}
+                                {answer.answerId === editingAnswerId && (
+                                    <div className="flex justify-end gap-2">
+                                        <button
+                                            className="px-4 py-2 text-gray-600 hover:bg-gray-100 rounded"
+                                            onClick={cancelEdit}>
+                                            취소
+                                        </button>
+                                        <button
+                                            className="px-4 py-2 bg-[#9CB395] text-white rounded hover:bg-[#8AA082]"
+                                            onClick={handleAnswerEdit}
+                                        >
+                                            수정하기
+                                        </button>
+                                    </div>
+                                )}
                             </div>
                         ))
                     )}
