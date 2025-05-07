@@ -5,13 +5,15 @@ import {HeaderTags} from "./HeaderTags";
 import { clearTokens } from '@/api/auth/token';
 import { Link } from "react-router-dom";
 import { useAppDispatch } from "@/hooks/useAppDispatch"
+import { useNavigation } from "@/hooks/useNavigation";
 export const MainHeader = ():React.JSX.Element => {
     const {clearKeyword} = useAppDispatch();
+    const navigate = useNavigation();
 
     const handleLogout = () => {
         clearTokens();
         clearKeyword();
-        window.location.reload();
+        navigate.goToLogin();
     }
 
     return (

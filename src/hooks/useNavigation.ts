@@ -6,6 +6,9 @@ export const useNavigation = () => {
     const goToMain = () => {
         navigate('/main');
     }
+    const goToLogin = () => {
+        navigate('/login');
+    }
     const goToQuestionList = (keyword: string = '', category: string = '', page: string = '0') => {
         const searchParams = new URLSearchParams();
         searchParams.set('keyword', keyword);
@@ -25,6 +28,7 @@ export const useNavigation = () => {
 
     return {
         goToMain,
+        goToLogin,
         goToQuestionList,
         goToQuestionWrite,
         goToQuestionDetail,

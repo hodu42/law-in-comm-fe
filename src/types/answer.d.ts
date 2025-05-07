@@ -1,5 +1,6 @@
 export interface Answer {
     answerId: number,
+    author: boolean,
     content: string,
     createdAt: string,
     updatedAt: string,

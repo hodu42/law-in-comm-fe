@@ -166,18 +166,20 @@ export const QuestionDetailPage = (): React.JSX.Element => {
                         <div className="flex flex-col gap-[30px] p-10">
                             <div className="flex justify-between items-start px-4">
                                 <span className="text-[18px] pc:text-[20px] text-[#848484]">{LegalSpecialityLabels[question.legalSpeciality]}</span>
-                                <div className="flex gap-2">
-                                    <button onClick={() => navigate.goToQuestionModify(String(questionId))} className='mr-2'>
-                                        <svg className="w-6 h-6 text-[#9CB395]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
-                                        </svg>
-                                    </button>
-                                    <button onClick={() => openDeleteModal({ type: 'question', id: question.questionId })}>
-                                        <svg className="w-7 h-7 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
-                                        </svg>
-                                    </button>
-                                </div>
+                                {question.author && (
+                                    <div className="flex gap-2">
+                                        <button onClick={() => navigate.goToQuestionModify(String(questionId))} className='mr-2'>
+                                            <svg className="w-6 h-6 text-[#9CB395]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
+                                            </svg>
+                                        </button>
+                                        <button onClick={() => openDeleteModal({ type: 'question', id: question.questionId })}>
+                                            <svg className="w-7 h-7 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                                            </svg>
+                                        </button>
+                                    </div>
+                                )}
                             </div>
                             <div className="flex justify-between text-[16px] pc:text-[18px] text-[#999]">
                                 <span className="">최초 사건 발생일</span>
@@ -211,7 +213,7 @@ export const QuestionDetailPage = (): React.JSX.Element => {
                         </div>
                     </article>
                 )}
-                
+
                 {/* 답변 영역 */}
                 <div>
                     <h3 className="pl-5 py-10 text-[26px] pc:text-[28px] font-bold border-t-[1px] border-[#CFCFCF]">답변 <span className='text-[#9CB395]'>{answers?.totalElements || 0}</span>개</h3>
@@ -219,7 +221,7 @@ export const QuestionDetailPage = (): React.JSX.Element => {
                     {answers && answers.content.length > 0 && (
                         answers.content.map((answer) => (
                             <div key={answer.answerId} className="flex flex-col gap-4 bg-white p-10 rounded-[10px] shadow-sm border-2 border-[#9CB395] mb-24">
-                                <div className="flex items-center gap-6 mb-4">
+                                <div className="flex items-center gap-6 mb-4 px-4">
                                     <img
                                         src={'/images/default-profile.png'}
                                         alt={`프로필 사진`}
@@ -228,19 +230,21 @@ export const QuestionDetailPage = (): React.JSX.Element => {
                                     <div className="flex-grow">
                                         <div className="flex justify-between items-center">
                                             <h4 className="text-[19px] pc:text-[21px] font-bold">{answer.authorName}</h4>
-                                            <div className="flex gap-2">
-                                                {/*TODO:답변 수정 기능 만들기*/}
-                                                <button className='mr-2'>
-                                                    <svg className="w-6 h-6 text-[#9CB395]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
-                                                    </svg>
-                                                </button>
-                                                <button onClick={() => openDeleteModal({ type: 'answer', id: answer.answerId })}>
-                                                    <svg className="w-7 h-7 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
-                                                    </svg>
-                                                </button>
-                                            </div>
+                                            {answer.author && (
+                                                <div className="flex gap-2">
+                                                    {/*TODO:답변 수정 기능 만들기*/}
+                                                    <button className='mr-2'>
+                                                        <svg className="w-6 h-6 text-[#9CB395]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
+                                                        </svg>
+                                                    </button>
+                                                    <button onClick={() => openDeleteModal({ type: 'answer', id: answer.answerId })}>
+                                                        <svg className="w-7 h-7 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                                                        </svg>
+                                                    </button>
+                                                </div>
+                                            )}
                                         </div>
                                         <p className="text-[16px] pc:text-[18px] text-gray-500">{answer.createdAt.split('T')[0]}</p>
                                     </div>

@@ -4,6 +4,7 @@ import { QuestionWithAnswer } from "./questionWithAnswer";
 
 export interface Question {
     questionId: number,
+    author: boolean,
     title: string,
     content: string,
     authorId: string | null,
