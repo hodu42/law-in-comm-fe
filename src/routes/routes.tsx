@@ -15,6 +15,7 @@ import { QuestionDetailPage } from '@/pages/QuestionDetailPage';
 import { QuestionModify } from '@/pages/QuestionModify';
 import { Role } from '@/types/role';
 import { ClientRegister } from '@/pages/ClientRegister';
+import { LawyerRegister } from '@/pages/LawyerRegister';
 import { ProtectedRoute } from '@/components/route/ProtectedRoute';
 
 export const protectedRoutes: RouteObject[] = [
@@ -80,6 +81,10 @@ export const publicRoutes: RouteObject[] = [
   {
     path: '/users/join/general',
     element: <ClientRegister />,
+  },
+  {
+    path: '/users/join/lawyer',
+    element: <LawyerRegister />,
   },
 ]
 

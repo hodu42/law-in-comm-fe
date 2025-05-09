@@ -7,7 +7,7 @@ import { checkNicknameDuplication } from "@/api/users";
 import { useNavigation } from "@/hooks/useNavigation";
 import { ClientData } from "@/types/client";
 
-export const ClientRegister = (): React.JSX.Element => {
+export const LawyerRegister = (): React.JSX.Element => {
   const { goToMain, goToPreviousPage, goToLogin } = useNavigation();
   const [userId, setUserId] = useState<string>("");
   const [password, setPassword] = useState<string>("");
