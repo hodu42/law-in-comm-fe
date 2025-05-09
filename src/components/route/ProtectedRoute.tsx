@@ -1,8 +1,12 @@
-import { Navigate, Outlet } from 'react-router-dom';
+import { Navigate, Outlet, useLocation } from 'react-router-dom';
 
-/*TODO: protected route 적용 할 예정*/
 export const ProtectedRoute = () => {
   const accessToken = localStorage.getItem('accessToken');
+  const location = useLocation();
+
+  if (location.pathname === '/') {
+    return <Navigate to="/main" replace />;
+  }
 
   if (!accessToken) {
     return <Navigate to="/login" replace />;

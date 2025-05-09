@@ -15,19 +15,12 @@ import { QuestionDetailPage } from '@/pages/QuestionDetailPage';
 import { QuestionModify } from '@/pages/QuestionModify';
 import { Role } from '@/types/role';
 import { ClientRegister } from '@/pages/ClientRegister';
+import { ProtectedRoute } from '@/components/route/ProtectedRoute';
 
-export const routes: RouteObject[] = [
+export const protectedRoutes: RouteObject[] = [
   {
     path: '/main',
     element: <MainPage />,
-  },
-  {
-    path: '/login',
-    element: <Login />,
-  },
-  {
-    path: '/users/join/general',
-    element: <ClientRegister />,
   },
   {
     path: '/test',
@@ -78,6 +71,28 @@ export const routes: RouteObject[] = [
     element: <QuestionModify/>,
   },
 ];
+
+export const publicRoutes: RouteObject[] = [
+  {
+    path: '/login',
+    element: <Login />,
+  },
+  {
+    path: '/users/join/general',
+    element: <ClientRegister />,
+  },
+]
+
+export const routes: RouteObject[] = [
+  ...publicRoutes,
+  {
+    path: '/',
+    element: <ProtectedRoute />,
+    children: [
+      ...protectedRoutes,
+    ],
+  },
+]
 
 export const headerPaths = [
   {
