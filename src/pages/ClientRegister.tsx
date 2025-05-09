@@ -143,7 +143,7 @@ export const ClientRegister = (): React.JSX.Element => {
             <input
               type="text"
               placeholder="아이디를 입력해주세요."
-              className="font-NotoSansKR border-b-2 pl-[10px] pc:pl-4 placeholder:text-[15px] text-[18px] pc:placeholder:text-[19px] pc:text-[19px] border-[#E2E4E5] py-[10px] pc:py-4 focus:outline-none focus:border-[#A9BE8C] placeholder-[#E2E4E5]"
+              className="transition-colors border-b-2 pl-[10px] pc:pl-4 placeholder:text-[15px] text-[18px] pc:placeholder:text-[19px] pc:text-[19px] border-[#E2E4E5] py-[10px] pc:py-4 focus:outline-none focus:border-[#A9BE8C] placeholder-[#E2E4E5]"
               value={userId}
               onChange={(e) => setUserId(e.target.value)}
             />
@@ -157,7 +157,7 @@ export const ClientRegister = (): React.JSX.Element => {
             <input
               type="password"
               placeholder="비밀번호를 입력해주세요."
-              className="font-NotoSansKR border-b-2 pl-[10px] pc:pl-4 placeholder:text-[15px] text-[18px] pc:placeholder:text-[19px] pc:text-[19px] border-[#E2E4E5] py-[10px] pc:py-4 focus:outline-none focus:border-[#A9BE8C] placeholder-[#E2E4E5]"
+              className="transition-colors border-b-2 pl-[10px] pc:pl-4 placeholder:text-[15px] text-[18px] pc:placeholder:text-[19px] pc:text-[19px] border-[#E2E4E5] py-[10px] pc:py-4 focus:outline-none focus:border-[#A9BE8C] placeholder-[#E2E4E5]"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             />
@@ -176,7 +176,7 @@ export const ClientRegister = (): React.JSX.Element => {
             <input
               type="text"
               placeholder="이름을 입력해주세요."
-              className="font-NotoSansKR border-b-2 pl-[10px] pc:pl-4 text-[15px] pc:text-[19px] border-[#E2E4E5] py-[10px] pc:py-4 focus:outline-none focus:border-[#A9BE8C] placeholder-[#E2E4E5]"
+              className="transition-colors border-b-2 pl-[10px] pc:pl-4 text-[15px] pc:text-[19px] border-[#E2E4E5] py-[10px] pc:py-4 focus:outline-none focus:border-[#A9BE8C] placeholder-[#E2E4E5]"
               value={name}
               onChange={(e) => setName(e.target.value)}
             />
@@ -195,7 +195,7 @@ export const ClientRegister = (): React.JSX.Element => {
               <input
                 type="text"
                 placeholder="닉네임을 입력해주세요."
-                className="font-NotoSansKR border-b-2 pl-[10px] pc:pl-4 text-[15px] pc:text-[19px] border-[#E2E4E5] py-[10px] pc:py-4 focus:outline-none focus:border-[#A9BE8C] placeholder-[#E2E4E5]"
+                className="transition-colors border-b-2 pl-[10px] pc:pl-4 text-[15px] pc:text-[19px] border-[#E2E4E5] py-[10px] pc:py-4 focus:outline-none focus:border-[#A9BE8C] placeholder-[#E2E4E5]"
                 value={nickname}
                 onChange={(e) => setNickname(e.target.value)}
               />
@@ -214,7 +214,7 @@ export const ClientRegister = (): React.JSX.Element => {
             <button
               type="button"
               onClick={() => checkNicknameDuplicate()}
-              className="inline-block w-[120px] mx-auto mt-6 bg-[#CBD8B7] text-black font-bold text-[16px] py-2 rounded-md hover:bg-[#A9BE8C] transition-colors"
+              className="transition-colors inline-block w-[120px] mx-auto mt-6 bg-[#CBD8B7] text-black font-bold text-[16px] py-2 rounded-md hover:bg-[#A9BE8C]"
             >
               중복확인
             </button>
@@ -227,7 +227,7 @@ export const ClientRegister = (): React.JSX.Element => {
             <input
               type="date"
               ref={dateInputRef}
-              className={`font-NotoSansKR border-b-2 pl-[10px] pc:pl-4 py-[10px] pc:py-4 text-[15px] pc:text-[19px] border-[#E2E4E5] focus:outline-none focus:border-[#A9BE8C] placeholder-[#A9BE8C] hover:cursor-pointer [&::-webkit-calendar-picker-indicator]:cursor-pointer ${
+              className={`transition-colors border-b-2 pl-[10px] pc:pl-4 py-[10px] pc:py-4 text-[15px] pc:text-[19px] border-[#E2E4E5] focus:outline-none focus:border-[#A9BE8C] placeholder-[#A9BE8C] hover:cursor-pointer [&::-webkit-calendar-picker-indicator]:cursor-pointer ${
                 birthDate ? "text-black" : "text-[#E2E4E5]"
               }`}
               value={birthDate}
@@ -238,7 +238,7 @@ export const ClientRegister = (): React.JSX.Element => {
           {/* 회원가입 버튼 */}
           <button
             type="submit"
-            className="inline-block bg-[#CBD8B7] text-black font-bold text-[16px] pc:text-[18px] mb-10 pc:mb-0 py-3 rounded-md hover:bg-[#A9BE8C] transition-colors"
+            className="transition-colors inline-block bg-[#CBD8B7] text-black font-bold text-[16px] pc:text-[18px] mb-10 pc:mb-0 py-3 rounded-md hover:bg-[#A9BE8C]"
           >
             회원가입
           </button>

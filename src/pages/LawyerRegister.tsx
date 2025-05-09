@@ -152,7 +152,7 @@ export const LawyerRegister = (): React.JSX.Element => {
                 <input
                   type="text"
                   placeholder="아이디를 입력해주세요."
-                  className="font-NotoSansKR border-b-2 pl-[10px] pc:pl-4 placeholder:text-[15px] text-[15px] pc:placeholder:text-[17px] pc:text-[17px] border-[#E2E4E5] py-[10px] pc:py-4 focus:outline-none focus:border-[#A9BE8C] placeholder-[#E2E4E5]"
+                  className="transition-colors border-b-2 pl-[10px] pc:pl-4 placeholder:text-[15px] text-[15px] pc:placeholder:text-[17px] pc:text-[17px] border-[#E2E4E5] py-[10px] pc:py-4 focus:outline-none focus:border-[#A9BE8C] placeholder-[#E2E4E5]"
                   value={userId}
                   onChange={(e) => setUserId(e.target.value)}
                 />
@@ -166,7 +166,7 @@ export const LawyerRegister = (): React.JSX.Element => {
                 <input
                   type="password"
                   placeholder="비밀번호를 입력해주세요."
-                  className="font-NotoSansKR border-b-2 pl-[10px] pc:pl-4 placeholder:text-[15px] text-[15px] pc:placeholder:text-[17px] pc:text-[17px] border-[#E2E4E5] py-[10px] pc:py-4 focus:outline-none focus:border-[#A9BE8C] placeholder-[#E2E4E5]"
+                  className="transition-colors border-b-2 pl-[10px] pc:pl-4 placeholder:text-[15px] text-[15px] pc:placeholder:text-[17px] pc:text-[17px] border-[#E2E4E5] py-[10px] pc:py-4 focus:outline-none focus:border-[#A9BE8C] placeholder-[#E2E4E5]"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                 />
@@ -185,7 +185,7 @@ export const LawyerRegister = (): React.JSX.Element => {
                 <input
                   type="text"
                   placeholder="이름을 입력해주세요."
-                  className="font-NotoSansKR border-b-2 pl-[10px] pc:pl-4 text-[15px] pc:text-[17px] placeholder:text-[15px] pc:placeholder:text-[17px] border-[#E2E4E5] py-[10px] pc:py-4 focus:outline-none focus:border-[#A9BE8C] placeholder-[#E2E4E5]"
+                  className="transition-colors border-b-2 pl-[10px] pc:pl-4 text-[15px] pc:text-[17px] placeholder:text-[15px] pc:placeholder:text-[17px] border-[#E2E4E5] py-[10px] pc:py-4 focus:outline-none focus:border-[#A9BE8C] placeholder-[#E2E4E5]"
                   value={name}
                   onChange={(e) => setName(e.target.value)}
                 />
@@ -195,29 +195,28 @@ export const LawyerRegister = (): React.JSX.Element => {
                 <label className="text-[#656565] text-[16px] pc:text-[18px] font-bold text-nowrap">
                   휴대폰 번호
                 </label>
-                <div className="flex flex-col group">
-                  <div className="relative">
-                    {/* TODO: 아이콘 위치 변경 필요 */}
-                    <svg 
-                      width="31" 
-                      height="31" 
-                      viewBox="0 0 31 31" 
-                      fill="none" 
-                      className="absolute -left-2 -top-2"
+                <div className="relative group">
+                  <div className="absolute inset-y-0 left-0 flex items-center px-3 text-[#E2E4E5] group-focus-within:text-[#A9BE8C] transition-colors">
+                    <svg
+                      width="31"
+                      height="31"
+                      viewBox="0 0 31 31"
+                      fill="currentColor"
+                      className="absolute"
                     >
                       <path
-                        fill="#D9D9D9"
+                        fill="currentColor"
                         d="M21.951 24.66h-12.5V7.16h12.5m0-5h-12.5a2.491 2.491 0 0 0-2.5 2.5v22.5a2.5 2.5 0 0 0 2.5 2.5h12.5a2.5 2.5 0 0 0 2.5-2.5V4.66a2.5 2.5 0 0 0-2.5-2.5Z"
                       />
                     </svg>
-                    <input
-                      type="text"
-                      placeholder="휴대폰 번호를 입력해주세요."
-                      className="font-NotoSansKR border-b-2 pl-[10px] pc:pl-4 text-[15px] pc:text-[17px] placeholder:text-[15px] pc:placeholder:text-[17px] border-[#E2E4E5] py-[10px] pc:py-4 focus:outline-none focus:border-[#A9BE8C] placeholder-[#E2E4E5]"
-                      value={nickname}
-                      onChange={(e) => setNickname(e.target.value)}
-                    />
                   </div>
+                  <input
+                    type="text"
+                    placeholder="휴대폰 번호를 입력해주세요."
+                    className="transition-colors border-b-2 w-full pl-10 pc:pl-16 text-[15px] pc:text-[17px] placeholder:text-[15px] pc:placeholder:text-[17px] border-[#E2E4E5] py-[10px] pc:py-4 focus:outline-none focus:border-[#A9BE8C] placeholder-[#E2E4E5]"
+                    value={nickname}
+                    onChange={(e) => setNickname(e.target.value)}
+                  />
                 </div>
               </div>
               {/* 증명서 첨부 필드 */}
@@ -270,11 +269,13 @@ export const LawyerRegister = (): React.JSX.Element => {
                         id={key}
                         checked={checkedList.includes(key)}
                         onChange={(e) => checkHandler(e, key)}
-                        className="w-4 h-4 text-[#A9BE8C] border-[#E2E4E5] rounded focus:ring-[#A9BE8C] focus:ring-offset-0"
+                        className="transition-colors w-4 h-4 text-[#A9BE8C] border-[#E2E4E5] rounded focus:ring-[#A9BE8C] focus:ring-offset-0"
                       />
                       <label
                         htmlFor={key}
-                        className="text-[14px] pc:text-[16px] text-[#656565] cursor-pointer hover:text-[#A9BE8C] transition-colors text-nowrap"
+                        className={`transition-colors text-[14px] pc:text-[16px] cursor-pointer text-nowrap hover:text-[#A9BE8C] ${
+                          checkedList.includes(key) ? "text-[#A9BE8C]" : "text-[#656565]"
+                        }`}
                       >
                         {label}
                       </label>
@@ -290,7 +291,7 @@ export const LawyerRegister = (): React.JSX.Element => {
           {/* 회원가입 버튼 */}
           <button
             type="submit"
-            className="inline-block bg-[#CBD8B7] text-black font-bold text-[16px] pc:text-[18px] mb-10 pc:mb-0 py-3 rounded-md hover:bg-[#A9BE8C] transition-colors"
+            className="transition-colors inline-block bg-[#CBD8B7] text-black font-bold text-[16px] pc:text-[18px] mb-10 pc:mb-0 py-3 rounded-md hover:bg-[#A9BE8C]"
           >
             회원가입
           </button>
