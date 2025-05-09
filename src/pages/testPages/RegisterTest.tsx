@@ -18,7 +18,6 @@ export const RegisterTest = ():React.JSX.Element => {
                 password: password,
                 birthDate: birthDate,
             });
-            console.log(response);
             alert("회원가입 대기중");
         } catch (error) {
             console.error(error);

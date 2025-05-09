@@ -42,7 +42,6 @@ export const QuestionDetailPage = (): React.JSX.Element => {
 
     const fetchQuestion = async () => {
         const response = await getQuestion(String(questionId));
-        console.log('자세히보기', response.data);
         setQuestion(response.data);
     };
 

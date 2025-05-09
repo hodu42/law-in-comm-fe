@@ -61,7 +61,6 @@ export const LawyerRegisterTest = ():React.JSX.Element => {
 
         try {
             const response = await registerLawyer(multiPartFormData);
-            console.log(response);
             alert("변호사 회원가입 대기중");
         } catch (error) {
             console.error(error);

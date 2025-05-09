@@ -14,7 +14,6 @@ export const QuestionModify = (): React.JSX.Element => {
 
     const handleSubmit = async () => {
         try {
-            console.log('질문 수정',question);
             if (question) {
                 const response = await updateQuestion(
                     String(questionId),
@@ -33,7 +32,6 @@ export const QuestionModify = (): React.JSX.Element => {
 
     const fetchQuestion = async () => {
         const response = await getQuestion(String(questionId));
-        console.log('수정 조회', response.data);
         setQuestion(response.data);
     };
 

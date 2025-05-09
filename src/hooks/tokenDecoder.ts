@@ -7,7 +7,6 @@ const getCurrentPayload = (): TokenPayload | null => {
         try {
             return jwtDecode<TokenPayload>(token);
         } catch (error) {
-            console.log(error);
             return null;
         }
     } else {
@@ -19,7 +18,6 @@ export const getCurrentRole = ():string => {
     const payload = getCurrentPayload();
     if (payload) {
         const role = payload.role;
-        console.log('현재 권한', role);
         return role;
     } else {
         return '';

@@ -14,7 +14,6 @@ export const QuestionsTest = ():React.JSX.Element => {
         e.preventDefault();
         try {
             const response = await searchQuestion('', '', page, size);
-            console.log(response.data);
             setQuestions(response.data.content);
         } catch (error:any) {
             if (error.response && error.response.status === 409) {
