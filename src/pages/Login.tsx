@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { Logo } from '@/components/Logo';
 import { MobileNav } from '@/components/MobileNav';
 import { login } from '@/api/auth/login';
 import { useNavigation } from '@/hooks/useNavigation';
 
 export const Login = (): React.JSX.Element => {
-  const {goToMain} = useNavigation();
+  const {goToMain, goToPreviousPage} = useNavigation();
   const [userId, setUserId] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   const [error, setError] = useState<string>('');
@@ -41,13 +41,13 @@ export const Login = (): React.JSX.Element => {
       <header className="fixed top-0 left-0 right-0 w-full h-[72px] flex items-center justify-center bg-white z-20">
         <div className="relative w-full min-w-[355px] max-w-[1350px] pc:w-[70.31%] h-full flex items-center">
           {/* 모바일 뒤로가기 버튼 */}
-          <Link to="/" className="pc:hidden flex items-center text-black z-10 ml-6">
+          <button onClick={() => goToPreviousPage()} className="pc:hidden flex items-center text-black z-10 ml-6">
               <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 19l-7-7 7-7"></path>
               </svg>
-          </Link>
+          </button>
           {/* 데스크탑 로고 */}
-          <Link to="/" className="hidden pc:flex items-center absolute left-4 z-10">
+          <Link to="/main" className="hidden pc:flex items-center absolute left-4 z-10">
             <div className="text-[#A9BE8C] font-bold text-2xl flex items-center">
               <Logo />
               <span className="ml-5 text-[#9CB395] text-[36px]">로인컴</span>
@@ -71,7 +71,7 @@ export const Login = (): React.JSX.Element => {
         <form onSubmit={handleLogin} className="flex flex-col w-full pc:max-w-[570px] pc:mx-auto mt-10 pc:mt-16 gap-y-20 px-5 py-[72px] border-b-[1.7px] border-[#B4B4B4]">
           {/* 아이디 입력 필드 */}
           <div className="flex flex-col gap-5 pc:gap-6">
-            <label className="text:black pc:text-[#656565] text-[20px] font-bold">
+            <label className="text-[#656565] text-[20px] font-bold">
               아이디
             </label>
             <input
@@ -85,7 +85,7 @@ export const Login = (): React.JSX.Element => {
 
           {/* 비밀번호 입력 필드 */}
           <div className="relative flex flex-col gap-5 pc:gap-6">
-            <label className="text:black pc:text-[#656565] text-[20px] font-bold">
+            <label className="text-[#656565] text-[20px] font-bold">
               비밀번호
             </label>
             <input
@@ -113,7 +113,7 @@ export const Login = (): React.JSX.Element => {
         {/* 회원가입 링크 */}
         <div className="flex w-full pc:w-[570px] justify-evenly my-[50px]">
           <span className="font-NotoSansKR text-[16px] pc:text-[20px]">아직 회원이 아니신가요?</span>
-          <Link to="/register" className="font-NotoSansKR text-[16px] pc:text-[20px] text-[#A9BE8C] hover:text-[#9CB395] hover:underline transition-colors font-bold">
+          <Link to="/client-register" className="font-NotoSansKR text-[16px] pc:text-[20px] text-[#A9BE8C] hover:text-[#9CB395] hover:underline transition-colors font-bold">
             회원가입
           </Link>
         </div>

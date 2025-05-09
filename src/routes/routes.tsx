@@ -14,6 +14,7 @@ import { AnswerWriteTest } from '@/pages/testPages/AnswerWriteTest';
 import { QuestionDetailPage } from '@/pages/QuestionDetailPage';
 import { QuestionModify } from '@/pages/QuestionModify';
 import { Role } from '@/types/role';
+import { ClientRegister } from '@/pages/ClientRegister';
 
 export const routes: RouteObject[] = [
   {
@@ -25,6 +26,10 @@ export const routes: RouteObject[] = [
     element: <Login />,
   },
   {
+    path: '/client-register',
+    element: <ClientRegister />,
+  },
+  {
     path: '/test',
     element: <Test />,
   },
@@ -33,7 +38,7 @@ export const routes: RouteObject[] = [
     element: <RegisterTest />,
   },
   {
-    path: '/register-lawyer',
+    path: '/lawyer-register',
     element: <LawyerRegisterTest />,
   },
   {

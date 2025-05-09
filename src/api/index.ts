@@ -28,7 +28,8 @@
            if (config.url?.includes('/login') || 
                config.url?.includes('/register') || 
                config.url?.includes('/register-lawyer') ||
-               config.url?.includes('/auth/token/refresh')) {
+               config.url?.includes('/auth/token/refresh') ||
+               config.url?.includes('/users/join/nickname/dupe-check')) {
              return config;
            }
 
