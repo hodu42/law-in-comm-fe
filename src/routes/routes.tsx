@@ -24,44 +24,12 @@ export const protectedRoutes: RouteObject[] = [
     element: <MainPage />,
   },
   {
-    path: '/test',
-    element: <Test />,
-  },
-  {
-    path: '/register',
-    element: <RegisterTest />,
-  },
-  {
-    path: '/lawyer-register',
-    element: <LawyerRegisterTest />,
-  },
-  {
-    path: '/pending-lawyers',
-    element: <PendingLawyersPage />,
-  },
-  {
     path: '/question/write',
     element: <QuestionWrite />,
   },
   {
-    path: '/write',
-    element: <WriteTest />,
-  },
-  {
-    path: '/question/test',
-    element: <QuestionsTest />,
-  },
-  {
     path: '/questions',
     element: <QuestionListPage />,
-  },
-  {
-    path: '/test-page',
-    element: <TestPage />,
-  },
-  {
-    path: '/answer/write',
-    element: <AnswerWriteTest />,
   },
   {
     path: '/question/:questionId',
@@ -88,8 +56,44 @@ export const publicRoutes: RouteObject[] = [
   },
 ]
 
+export const testRoutes: RouteObject[] = [
+  {
+    path: '/test',
+    element: <Test />,
+  },
+  {
+    path: '/register',
+    element: <RegisterTest />,
+  },
+  {
+    path: '/lawyer-register',
+    element: <LawyerRegisterTest />,
+  },
+  {
+    path: '/write',
+    element: <WriteTest />,
+  },
+  {
+    path: '/pending-lawyers',
+    element: <PendingLawyersPage />,
+  },
+  {
+    path: '/question/test',
+    element: <QuestionsTest />,
+  },
+  {
+    path: '/test-page',
+    element: <TestPage />,
+  },
+  {
+    path: '/answer/write',
+    element: <AnswerWriteTest />,
+  },
+]
+
 export const routes: RouteObject[] = [
   ...publicRoutes,
+  ...testRoutes,
   {
     path: '/',
     element: <ProtectedRoute />,

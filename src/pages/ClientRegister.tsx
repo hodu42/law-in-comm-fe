@@ -121,7 +121,7 @@ export const ClientRegister = (): React.JSX.Element => {
           </div>
           <div className="mr-6 pc:mr-0">
             <div className="flex items-center justify-center">
-              <Link to="/users/join/lawyer" className="text-[14px] pc:text-[16px] text-[#5C6E56] hover:text-[#3F4D3B] text-nowrap underline">
+              <Link to="/users/join/lawyer" className="text-[14px] pc:text-[16px] text-[#5C6E56] hover:text-[#3F4D3B] transition-colors text-nowrap underline">
                 변호사 회원가입
               </Link>
             </div>
