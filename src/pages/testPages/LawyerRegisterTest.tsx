@@ -1,7 +1,6 @@
 import React, {useEffect, useState} from "react";
 import { registerLawyer } from "@/api/auth/register";
 import { getLegalSpecialities } from "@/api/users";
-import LawyerSpeciality from "@/types/lawyer";
 
 export const LawyerRegisterTest = ():React.JSX.Element => {
     const [username, setUsername] = useState("");
@@ -16,7 +15,7 @@ export const LawyerRegisterTest = ():React.JSX.Element => {
     const [officePhoneNumber, setOfficePhoneNumber] = useState("");
     const [description, setDescription] = useState("");
     const [image, setImage] = useState<string | ArrayBuffer | null> (null);
-    const [lawyerSpeciality, setLawyerSpeciality] = useState<LawyerSpeciality[]>([]);
+    const [lawyerSpeciality, setLawyerSpeciality] = useState<string[]>([]);
     const [checkedList, setCheckedList] = useState<string[]>([]);
     const [isChecked, setIsChecked] = useState<boolean>(false);
     const [licenseImage, setLicenseImage] = useState<File | string>("");
@@ -115,14 +114,14 @@ export const LawyerRegisterTest = ():React.JSX.Element => {
                 <input className="border-2 border-lightGreen rounded-10px" type={"text"} placeholder="사무실 주소" value={officeAddress} onChange={(e) => setOfficeAddress(e.target.value)} />
                 <input className="border-2 border-lightGreen rounded-10px" type={"text"} placeholder="사무실 전화번호" value={officePhoneNumber} onChange={(e) => setOfficePhoneNumber(e.target.value)} />
                 <div>
-                    {
+                    {/* {
                         lawyerSpeciality.map((item, idx) => (
                             <div key={idx}>
                                 <input type={"checkbox"} id={item.legalSpecialtyName} checked={checkedList.includes(item.legalSpecialtyName)} onChange={(e) => checkHandler(e, item.legalSpecialtyName)}/>
                                 <label>{item.legalSpecialtyDescription}</label>
                             </div>
                         ))
-                    }
+                    } */}
                 </div>
                 <button className="border-2 bg-lightGreen rounded-10px" type={"submit"}>변호사 회원가입</button>
             </form>
