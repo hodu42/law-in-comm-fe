@@ -26,7 +26,7 @@ export const routes: RouteObject[] = [
     element: <Login />,
   },
   {
-    path: '/client-register',
+    path: '/users/join/general',
     element: <ClientRegister />,
   },
   {
@@ -75,8 +75,8 @@ export const routes: RouteObject[] = [
   },
   {
     path: '/question/modify/:questionId',
-    element: <QuestionModify/>
-  }
+    element: <QuestionModify/>,
+  },
 ];
 
 export const headerPaths = [
@@ -94,7 +94,6 @@ export const headerPaths = [
     title: '질문 작성',
     link: '/question/write',
     currentCheck: '/question/write',
-    roles: [Role.USER, Role.ADMIN]
   },
   {
     title: '질문 관리',

@@ -113,7 +113,7 @@ export const Login = (): React.JSX.Element => {
         {/* 회원가입 링크 */}
         <div className="flex w-full pc:w-[570px] justify-evenly my-[50px]">
           <span className="font-NotoSansKR text-[16px] pc:text-[20px]">아직 회원이 아니신가요?</span>
-          <Link to="/client-register" className="font-NotoSansKR text-[16px] pc:text-[20px] text-[#A9BE8C] hover:text-[#9CB395] hover:underline transition-colors font-bold">
+          <Link to="/users/join/general" className="font-NotoSansKR text-[16px] pc:text-[20px] text-[#A9BE8C] hover:text-[#9CB395] hover:underline transition-colors font-bold">
             회원가입
           </Link>
         </div>
