@@ -26,6 +26,13 @@ export interface DetailedPendingLawyer {
     size: number;
     path: string;
   };
+  profileImage: {
+    id: number;
+    name: string;
+    contentType: string;
+    size: number;
+    path: string;
+  };
   createdAt: string;
   updatedAt: string;
 }

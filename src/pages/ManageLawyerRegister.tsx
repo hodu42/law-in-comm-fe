@@ -2,7 +2,9 @@ import { useState, useEffect } from "react";
 import { MainHeader } from "@/components/MainHeader";
 import { fetchPendingLawyers } from "@/services/pendingLawyersService";
 import { PageResponse } from "@/types/page";
-import { PendingLawyers } from "@/types/admin";
+import { DetailedPendingLawyer } from "@/types/admin";
+import { approveLawyerRegister } from "@/api/users/admin";
+import { IMAGE_URL } from "@/config/Config";
 
 export const ManageLawyerRegister = (): React.JSX.Element => {
   const [totalElements, setTotalElements] = useState<number>(0);
@@ -12,8 +14,8 @@ export const ManageLawyerRegister = (): React.JSX.Element => {
   const [isLastPage, setIsLastPage] = useState<boolean>(false);
   const [totalPages, setTotalPages] = useState<number>(0);
   const [pendingLawyers, setPendingLawyers] =
-    useState<PageResponse<PendingLawyers>>();
-  const [isOpenedLawyer, setIsOpenedLawyer] = useState<boolean[]>([]);
+    useState<PageResponse<DetailedPendingLawyer>>();
+  const [openedLawyerId, setOpenedLawyerId] = useState<number | null>(null);
 
   const handleImageClick = () => {
     setIsImageZoomed(!isImageZoomed);
@@ -26,6 +28,11 @@ export const ManageLawyerRegister = (): React.JSX.Element => {
     setIsFirstPage(response.first);
     setIsLastPage(response.last);
     setTotalPages(response.totalPages);
+  };
+
+  const handleApprove = async (isApprove: boolean, lawyerId: number) => {
+    await approveLawyerRegister(lawyerId, isApprove);
+    loadPendingLawyers();
   };
 
   useEffect(() => {
@@ -43,182 +50,231 @@ export const ManageLawyerRegister = (): React.JSX.Element => {
             <span className="text-[#9CB395]">{totalElements}</span>명
           </h1>
         </div>
-        <div
-          onClick={() => {}}
-          className="flex flex-col justify-between max-w-[800px] mx-auto mt-10 cursor-pointer"
-        >
-          <div className="bg-white rounded-b-[10px]">
-            {/* 변호사 정보 */}
-            <div className="relative bg-[#D9D9D9] py-2 px-4 rounded-[10px] text-[0.9rem] pc:text-[1.1rem] font-bold">
-              <span>변호사 정보</span>
-              <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-3">
-                <svg
-                  className="h-5 w-5 text-black"
-                  viewBox="0 0 20 20"
-                  fill="currentColor"
-                >
-                  <path
-                    fillRule="evenodd"
-                    d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-                    clipRule="evenodd"
-                  />
-                </svg>
-              </div>
-            </div>
-            <div className="flex flex-col gap-4 px-6 my-4">
-              {/* 이름 */}
-              <div className="flex items-center">
-                <div className="w-16 text-[15px] pc:text-[17px] font-bold">
-                  이름
-                </div>
-                <div className="text-[15px] pc:text-[17px] ml-5">홍길동</div>
-              </div>
-              {/* 아이디 */}
-              <div className="flex items-center">
-                <div className="w-16 text-[15px] pc:text-[17px] font-bold">
-                  아이디
-                </div>
-                <div className="text-[15px] pc:text-[17px] ml-5">abcde</div>
-              </div>
-              {/* 전화번호 */}
-              <div className="flex items-center">
-                <div className="w-16 text-[15px] pc:text-[17px] font-bold">
-                  전화번호
-                </div>
-                <div className="text-[15px] pc:text-[17px] ml-5">
-                  010-1234-5678
+        {pendingLawyers?.content.length === 0 && (
+          <div className="flex justify-center items-center my-20 h-full">
+            <p className="text-[1.4rem] pc:text-[1.8rem] font-bold text-gray-500">
+              대기중인 변호사가 없습니다.
+            </p>
+          </div>
+        )}
+        {pendingLawyers?.content.map((detailedLawyer) => (
+          <div
+            onClick={() => {
+              setOpenedLawyerId(
+                openedLawyerId === detailedLawyer.lawyerId
+                  ? null
+                  : detailedLawyer.lawyerId
+              );
+            }}
+            className="flex flex-col justify-between max-w-[800px] mx-auto mt-10"
+            key={detailedLawyer.lawyerId}
+          >
+            <div className="bg-white rounded-b-[10px]">
+              {/* 변호사 정보 */}
+              <div className="relative bg-[#D9D9D9] hover:bg-[#C4C4C4] py-2 px-4 rounded-[10px] text-[0.9rem] pc:text-[1.1rem] font-bold cursor-pointer transition-colors duration-200">
+                <span>변호사 정보</span>
+                <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-3">
+                  <svg
+                    className={`h-5 w-5 text-black transition-transform duration-200 ${
+                      openedLawyerId === detailedLawyer.lawyerId
+                        ? "rotate-180"
+                        : ""
+                    }`}
+                    viewBox="0 0 20 20"
+                    fill="currentColor"
+                  >
+                    <path
+                      fillRule="evenodd"
+                      d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                      clipRule="evenodd"
+                    />
+                  </svg>
                 </div>
               </div>
-              {/* 생년월일 */}
-              <div className="flex items-center">
-                <div className="w-16 text-[15px] pc:text-[17px] font-bold">
-                  생년월일
+              <div className="flex flex-col gap-4 px-6 my-4">
+                {/* 이름 */}
+                <div className="flex items-center">
+                  <div className="w-16 text-[15px] pc:text-[17px] font-bold">
+                    이름
+                  </div>
+                  <div className="text-[15px] pc:text-[17px] ml-5">
+                    {detailedLawyer.name}
+                  </div>
                 </div>
-                <div className="text-[15px] pc:text-[17px] ml-5">
-                  1990-01-01
-                </div>
-              </div>
-              {/* 자기소개 */}
-              <div className="flex flex-col gap-3">
-                <div className="w-16 text-[15px] pc:text-[17px] font-bold">
-                  자기소개
-                </div>
-                <div className="text-[15px] pc:text-[17px] ml-5">
-                  안녕하세요. 홍길동입니다. 홍길동입니다. 홍길동입니다.
-                  홍길동입니다. 홍길동입니다. 홍길동입니다. 홍길동입니다.
-                  홍길동입니다. 홍길동입니다. 홍길동입니다. 홍길동입니다.
-                  홍길동입니다. 홍길동입니다. 홍길동입니다. 홍길동입니다.
-                  홍길동입니다. 홍길동입니다. 홍길동입니다. 홍길동입니다.
-                  홍길동입니다. 홍길동입니다. 홍길동입니다. 홍길동입니다.
-                  홍길동입니다. 홍길동입니다. 홍길동입니다. 홍길동입니다.
-                  홍길동입니다. 홍길동입니다. 홍길동입니다. 홍길동입니다.
-                  홍길동입니다. 홍길동입니다. 홍길동입니다.
-                </div>
-              </div>
-              {/* 변호사 사진 */}
-              <div className="flex flex-col items-center">
-                <div className="w-full text-[15px] pc:text-[17px] font-bold">
-                  변호사 사진 (눌러서 확대)
+                {/* 아이디 */}
+                <div className="flex items-center">
+                  <div className="w-16 text-[15px] pc:text-[17px] font-bold">
+                    아이디
+                  </div>
+                  <div className="text-[15px] pc:text-[17px] ml-5">
+                    {detailedLawyer.lawyerId}
+                  </div>
                 </div>
                 <div
-                  onClick={handleImageClick}
-                  className={`w-full ${
-                    isImageZoomed ? "max-w-[300px]" : "max-w-[100px]"
-                  } my-9`}
+                  className={`overflow-hidden transition-all duration-300 ease-in-out ${
+                    openedLawyerId === detailedLawyer.lawyerId
+                      ? "max-h-[2000px] opacity-100"
+                      : "max-h-0 opacity-0"
+                  }`}
                 >
-                  <img
-                    src="https://static.cdn.soomgo.com/upload/portfolio/515c31a1-c1e6-4aca-b6e8-a201e81c9d84.jpg?webp=1"
-                    alt="변호사 사진"
-                    className="w-full h-full object-contain"
-                  />
+                  <div className="flex flex-col gap-4">
+                    {/* 전화번호 */}
+                    <div className="flex items-center">
+                      <div className="w-16 text-[15px] pc:text-[17px] font-bold">
+                        전화번호
+                      </div>
+                      <div className="text-[15px] pc:text-[17px] ml-5">
+                        {detailedLawyer.phoneNumber}
+                      </div>
+                    </div>
+                    {/* 자기소개 */}
+                    <div className="flex flex-col gap-3">
+                      <div className="w-16 text-[15px] pc:text-[17px] font-bold">
+                        자기소개
+                      </div>
+                      <div className="text-[15px] pc:text-[17px] ml-5">
+                        {detailedLawyer.description}
+                      </div>
+                    </div>
+                    {/* 변호사 사진 */}
+                    <div className="flex flex-col items-center">
+                      <div className="w-full text-[15px] pc:text-[17px] font-bold">
+                        변호사 사진 (눌러서 확대)
+                      </div>
+                      <div
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          handleImageClick();
+                        }}
+                        className={`w-full ${
+                          isImageZoomed ? "max-w-[300px]" : "max-w-[100px]"
+                        } my-9`}
+                      >
+                        {/* TODO:변호사 사진 나오도록 변경하기 */}
+                        {/* <img
+                          src={`${IMAGE_URL}${detailedLawyer.profileImageInfo.path}`}
+                          alt={detailedLawyer.profileImageInfo.name}
+                          className="w-full h-full object-contain cursor-pointer"
+                        /> */}
+                        <img
+                          src={
+                            "https://www.lec.co.kr/news/photo/202304/743122_77322_2047.jpg"
+                          }
+                          alt={"변호사 사진"}
+                          className="w-full h-full object-contain cursor-pointer"
+                        />
+                      </div>
+                    </div>
+                    {/* 합격 증명서 */}
+                    <div className="flex flex-col items-center">
+                      <div className="w-full text-[15px] pc:text-[17px] font-bold">
+                        합격 증명서 (눌러서 확대)
+                      </div>
+                      <div
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          handleImageClick();
+                        }}
+                        className={`w-full ${
+                          isImageZoomed ? "max-w-[300px]" : "max-w-[100px]"
+                        } my-9`}
+                      >
+                        <img
+                          src={`${IMAGE_URL}${detailedLawyer.licenseImageInfo.path}`}
+                          alt={detailedLawyer.licenseImageInfo.name}
+                          className="w-full h-full object-contain cursor-pointer"
+                        />
+                      </div>
+                    </div>
+                    {/* 경력 */}
+                    <div className="flex flex-col gap-3">
+                      <div className="w-full text-[15px] pc:text-[17px] font-bold">
+                        경력
+                      </div>
+                      <div className="text-[15px] pc:text-[17px] ml-5">
+                        {detailedLawyer.career.map((career) => (
+                          <div key={career}>{career}</div>
+                        ))}
+                      </div>
+                    </div>
+                    {/* 학력 */}
+                    <div className="flex flex-col gap-3">
+                      <div className="w-full text-[15px] pc:text-[17px] font-bold">
+                        학력
+                      </div>
+                      <div className="text-[15px] pc:text-[17px] ml-5">
+                        {detailedLawyer.educations.map((education) => (
+                          <div key={education}>{education}</div>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
-              {/* 합격 증명서 */}
-              <div className="flex flex-col items-center">
-                <div className="w-full text-[15px] pc:text-[17px] font-bold">
-                  합격 증명서 (눌러서 확대)
-                </div>
-                <div
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    handleImageClick();
-                  }}
-                  className={`w-full ${
-                    isImageZoomed ? "max-w-[300px]" : "max-w-[100px]"
-                  } my-9`}
-                >
-                  <img
-                    src="https://static.cdn.soomgo.com/upload/portfolio/515c31a1-c1e6-4aca-b6e8-a201e81c9d84.jpg?webp=1"
-                    alt="합격 증명서"
-                    className="w-full h-full object-contain"
-                  />
-                </div>
-              </div>
-              {/* 분야 */}
-              <div className="flex flex-col gap-3">
-                <div className="w-full text-[15px] pc:text-[17px] font-bold">
-                  분야
-                </div>
-                <div className="text-[15px] pc:text-[17px] ml-5">법률 분야</div>
-              </div>
-              {/* 경력 */}
-              <div className="flex flex-col gap-3">
-                <div className="w-full text-[15px] pc:text-[17px] font-bold">
-                  경력
-                </div>
-                <div className="text-[15px] pc:text-[17px] ml-5">10년</div>
-              </div>
-              {/* 학력 */}
-              <div className="flex flex-col gap-3">
-                <div className="w-full text-[15px] pc:text-[17px] font-bold">
-                  학력
-                </div>
-                <div className="text-[15px] pc:text-[17px] ml-5">
-                  대학교 졸업
-                </div>
-              </div>
-            </div>
-            {/* 사무실 정보 */}
-            <div className="relative bg-[#D9D9D9] py-2 px-4 rounded-[10px] text-[0.9rem] pc:text-[1.1rem] font-bold">
-              <span>사무실 정보</span>
-            </div>
-            <div className="flex flex-col gap-4 px-6 my-4">
-              {/* 사무실 이름 */}
-              <div className="flex items-center">
-                <div className="w-16 text-[15px] pc:text-[17px] font-bold">
-                  이름
-                </div>
-                <div className="text-[15px] pc:text-[17px] ml-5">홍길동</div>
-              </div>
-              {/* 사무실 주소 */}
-              <div className="flex items-center">
-                <div className="w-16 text-[15px] pc:text-[17px] font-bold">
-                  주소
-                </div>
-                <div className="text-[15px] pc:text-[17px] ml-5">
-                  서울특별시 강남구 테헤란로 14길 6 남도빌딩 2층
+              <div
+                className={`overflow-hidden transition-all duration-300 ease-in-out ${
+                  openedLawyerId === detailedLawyer.lawyerId
+                    ? "max-h-[1000px] opacity-100"
+                    : "max-h-0 opacity-0"
+                }`}
+              >
+                <div className="flex flex-col gap-4 pt-4">
+                  {/* 사무실 정보 */}
+                  <div className="relative bg-[#D9D9D9] py-2 px-4 rounded-[10px] text-[0.9rem] pc:text-[1.1rem] font-bold">
+                    <span>사무실 정보</span>
+                  </div>
+                  <div className="flex flex-col gap-4 px-6">
+                    {/* 사무실 이름 */}
+                    <div className="flex items-center">
+                      <div className="w-16 text-[15px] pc:text-[17px] font-bold">
+                        이름
+                      </div>
+                      <div className="text-[15px] pc:text-[17px] ml-5">
+                        {detailedLawyer.officeInfo.officeName}
+                      </div>
+                    </div>
+                    {/* 사무실 주소 */}
+                    <div className="flex items-center">
+                      <div className="w-16 text-[15px] pc:text-[17px] font-bold">
+                        주소
+                      </div>
+                      <div className="text-[15px] pc:text-[17px] ml-5">
+                        {detailedLawyer.officeInfo.officeAddress}
+                      </div>
+                    </div>
+                    {/* 사무실 전화번호 */}
+                    <div className="flex items-center">
+                      <div className="w-16 text-[15px] pc:text-[17px] font-bold">
+                        전화번호
+                      </div>
+                      <div className="text-[15px] pc:text-[17px] ml-5">
+                        {detailedLawyer.officeInfo.officePhoneNumber}
+                      </div>
+                    </div>
+                  </div>
+                  <div className="flex w-[70%] justify-center items-center mx-auto my-7 font-bold">
+                    <button
+                      onClick={() =>
+                        handleApprove(false, detailedLawyer.lawyerId)
+                      }
+                      className="bg-[#FF8787] w-full px-4 py-2 rounded-l hover:bg-[#FF6B6B] transition-colors duration-200"
+                    >
+                      거절
+                    </button>
+                    <button
+                      onClick={() =>
+                        handleApprove(true, detailedLawyer.lawyerId)
+                      }
+                      className="bg-[#9CB395] w-full px-4 py-2 rounded-r hover:bg-[#8BA385] transition-colors duration-200"
+                    >
+                      승인
+                    </button>
+                  </div>
                 </div>
               </div>
-              {/* 사무실 전화번호 */}
-              <div className="flex items-center">
-                <div className="w-16 text-[15px] pc:text-[17px] font-bold">
-                  전화번호
-                </div>
-                <div className="text-[15px] pc:text-[17px] ml-5">
-                  010-1234-5678
-                </div>
-              </div>
-            </div>
-            <div className="flex w-[70%] justify-center items-center mx-auto my-7 font-bold">
-              <button className="bg-[#FF8787] w-full px-4 py-2 rounded-l hover:bg-[#FF6B6B] transition-colors duration-200">
-                거절
-              </button>
-              <button className="bg-[#9CB395] w-full px-4 py-2 rounded-r hover:bg-[#8BA385] transition-colors duration-200">
-                승인
-              </button>
             </div>
           </div>
-        </div>
+        ))}
         {/* 페이지네이션 */}
         <div className="mt-8 mb-10 pc:mb-0 flex justify-center">
           <div className="flex items-center gap-2">
