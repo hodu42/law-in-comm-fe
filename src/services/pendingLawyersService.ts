@@ -9,7 +9,7 @@ export const DEFAULT_SIZE = 10;
 export const fetchPendingLawyers = async (
   page: number = DEFAULT_PAGE
 ): Promise<PageResponse<DetailedPendingLawyer>> => {
-  const pendingLawyersResponse = await getPendingLawyers(page, 2);
+  const pendingLawyersResponse = await getPendingLawyers(page, DEFAULT_SIZE);
 
   const pendingLawyers = pendingLawyersResponse.data.content;
 
