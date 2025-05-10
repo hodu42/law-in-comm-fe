@@ -2,7 +2,6 @@ import React, { useEffect, useState, useRef } from "react";
 import { Link } from "react-router-dom";
 import { Logo } from "@/components/Logo";
 import { MobileNav } from "@/components/MobileNav";
-import { registerGeneral } from "@/api/auth/register";
 import { useNavigation } from "@/hooks/useNavigation";
 import { LegalSpecialityLabels } from "@/types/speciality";
 import { LawyerInfo } from "@/types/lawyer";
