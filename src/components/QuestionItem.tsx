@@ -19,7 +19,7 @@ export const QuestionItem: React.FC<{
             {LegalSpecialityLabels[question.legalSpeciality]}
           </span>
           <span className="ml-auto text-[0.81rem] pc:text-[1rem] text-[#999999]">
-            {question.firstOccurrenceDate}
+            {question.createdAt.split("T")[0]}
           </span>
         </div>
 
