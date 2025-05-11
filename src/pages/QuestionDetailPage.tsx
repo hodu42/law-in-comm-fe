@@ -255,7 +255,7 @@ export const QuestionDetailPage = (): React.JSX.Element => {
                 <p>{question.firstOccurrenceDate}</p>
               </div>
               {question.authorName && (
-                <div className="flex text-[20px]">
+                <div className="flex text-[18px] pc:text-[20px]">
                   <span className="font-bold text-[#5C6E56] mr-2">작성자</span>
                   <h1 className="font-bold text-[#555]">
                     {question.authorName}
