@@ -269,7 +269,11 @@ export const QuestionDetailPage = (): React.JSX.Element => {
                 {question.content}
               </p>
               <div className="flex text-[14px] pc:text-[16px] text-[#B4B4B4] justify-end">
-                <span className="mr-3">{question.createdAt.split("T")[0]}</span>
+                <span className="mr-3">
+                  {question.updatedAt
+                    ? question.updatedAt.split("T")[0]
+                    : question.createdAt.split("T")[0]}
+                </span>
                 <span className="mr-3">조회수 {question.viewCount}</span>
                 <div className="flex items-center gap-2">
                   <span>신고 {question.reportCount}</span>
@@ -384,7 +388,9 @@ export const QuestionDetailPage = (): React.JSX.Element => {
                       )}
                     </div>
                     <p className="text-[16px] pc:text-[18px] text-gray-500">
-                      {answer.createdAt.split("T")[0]}
+                      {answer.updatedAt
+                        ? answer.updatedAt.split("T")[0]
+                        : answer.createdAt.split("T")[0]}
                     </p>
                   </div>
                 </div>
