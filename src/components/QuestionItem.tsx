@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { LegalSpecialityLabels } from "@/types/speciality";
 import { Question } from "@/types/question";
 import { Answer } from "@/types/answer";
+import { formatDate } from "@/utils/dateFormat";
 
 export const QuestionItem: React.FC<{
   question: Question;
@@ -20,8 +21,8 @@ export const QuestionItem: React.FC<{
           </span>
           <span className="ml-auto text-[0.81rem] pc:text-[1rem] text-[#999999]">
             {question.updatedAt
-              ? question.updatedAt.split("T")[0]
-              : question.createdAt.split("T")[0]}
+              ? formatDate(question.updatedAt)
+              : formatDate(question.createdAt)}
           </span>
         </div>
 

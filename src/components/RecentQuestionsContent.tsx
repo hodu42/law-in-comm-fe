@@ -2,6 +2,7 @@ import React from "react";
 import { Question } from "@/types/question";
 import { LegalSpecialityLabels } from "@/types/speciality";
 import { Link } from "react-router-dom";
+import { formatDate } from "@/utils/dateFormat";
 
 export const RecentQuestionsContent = ({
   anonymous: isAnonymous,
@@ -26,7 +27,7 @@ export const RecentQuestionsContent = ({
             {LegalSpecialityLabels[legalSpeciality]}
           </span>
           <span className="text-[0.8rem] pc:text-[1.1rem] text-[#999999] whitespace-nowrap">
-            {updatedAt ? updatedAt.split("T")[0] : createdAt.split("T")[0]}
+            {updatedAt ? formatDate(updatedAt) : formatDate(createdAt)}
           </span>
         </div>
 

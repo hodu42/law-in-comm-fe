@@ -19,6 +19,7 @@ import { DEFAULT_SIZE } from "@/services/questionService";
 import { useNavigation } from "@/hooks/useNavigation";
 import { getCurrentRole } from "@/hooks/tokenDecoder";
 import { IMAGE_URL } from "@/config/Config";
+import { formatDate } from "@/utils/dateFormat";
 
 export const QuestionDetailPage = (): React.JSX.Element => {
   const navigate = useNavigation();
@@ -271,8 +272,8 @@ export const QuestionDetailPage = (): React.JSX.Element => {
               <div className="flex text-[14px] pc:text-[16px] text-[#B4B4B4] justify-end">
                 <span className="mr-3">
                   {question.updatedAt
-                    ? question.updatedAt.split("T")[0]
-                    : question.createdAt.split("T")[0]}
+                    ? formatDate(question.updatedAt)
+                    : formatDate(question.createdAt)}
                 </span>
                 <span className="mr-3">조회수 {question.viewCount}</span>
                 <div className="flex items-center gap-2">
@@ -389,8 +390,8 @@ export const QuestionDetailPage = (): React.JSX.Element => {
                     </div>
                     <p className="text-[16px] pc:text-[18px] text-gray-500">
                       {answer.updatedAt
-                        ? answer.updatedAt.split("T")[0]
-                        : answer.createdAt.split("T")[0]}
+                        ? formatDate(answer.updatedAt)
+                        : formatDate(answer.createdAt)}
                     </p>
                   </div>
                 </div>
