@@ -18,6 +18,7 @@ import {
 import { DEFAULT_SIZE } from "@/services/questionService";
 import { useNavigation } from "@/hooks/useNavigation";
 import { getCurrentRole } from "@/hooks/tokenDecoder";
+import { IMAGE_URL } from "@/config/Config";
 
 export const QuestionDetailPage = (): React.JSX.Element => {
   const navigate = useNavigation();
@@ -267,7 +268,7 @@ export const QuestionDetailPage = (): React.JSX.Element => {
               <p className="text-[#656565] text-[15px] pc:text-[17px] whitespace-pre-line">
                 {question.content}
               </p>
-              <div className="flex text-[16px] pc:text-[18px] text-[#B4B4B4] justify-end">
+              <div className="flex text-[14px] pc:text-[16px] text-[#B4B4B4] justify-end">
                 <span className="mr-3">{question.createdAt.split("T")[0]}</span>
                 <span className="mr-3">조회수 {question.viewCount}</span>
                 <div className="flex items-center gap-2">
@@ -281,17 +282,17 @@ export const QuestionDetailPage = (): React.JSX.Element => {
                     }
                   >
                     <svg
-                      className="w-[13px] h-[14px] pc:w-[20px] pc:h-[20px] flex-shrink-0"
+                      className="w-[14px] h-[14px] pc:w-[18px] pc:h-[18px] text-[#EF4242] hover:text-[#D63030] transition-colors flex-shrink-0"
                       fill="none"
                       viewBox="0 0 16 16"
                     >
                       <path
-                        fill="#EF4242"
-                        stroke="#EF4242"
+                        fill="currentColor"
+                        stroke="currentColor"
                         d="M12 12.167H4V7.5a4 4 0 0 1 8 0v4.667Z"
                       />
                       <path
-                        stroke="#EF4242"
+                        stroke="currentColor"
                         d="M2.667 14.5h10.666m-12-9.666 1 .333m2-3.333.334 1m-1.333 1-1-1"
                       />
                     </svg>
@@ -320,8 +321,13 @@ export const QuestionDetailPage = (): React.JSX.Element => {
                 className="flex flex-col gap-4 bg-white p-10 rounded-[10px] shadow-sm border-2 border-[#9CB395] mb-24"
               >
                 <div className="flex items-center gap-6 mb-4 px-4">
+                  {/* 프로필 사진 존재 할 시 프로필 사진 출력, 없을 시 기본 이미지 출력 */}
                   <img
-                    src={"/images/default-profile.png"}
+                    src={
+                      answer.profileImageInfo
+                        ? `${IMAGE_URL}${answer.profileImageInfo.path}`
+                        : "https://upload.wikimedia.org/wikipedia/commons/9/99/Sample_User_Icon.png"
+                    }
                     alt={`프로필 사진`}
                     className="w-16 h-16 pc:w-20 pc:h-20 rounded-full bg-gray-200"
                   />
@@ -414,7 +420,7 @@ export const QuestionDetailPage = (): React.JSX.Element => {
                     </button>
                   </div>
                 )}
-                <div className="flex text-[16px] pc:text-[18px] text-[#B4B4B4] justify-end items-center gap-2">
+                <div className="flex text-[14px] pc:text-[16px] text-[#B4B4B4] justify-end items-center gap-2">
                   <div className="flex mr-3 gap-2">
                     <span>신고 {answer.reportCount}</span>
                     <button
@@ -423,25 +429,25 @@ export const QuestionDetailPage = (): React.JSX.Element => {
                       }
                     >
                       <svg
-                        className="w-[13px] h-[14px] pc:w-[20px] pc:h-[20px] flex-shrink-0"
+                        className="w-[14px] h-[14px] pc:w-[18px] pc:h-[18px] text-[#EF4242] hover:text-[#D63030] transition-colors flex-shrink-0"
                         fill="none"
                         viewBox="0 0 16 16"
                       >
                         <path
-                          fill="#EF4242"
-                          stroke="#EF4242"
+                          fill="currentColor"
+                          stroke="currentColor"
                           d="M12 12.167H4V7.5a4 4 0 0 1 8 0v4.667Z"
                         />
                         <path
-                          stroke="#EF4242"
+                          stroke="currentColor"
                           d="M2.667 14.5h10.666m-12-9.666 1 .333m2-3.333.334 1m-1.333 1-1-1"
                         />
                       </svg>
                     </button>
                   </div>
-                  <button className="flex items-center gap-2 bg-[#9CB395] p-2 rounded-[10px] text-white">
+                  <button className="flex items-center gap-2 bg-[#9CB395] hover:bg-[#8AA082] transition-colors p-2 rounded-[10px] text-white">
                     <svg
-                      className="w-6 h-6 pc:w-8 pc:h-8"
+                      className="w-6 h-6 pc:w-6 pc:h-6"
                       fill="none"
                       viewBox="0 0 50 50"
                     >
@@ -450,7 +456,7 @@ export const QuestionDetailPage = (): React.JSX.Element => {
                         d="M25 6.25c11.459 0 20.834 7.458 20.834 16.667 0 9.208-9.375 16.666-20.834 16.666-2.583 0-5.062-.375-7.354-1.041C11.563 43.75 4.167 43.75 4.167 43.75c4.854-4.854 5.625-8.125 5.73-9.375-3.543-2.98-5.73-7.02-5.73-11.458C4.167 13.708 13.542 6.25 25 6.25Z"
                       />
                     </svg>
-                    <span className="text-[15px] pc:text-[17px]">
+                    <span className="text-[14px] pc:text-[16px]">
                       채팅 신청
                     </span>
                   </button>
@@ -539,13 +545,13 @@ export const QuestionDetailPage = (): React.JSX.Element => {
             <div className="text-red-500 text-sm">{errorMsg}</div>
             <div className="flex justify-end gap-2">
               <button
-                className="px-4 py-2 text-gray-600 hover:bg-gray-100 rounded"
+                className="px-4 py-2 text-gray-600 hover:bg-gray-100 rounded transition-colors "
                 onClick={closeReportModal}
               >
                 취소
               </button>
               <button
-                className="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600"
+                className="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600 transition-colors"
                 onClick={handleReportSubmit}
               >
                 신고하기
