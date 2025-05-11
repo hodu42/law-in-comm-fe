@@ -9,3 +9,7 @@ export const getClientQuestions = async (page: number = DEFAULT_PAGE) => {
     size: DEFAULT_SIZE,
   });
 };
+
+export const getClientMypageData = async () => {
+  return api.get<any>(`/users/my-page`);
+};

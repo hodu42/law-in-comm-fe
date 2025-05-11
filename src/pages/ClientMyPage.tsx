@@ -7,6 +7,9 @@ import { QuestionWithAnswer } from "@/types/questionWithAnswer";
 import { fetchClientQuestionsWithAnswers } from "@/services/questionService";
 import { useNavigation } from "@/hooks/useNavigation";
 import { useLogout } from "@/hooks/useLogout";
+import { ClientMypageData } from "@/types/client";
+import { getClientMypageData } from "@/api/users/client";
+import { MobileNav } from "@/components/MobileNav";
 
 export const ClientMyPage = (): React.JSX.Element => {
   const navigate = useNavigation();
@@ -18,6 +21,7 @@ export const ClientMyPage = (): React.JSX.Element => {
   const [isLastPage, setIsLastPage] = useState(false);
   const [currentPage, setCurrentPage] = useState(0);
   const { handleLogout } = useLogout();
+  const [clientMypageData, setClientMypageData] = useState<ClientMypageData>();
 
   const loadQuestions = async (currentPage: number) => {
     const response = await fetchClientQuestionsWithAnswers(currentPage);
@@ -28,9 +32,18 @@ export const ClientMyPage = (): React.JSX.Element => {
     setIsLastPage(response.last);
   };
 
+  const loadClientMypageData = async () => {
+    const response = await getClientMypageData();
+    setClientMypageData(response.data);
+  };
+
   const handlePageChange = (newPage: number) => {
     setCurrentPage(newPage);
   };
+
+  useEffect(() => {
+    loadClientMypageData();
+  }, []);
 
   useEffect(() => {
     loadQuestions(currentPage);
@@ -84,13 +97,13 @@ export const ClientMyPage = (): React.JSX.Element => {
             <div className="flex items-center gap-x-5">
               <Link
                 to="/users/join/lawyer"
-                className="text-[14px] pc:text-[16px] hover:text-[#3F4D3B] transition-colors text-nowrap underline"
+                className="text-[14px] pc:text-[16px] hover:underline hover:text-[#9CB395] transition-colors text-nowrap"
               >
                 내 정보 수정
               </Link>
               <button
                 onClick={handleLogout}
-                className="text-[14px] pc:text-[16px] hover:text-[#3F4D3B] transition-colors text-nowrap underline"
+                className="text-[14px] pc:text-[16px] hover:underline hover:text-[#9CB395] transition-colors text-nowrap"
               >
                 로그아웃
               </button>
@@ -102,11 +115,43 @@ export const ClientMyPage = (): React.JSX.Element => {
         <div className="flex flex-col justify-between max-w-[800px] mx-auto">
           <div className="my-10 pl-4">
             <h1 className="text-[1.4rem] pc:text-[1.8rem] font-bold">
+              내 정보
+            </h1>
+          </div>
+          <div className="w-[50%] pc:w-[40%] bg-white border-2 border-[#C9D8B7] rounded-lg p-4 mx-auto">
+            <div className="flex flex-col gap-4 px-2 pc:px-6 my-4">
+              <div className="flex items-center justify-between pc:justify-evenly">
+                <div className="w-16 text-[14px] pc:text-[17px] font-bold">
+                  이름
+                </div>
+                <div className="text-[14px] pc:text-[17px] ml-2 pc:ml-5 break-all">
+                  {clientMypageData?.name}
+                </div>
+              </div>
+              <div className="flex items-center justify-between pc:justify-evenly">
+                <div className="w-16 text-[14px] pc:text-[17px] font-bold">
+                  닉네임
+                </div>
+                <div className="text-[14px] pc:text-[17px] ml-2 pc:ml-5 break-all">
+                  {clientMypageData?.nickname}
+                </div>
+              </div>
+              <div className="flex items-center justify-between pc:justify-evenly">
+                <div className="w-16 text-[14px] pc:text-[17px] font-bold">
+                  생년월일
+                </div>
+                <div className="text-[14px] pc:text-[17px] ml-2 pc:ml-5 break-all">
+                  {clientMypageData?.birth}
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="my-10 pl-4">
+            <h1 className="text-[1.4rem] pc:text-[1.8rem] font-bold">
               작성한 상담글{" "}
               <span className="text-[#9CB395]">{totalElements}</span>개
             </h1>
           </div>
-
           {/* 질문 목록 */}
           {questionList?.content.map(({ question, answers }) => (
             <QuestionItem
@@ -115,7 +160,6 @@ export const ClientMyPage = (): React.JSX.Element => {
               answers={answers ?? null}
             />
           ))}
-
           {/* 페이지네이션 */}
           <div className="mt-8 mb-10 pc:mb-0 flex justify-center">
             <div className="flex items-center gap-2">
@@ -154,6 +198,7 @@ export const ClientMyPage = (): React.JSX.Element => {
           </div>
         </div>
       </main>
+      <MobileNav />
     </div>
   );
 };
