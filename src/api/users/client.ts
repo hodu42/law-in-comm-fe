@@ -13,3 +13,15 @@ export const getClientQuestions = async (page: number = DEFAULT_PAGE) => {
 export const getClientMypageData = async () => {
   return api.get<any>(`/users/my-page`);
 };
+
+export const updateClientMypageData = async (
+  name: string,
+  nickname: string,
+  birth: string
+) => {
+  return api.put<any>(`/users/my-page`, {
+    name: name,
+    nickname: nickname,
+    birth: birth,
+  });
+};

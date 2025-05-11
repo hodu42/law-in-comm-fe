@@ -96,7 +96,7 @@ export const ClientMyPage = (): React.JSX.Element => {
           <div className="mr-6 pc:mr-0">
             <div className="flex items-center gap-x-5">
               <Link
-                to="/users/join/lawyer"
+                to="/client/my-page/modify"
                 className="text-[14px] pc:text-[16px] hover:underline hover:text-[#9CB395] transition-colors text-nowrap"
               >
                 내 정보 수정

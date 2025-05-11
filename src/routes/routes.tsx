@@ -20,6 +20,7 @@ import { ProtectedRoute } from "@/components/route/ProtectedRoute";
 import { ManageLawyerRegister } from "@/pages/ManageLawyerRegister";
 import { ClientMyPage } from "@/pages/ClientMyPage";
 import { LawyerMyPage } from "@/pages/LawyerMyPage";
+import { ClientMyPageModify } from "@/pages/ClientMyPageModify";
 
 export const protectedRoutes: RouteObject[] = [
   {
@@ -53,6 +54,10 @@ export const protectedRoutes: RouteObject[] = [
   {
     path: "/lawyer/my-page",
     element: <LawyerMyPage />,
+  },
+  {
+    path: "/client/my-page/modify",
+    element: <ClientMyPageModify />,
   },
 ];
 

@@ -49,7 +49,7 @@ export const MobileNav = (): React.JSX.Element => {
         className="text-[#848484] aria-[current=page]:text-[#9CB395]"
         aria-current={
           location.pathname === "/question/write" ||
-          location.pathname.includes("/modify")
+          location.pathname.includes("question/modify")
             ? "page"
             : undefined
         }
