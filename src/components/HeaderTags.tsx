@@ -5,38 +5,41 @@ import { useAppDispatch } from "@/hooks/useAppDispatch";
 import { getCurrentRole } from "@/hooks/tokenDecoder";
 import { Role } from "@/types/role";
 
-export const HeaderTags = ():React.JSX.Element => {
-    const {clearKeyword} = useAppDispatch();
-    const location = useLocation();
-    const userRole = getCurrentRole();
-    
-    const handleQuestionListClick = () => {
-        clearKeyword();
-    };
+export const HeaderTags = (): React.JSX.Element => {
+  const { clearKeyword } = useAppDispatch();
+  const location = useLocation();
+  const userRole = getCurrentRole();
 
-    const visiblePaths = headerPaths.filter((path) => {
-        if(!path.roles || path.roles.length === 0) {
-            return true;
-        }
-        if(userRole && path.roles.includes(userRole as Role)) {
-            return true;
-        }
+  const handleQuestionListClick = () => {
+    clearKeyword();
+  };
 
-        return false;
-    })
-    
-    return (
-        <nav className="hidden absolute pc:flex items-center w-full h-[72px] gap-[50px]">
-            {visiblePaths.map((path,idx) => (
-                <Link 
-                    key={idx} 
-                    to={path.link}
-                    onClick={handleQuestionListClick}
-                    className={`text-[#CECFD3] text-[24px] font-bold py-4 h-full hover:text-black hover:border-b-black hover:border-b-2 aria-[current=page]:text-black aria-[current=page]:border-b-black aria-[current=page]:border-b-2`}
-                    aria-current={location.pathname.startsWith(path.currentCheck) ? 'page' : undefined}>
-                    {path.title}
-                </Link>
-            ))}
-        </nav>
-    );
+  const visiblePaths = headerPaths.filter((path) => {
+    if (!path.roles || path.roles.length === 0) {
+      return true;
+    }
+    if (userRole && path.roles.includes(userRole as Role)) {
+      return true;
+    }
+
+    return false;
+  });
+
+  return (
+    <nav className="hidden absolute pc:flex items-center w-full h-[72px] gap-[50px]">
+      {visiblePaths.map((path, idx) => (
+        <Link
+          key={idx}
+          to={path.link}
+          onClick={handleQuestionListClick}
+          className={`text-[#CECFD3] text-[24px] font-bold py-4 h-full hover:text-black hover:border-b-black hover:border-b-2 aria-[current=page]:text-black aria-[current=page]:border-b-black aria-[current=page]:border-b-2 transition-colors`}
+          aria-current={
+            location.pathname.startsWith(path.currentCheck) ? "page" : undefined
+          }
+        >
+          {path.title}
+        </Link>
+      ))}
+    </nav>
+  );
 };

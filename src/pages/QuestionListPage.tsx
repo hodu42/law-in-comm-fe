@@ -120,7 +120,7 @@ export const QuestionListPage = (): React.JSX.Element => {
                 id="speciality"
                 value={category}
                 onChange={(e) => handleCategoryChange(e.target.value)}
-                className="appearance-none w-full px-4 py-2 border-2 text-[1.1rem] border-[#CFCFCF] rounded-[10px] bg-white focus:outline-none focus:border-[#9CB395]"
+                className="appearance-none w-full px-4 py-2 border-2 text-[1.1rem] border-[#CFCFCF] rounded-[10px] bg-white focus:outline-none focus:border-[#9CB395] hover:border-[#9CB395] hover:cursor-pointer transition-colors"
               >
                 <option value="">전체</option>
                 {Object.entries(LegalSpecialityLabels).map(([key, label]) => (
@@ -161,7 +161,7 @@ export const QuestionListPage = (): React.JSX.Element => {
               <button
                 onClick={() => handlePageChange(Math.max(0, currentPage - 1))}
                 disabled={isFirstPage}
-                className="px-3 py-1 rounded text-gray-700 hover:bg-[#C9D8B7] disabled:opacity-50 disabled:cursor-not-allowed"
+                className="px-3 py-1 rounded text-gray-700 hover:bg-[#C9D8B7] disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
               >
                 &lt;
               </button>
@@ -173,7 +173,7 @@ export const QuestionListPage = (): React.JSX.Element => {
                     className={`px-3 py-1 rounded ${
                       pageNum === currentPage
                         ? "bg-[#C9D8B7] text-gray-700"
-                        : "text-gray-700 hover:bg-[#C9D8B7]"
+                        : "text-gray-700 hover:bg-[#C9D8B7] transition-colors"
                     }`}
                   >
                     {pageNum + 1}
@@ -185,7 +185,7 @@ export const QuestionListPage = (): React.JSX.Element => {
                   handlePageChange(Math.min(totalPages - 1, currentPage + 1))
                 }
                 disabled={isLastPage}
-                className="px-3 py-1 rounded text-gray-700 hover:bg-[#C9D8B7] disabled:opacity-50 disabled:cursor-not-allowed"
+                className="px-3 py-1 rounded text-gray-700 hover:bg-[#C9D8B7] disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
               >
                 &gt;
               </button>

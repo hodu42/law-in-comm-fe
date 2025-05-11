@@ -7,13 +7,22 @@ interface CategoryItemProps {
   value: string;
 }
 
-export const CategoryItem = ({ title, value }: CategoryItemProps): React.JSX.Element => {
+export const CategoryItem = ({
+  title,
+  value,
+}: CategoryItemProps): React.JSX.Element => {
   const content = (
-    <Link className="flex gap-[11px] pc:gap-[28px] flex-col items-center group" to={`/questions?keyword=&category=${value}&page=0`}>
+    <Link
+      className="flex gap-[11px] pc:gap-[28px] flex-col items-center group"
+      to={`/questions?keyword=&category=${value}&page=0`}
+    >
       <div className="w-[48px] h-[48px] pc:w-[72px] pc:h-[72px]">
-        <CategoryIcon type={title} className="text-[#656565] group-hover:text-[#9CB395]" />
+        <CategoryIcon
+          type={title}
+          className="text-[#656565] group-hover:text-[#9CB395]"
+        />
       </div>
-      <span className="block whitespace-nowrap font-normal pc:font-bold text-[13px] pc:text-[19px] text-[#656565] group-hover:text-[#9CB395]">
+      <span className="block whitespace-nowrap font-normal pc:font-bold text-[13px] pc:text-[19px] text-[#656565] group-hover:text-[#9CB395] transition-colors">
         {title}
       </span>
     </Link>
@@ -26,4 +35,4 @@ export const CategoryItem = ({ title, value }: CategoryItemProps): React.JSX.Ele
       </div>
     </li>
   );
-}; 
+};
