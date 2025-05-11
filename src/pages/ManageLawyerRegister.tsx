@@ -59,19 +59,21 @@ export const ManageLawyerRegister = (): React.JSX.Element => {
         )}
         {pendingLawyers?.content.map((detailedLawyer) => (
           <div
-            onClick={() => {
-              setOpenedLawyerId(
-                openedLawyerId === detailedLawyer.lawyerId
-                  ? null
-                  : detailedLawyer.lawyerId
-              );
-            }}
             className="flex flex-col justify-between max-w-[800px] mx-auto mt-10"
             key={detailedLawyer.lawyerId}
           >
             <div className="bg-white rounded-b-[10px]">
               {/* 변호사 정보 */}
-              <div className="relative bg-[#D9D9D9] hover:bg-[#C4C4C4] py-2 px-4 rounded-[10px] text-[0.9rem] pc:text-[1.1rem] font-bold cursor-pointer transition-colors duration-200">
+              <div
+                className="relative bg-[#D9D9D9] hover:bg-[#C4C4C4] py-2 px-4 rounded-[10px] text-[0.9rem] pc:text-[1.1rem] font-bold cursor-pointer transition-colors duration-200"
+                onClick={() => {
+                  setOpenedLawyerId(
+                    openedLawyerId === detailedLawyer.lawyerId
+                      ? null
+                      : detailedLawyer.lawyerId
+                  );
+                }}
+              >
                 <span>변호사 정보</span>
                 <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-3">
                   <svg
@@ -141,29 +143,30 @@ export const ManageLawyerRegister = (): React.JSX.Element => {
                       <div className="w-full text-[15px] pc:text-[17px] font-bold">
                         변호사 사진 (눌러서 확대)
                       </div>
-                      <div
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          handleImageClick();
-                        }}
-                        className={`w-full ${
-                          isImageZoomed ? "max-w-[300px]" : "max-w-[100px]"
-                        } my-9`}
-                      >
-                        {/* TODO:변호사 사진 나오도록 변경하기 */}
-                        {/* <img
-                          src={`${IMAGE_URL}${detailedLawyer.profileImageInfo.path}`}
-                          alt={detailedLawyer.profileImageInfo.name}
-                          className="w-full h-full object-contain cursor-pointer"
-                        /> */}
-                        <img
-                          src={
-                            "https://www.lec.co.kr/news/photo/202304/743122_77322_2047.jpg"
-                          }
-                          alt={"변호사 사진"}
-                          className="w-full h-full object-contain cursor-pointer"
-                        />
-                      </div>
+                      {/* 사진이 존재할 시 보여주기 */}
+                      {detailedLawyer.profileImageInfo ? (
+                        <div
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            handleImageClick();
+                          }}
+                          className={`w-full ${
+                            isImageZoomed ? "max-w-[300px]" : "max-w-[100px]"
+                          } my-9`}
+                        >
+                          <img
+                            src={`${IMAGE_URL}${detailedLawyer.profileImageInfo.path}`}
+                            alt={detailedLawyer.profileImageInfo.name}
+                            className="w-full h-full object-contain cursor-pointer"
+                          />
+                        </div>
+                      ) : (
+                        <div className="flex items-center justify-center w-[40%] h-[180px] border-2 border-dashed border-[#E2E4E5] my-9">
+                          <p className="text-[#B4B4B4] text-[14px] pc:text-[16px]">
+                            등록된 사진이 없습니다.
+                          </p>
+                        </div>
+                      )}
                     </div>
                     {/* 합격 증명서 */}
                     <div className="flex flex-col items-center">
