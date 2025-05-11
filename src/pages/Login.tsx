@@ -1,65 +1,80 @@
-import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
-import { Logo } from '@/components/Logo';
-import { MobileNav } from '@/components/MobileNav';
-import { login } from '@/api/auth/login';
-import { useNavigation } from '@/hooks/useNavigation';
+import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import { Logo } from "@/components/Logo";
+import { MobileNav } from "@/components/MobileNav";
+import { login } from "@/api/auth/login";
+import { useNavigation } from "@/hooks/useNavigation";
 
 export const Login = (): React.JSX.Element => {
-  const {goToMain, goToPreviousPage} = useNavigation();
-  const [userId, setUserId] = useState<string>('');
-  const [password, setPassword] = useState<string>('');
-  const [error, setError] = useState<string>('');
+  const { goToMain, goToPreviousPage } = useNavigation();
+  const [userId, setUserId] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
+  const [error, setError] = useState<string>("");
 
   // 아이디 또는 비밀번호가 입력되면 에러 메시지 초기화
   useEffect(() => {
     if (userId || password) {
-      setError('');
+      setError("");
     }
   }, [userId, password]);
 
   const handleLogin = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    setError('');
+    setError("");
 
     try {
       await login(userId, password);
       goToMain();
     } catch (error: any) {
       if (error.response?.status === 401) {
-        setError('잘못된 아이디/비밀번호입니다.');
+        setError("잘못된 아이디/비밀번호입니다.");
       } else {
-        setError('로그인 중 오류가 발생했습니다');
+        setError("로그인 중 오류가 발생했습니다");
       }
     }
   };
 
   return (
     <div className="flex flex-col min-h-screen items-center bg-white overflow-x-hidden">
-      
       {/* 헤더 영역 */}
       <header className="fixed top-0 left-0 right-0 w-full h-[72px] flex items-center justify-center bg-white z-20">
         <div className="relative w-full min-w-[355px] max-w-[1350px] pc:w-[70.31%] h-full flex items-center">
           {/* 모바일 뒤로가기 버튼 */}
-          <button onClick={() => goToPreviousPage()} className="pc:hidden flex items-center text-black z-10 ml-6">
-              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 19l-7-7 7-7"></path>
-              </svg>
+          <button
+            onClick={() => goToPreviousPage()}
+            className="pc:hidden flex items-center text-black z-10 ml-6"
+          >
+            <svg
+              className="w-6 h-6"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                d="M15 19l-7-7 7-7"
+              ></path>
+            </svg>
           </button>
           {/* 데스크탑 로고 */}
-          <Link to="/main" className="hidden pc:flex items-center absolute left-4 z-10">
+          <Link
+            to="/main"
+            className="hidden pc:flex items-center absolute left-4 z-10"
+          >
             <div className="text-[#A9BE8C] font-bold text-2xl flex items-center">
               <Logo />
               <span className="ml-5 text-[#9CB395] text-[36px]">로인컴</span>
             </div>
           </Link>
-            
+
           <div className="flex items-center justify-between w-full">
             {/* 타이틀 */}
             <div className="absolute left-1/2 -translate-x-1/2 text-[21px] font-bold">
               로그인
             </div>
-            
+
             {/* 균형을 위한 빈 공간 */}
             <div className="pc:hidden w-6"></div>
           </div>
@@ -68,7 +83,10 @@ export const Login = (): React.JSX.Element => {
 
       {/* 메인 콘텐츠 */}
       <div className="flex flex-col w-full flex-grow px-6 items-center pt-[36px]">
-        <form onSubmit={handleLogin} className="flex flex-col w-full pc:max-w-[570px] pc:mx-auto mt-10 pc:mt-16 gap-y-20 px-5 py-[72px] border-b-[1.7px] border-[#B4B4B4]">
+        <form
+          onSubmit={handleLogin}
+          className="flex flex-col w-full pc:max-w-[570px] pc:mx-auto mt-10 pc:mt-16 gap-y-20 px-5 py-[72px] border-b-[1.7px] border-[#B4B4B4]"
+        >
           {/* 아이디 입력 필드 */}
           <div className="flex flex-col gap-5 pc:gap-6">
             <label className="text-[#656565] text-[20px] font-bold">
@@ -111,16 +129,21 @@ export const Login = (): React.JSX.Element => {
           </button>
         </form>
         {/* 회원가입 링크 */}
-        <div className="flex w-full pc:w-[570px] justify-evenly my-[50px]">
-          <span className="font-NotoSansKR text-[16px] pc:text-[20px]">아직 회원이 아니신가요?</span>
-          <Link to="/users/join/general" className="font-NotoSansKR text-[16px] pc:text-[20px] text-[#A9BE8C] hover:text-[#9CB395] hover:underline transition-colors font-bold">
+        <div className="flex w-full mb-32 pc:mb-20 pc:w-[570px] justify-evenly my-[50px]">
+          <span className="font-NotoSansKR text-[16px] pc:text-[20px]">
+            아직 회원이 아니신가요?
+          </span>
+          <Link
+            to="/users/join/general"
+            className="font-NotoSansKR text-[16px] pc:text-[20px] text-[#A9BE8C] hover:text-[#9CB395] hover:underline transition-colors font-bold"
+          >
             회원가입
           </Link>
         </div>
       </div>
 
       {/* 모바일 하단 네비게이션 */}
-      <MobileNav/>
+      <MobileNav />
     </div>
   );
-}; 
+};
