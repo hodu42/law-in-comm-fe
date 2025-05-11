@@ -15,7 +15,8 @@ export const ClientRegister = (): React.JSX.Element => {
   const [nickname, setNickname] = useState<string>("");
   const [birthDate, setBirthDate] = useState<string>("");
   const [error, setError] = useState<string>("");
-  const [nicknameDuplicateMessage, setNicknameDuplicateMessage] = useState<string>("");
+  const [nicknameDuplicateMessage, setNicknameDuplicateMessage] =
+    useState<string>("");
   const dateInputRef = useRef<HTMLInputElement>(null);
 
   // 아이디 또는 비밀번호가 입력되면 에러 메시지 초기화
@@ -27,7 +28,7 @@ export const ClientRegister = (): React.JSX.Element => {
   // 닉네임 입력 시 에러 메시지 초기화
   useEffect(() => {
     if (nickname) {
-      setNicknameDuplicateMessage('');
+      setNicknameDuplicateMessage("");
     }
   }, [nickname]);
 
@@ -41,10 +42,10 @@ export const ClientRegister = (): React.JSX.Element => {
         name: name,
         nickname: nickname,
         password: password,
-        birthDate: birthDate
-      }
+        birthDate: birthDate,
+      };
       await registerGeneral(userData);
-      alert('회원가입이 완료되었습니다.');
+      alert("회원가입이 완료되었습니다.");
       goToLogin();
     } catch (error: any) {
       if (error.response?.status === 401) {
@@ -65,7 +66,7 @@ export const ClientRegister = (): React.JSX.Element => {
       } else {
         setNicknameDuplicateMessage(`${nickname}은 사용 가능한 닉네임입니다.`);
       }
-    } catch (error:any) {
+    } catch (error: any) {
       if (error.response.data.code === 4000009) {
         const errorMessage = error.response.data.message.split(": ")[1];
         setNicknameDuplicateMessage(errorMessage);
@@ -121,7 +122,10 @@ export const ClientRegister = (): React.JSX.Element => {
           </div>
           <div className="mr-6 pc:mr-0">
             <div className="flex items-center justify-center">
-              <Link to="/users/join/lawyer" className="text-[14px] pc:text-[16px] text-[#5C6E56] hover:text-[#3F4D3B] transition-colors text-nowrap underline">
+              <Link
+                to="/users/join/lawyer"
+                className="text-[14px] pc:text-[16px] text-[#5C6E56] hover:text-[#3F4D3B] transition-colors text-nowrap underline"
+              >
                 변호사 회원가입
               </Link>
             </div>

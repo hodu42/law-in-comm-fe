@@ -18,6 +18,8 @@ import { ClientRegister } from "@/pages/ClientRegister";
 import { LawyerRegister } from "@/pages/LawyerRegister";
 import { ProtectedRoute } from "@/components/route/ProtectedRoute";
 import { ManageLawyerRegister } from "@/pages/ManageLawyerRegister";
+import { ClientMyPage } from "@/pages/ClientMyPage";
+import { LawyerMyPage } from "@/pages/LawyerMyPage";
 
 export const protectedRoutes: RouteObject[] = [
   {
@@ -43,6 +45,14 @@ export const protectedRoutes: RouteObject[] = [
   {
     path: "/lawyer/manage",
     element: <ManageLawyerRegister />,
+  },
+  {
+    path: "/client/my-page",
+    element: <ClientMyPage />,
+  },
+  {
+    path: "/lawyer/my-page",
+    element: <LawyerMyPage />,
   },
 ];
 

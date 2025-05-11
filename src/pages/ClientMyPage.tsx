@@ -1,0 +1,159 @@
+import { useState, useEffect } from "react";
+import { Logo } from "@/components/Logo";
+import { Link } from "react-router-dom";
+import { QuestionItem } from "@/components/QuestionItem";
+import { PageResponse } from "@/types/page";
+import { QuestionWithAnswer } from "@/types/questionWithAnswer";
+import { fetchClientQuestionsWithAnswers } from "@/services/questionService";
+import { useNavigation } from "@/hooks/useNavigation";
+import { useLogout } from "@/hooks/useLogout";
+
+export const ClientMyPage = (): React.JSX.Element => {
+  const navigate = useNavigation();
+  const [totalElements, setTotalElements] = useState<number>(0);
+  const [questionList, setQuestionList] =
+    useState<PageResponse<QuestionWithAnswer>>();
+  const [totalPages, setTotalPages] = useState(0);
+  const [isFirstPage, setIsFirstPage] = useState(true);
+  const [isLastPage, setIsLastPage] = useState(false);
+  const [currentPage, setCurrentPage] = useState(0);
+  const { handleLogout } = useLogout();
+
+  const loadQuestions = async (currentPage: number) => {
+    const response = await fetchClientQuestionsWithAnswers(currentPage);
+    setQuestionList(response);
+    setTotalElements(response.totalElements);
+    setTotalPages(response.totalPages);
+    setIsFirstPage(response.first);
+    setIsLastPage(response.last);
+  };
+
+  const handlePageChange = (newPage: number) => {
+    setCurrentPage(newPage);
+  };
+
+  useEffect(() => {
+    loadQuestions(currentPage);
+  }, [currentPage]);
+
+  return (
+    <div className="flex flex-col min-h-screen bg-gray-50">
+      {/* 헤더 영역 */}
+      <header className="fixed top-0 left-0 right-0 w-full h-[72px] flex items-center justify-center bg-white z-20 shadow-sm">
+        <div className="relative w-full min-w-[355px] max-w-[1350px] pc:w-[70.31%] h-full flex items-center">
+          {/* 모바일 뒤로가기 버튼 */}
+          <button
+            onClick={() => navigate.goToPreviousPage()}
+            className="pc:hidden flex items-center text-black z-10 ml-6"
+          >
+            <svg
+              className="w-6 h-6"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                d="M15 19l-7-7 7-7"
+              ></path>
+            </svg>
+          </button>
+          {/* 데스크탑 로고 */}
+          <Link
+            to="/main"
+            className="hidden pc:flex items-center absolute left-4 z-10"
+          >
+            <div className="text-[#A9BE8C] font-bold text-2xl flex items-center">
+              <Logo />
+              <span className="ml-5 text-[#9CB395] text-[36px]">로인컴</span>
+            </div>
+          </Link>
+
+          <div className="flex items-center justify-between w-full">
+            {/* 타이틀 */}
+            <div className="absolute left-1/2 -translate-x-1/2 text-[21px] font-bold">
+              마이페이지
+            </div>
+
+            {/* 균형을 위한 빈 공간 */}
+            <div className="pc:hidden w-6"></div>
+          </div>
+          <div className="mr-6 pc:mr-0">
+            <div className="flex items-center gap-x-5">
+              <Link
+                to="/users/join/lawyer"
+                className="text-[14px] pc:text-[16px] hover:text-[#3F4D3B] transition-colors text-nowrap underline"
+              >
+                내 정보 수정
+              </Link>
+              <button
+                onClick={handleLogout}
+                className="text-[14px] pc:text-[16px] hover:text-[#3F4D3B] transition-colors text-nowrap underline"
+              >
+                로그아웃
+              </button>
+            </div>
+          </div>
+        </div>
+      </header>
+      <main className="container mx-auto mt-[72px] px-4 pb-20 flex-grow">
+        <div className="flex flex-col justify-between max-w-[800px] mx-auto">
+          <div className="my-10 pl-4">
+            <h1 className="text-[1.4rem] pc:text-[1.8rem] font-bold">
+              작성한 상담글{" "}
+              <span className="text-[#9CB395]">{totalElements}</span>개
+            </h1>
+          </div>
+
+          {/* 질문 목록 */}
+          {questionList?.content.map(({ question, answers }) => (
+            <QuestionItem
+              key={question.questionId}
+              question={question}
+              answers={answers ?? null}
+            />
+          ))}
+
+          {/* 페이지네이션 */}
+          <div className="mt-8 mb-10 pc:mb-0 flex justify-center">
+            <div className="flex items-center gap-2">
+              <button
+                onClick={() => handlePageChange(Math.max(0, currentPage - 1))}
+                disabled={isFirstPage}
+                className="px-3 py-1 rounded text-gray-700 hover:bg-[#C9D8B7] disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+              >
+                &lt;
+              </button>
+              {Array.from({ length: Math.max(1, totalPages) }, (_, i) => i).map(
+                (pageNum) => (
+                  <button
+                    key={pageNum}
+                    onClick={() => handlePageChange(pageNum)}
+                    className={`px-3 py-1 rounded ${
+                      pageNum === currentPage
+                        ? "bg-[#C9D8B7] text-gray-700"
+                        : "text-gray-700 hover:bg-[#C9D8B7] transition-colors"
+                    }`}
+                  >
+                    {pageNum + 1}
+                  </button>
+                )
+              )}
+              <button
+                onClick={() =>
+                  handlePageChange(Math.min(totalPages - 1, currentPage + 1))
+                }
+                disabled={isLastPage}
+                className="px-3 py-1 rounded text-gray-700 hover:bg-[#C9D8B7] disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+              >
+                &gt;
+              </button>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+  );
+};
