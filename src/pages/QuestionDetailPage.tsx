@@ -199,73 +199,82 @@ export const QuestionDetailPage = (): React.JSX.Element => {
         {/* 질문 영역 */}
         {question && (
           <article className="bg-white mb-12 rounded-[10px] shadow-sm">
-            <div className="flex flex-col gap-[30px] p-10">
-              <div className="flex justify-between items-start px-4">
-                <span className="text-[18px] pc:text-[20px] text-[#848484]">
-                  {LegalSpecialityLabels[question.legalSpeciality]}
-                </span>
-                {question.author && (
-                  <div className="flex gap-2">
-                    <button
-                      onClick={() =>
-                        navigate.goToQuestionModify(String(questionId))
-                      }
-                      className="mr-2"
-                    >
-                      <svg
-                        className="w-6 h-6 text-[#9CB395]"
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
+            <div className="flex flex-col gap-[20px] p-8">
+              <div className="flex flex-col gap-4">
+                <div className="flex justify-end items-start px-4">
+                  {question.author && (
+                    <div className="flex gap-2">
+                      <button
+                        onClick={() =>
+                          navigate.goToQuestionModify(String(questionId))
+                        }
+                        className="mr-2"
                       >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth="2"
-                          d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"
-                        />
-                      </svg>
-                    </button>
-                    <button
-                      onClick={() =>
-                        openDeleteModal({
-                          type: "question",
-                          id: question.questionId,
-                        })
-                      }
-                    >
-                      <svg
-                        className="w-7 h-7 text-red-500"
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
+                        <svg
+                          className="w-6 h-6 text-[#9CB395]"
+                          fill="none"
+                          stroke="currentColor"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth="2"
+                            d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"
+                          />
+                        </svg>
+                      </button>
+                      <button
+                        onClick={() =>
+                          openDeleteModal({
+                            type: "question",
+                            id: question.questionId,
+                          })
+                        }
                       >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth="2"
-                          d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
-                        />
-                      </svg>
-                    </button>
+                        <svg
+                          className="w-7 h-7 text-red-500"
+                          fill="none"
+                          stroke="currentColor"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth="2"
+                            d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
+                          />
+                        </svg>
+                      </button>
+                    </div>
+                  )}
+                </div>
+              </div>
+
+              <div className="flex flex-col gap-2">
+                <div className="flex items-center">
+                  <h2 className="text-[19px] pc:text-[21px] font-bold mr-2">
+                    {question.title}
+                  </h2>
+                  <span className="text-[18px] pc:text-[20px] text-[#848484]">
+                    {LegalSpecialityLabels[question.legalSpeciality]}
+                  </span>
+                </div>
+                <div className="flex text-[16px] pc:text-[16px] text-[#999]">
+                  <span className="mr-6">최초 사건 발생일</span>
+                  <p>{question.firstOccurrenceDate}</p>
+                </div>
+                {question.authorName && (
+                  <div className="flex text-[14px] pc:text-[16px] pl-6">
+                    <span className="font-bold text-[#5C6E56] mr-2">
+                      작성자
+                    </span>
+                    <h1 className="font-bold text-[#555]">
+                      {question.authorName}
+                    </h1>
                   </div>
                 )}
               </div>
-              <div className="flex justify-between text-[16px] pc:text-[18px] text-[#999]">
-                <span className="">최초 사건 발생일</span>
-                <p>{question.firstOccurrenceDate}</p>
-              </div>
-              {question.authorName && (
-                <div className="flex text-[18px] pc:text-[20px]">
-                  <span className="font-bold text-[#5C6E56] mr-2">작성자</span>
-                  <h1 className="font-bold text-[#555]">
-                    {question.authorName}
-                  </h1>
-                </div>
-              )}
-              <h2 className="text-[19px] pc:text-[21px] font-bold">
-                {question.title}
-              </h2>
               <p className="text-[#656565] text-[15px] pc:text-[17px] whitespace-pre-line">
                 {question.content}
               </p>
@@ -326,7 +335,7 @@ export const QuestionDetailPage = (): React.JSX.Element => {
                 className="flex flex-col gap-4 bg-white p-10 rounded-[10px] shadow-sm border-2 border-[#9CB395] mb-24"
               >
                 <div className="flex items-center gap-6 mb-4 px-4">
-                  {/* 프로필 사진 존재 할 시 프로필 사진 출력, 없을 시 기본 이미지 출력 */}
+                  {/* TODO: 기본 이미지 URL 수정하기 , 프로필 사진 존재 할 시 프로필 사진 출력, 없을 시 기본 이미지 출력 */}
                   <img
                     src={
                       answer.profileImageInfo
@@ -339,7 +348,7 @@ export const QuestionDetailPage = (): React.JSX.Element => {
                   <div className="flex-grow">
                     <div className="flex justify-between items-center">
                       <h4 className="text-[19px] pc:text-[21px] font-bold">
-                        {answer.authorName}
+                        {`${answer.authorName} 변호사`}
                       </h4>
                       {answer.author && (
                         <div className="flex gap-2">
