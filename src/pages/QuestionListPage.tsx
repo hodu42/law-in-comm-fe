@@ -4,7 +4,7 @@ import { MobileNav } from "@/components/MobileNav";
 import { MainHeader } from "@/components/MainHeader";
 import { QuestionItem } from "@/components/QuestionItem";
 import { fetchQuestionsWithAnswers } from "@/services/questionService";
-import { QuestionWithAnswer } from "@/types/questionWithAnswer";
+import { QuestionWithAnswerList } from "@/types/questionWithAnswer";
 import { PageResponse } from "@/types/page";
 import { LegalSpecialityLabels } from "@/types/speciality";
 import { useAppSelector } from "@/hooks/useAppSelector";
@@ -15,7 +15,7 @@ export const QuestionListPage = (): React.JSX.Element => {
   const { keyword: currentKeyword } = useAppSelector();
   const { setKeyword } = useAppDispatch();
   const [questionList, setQuestionList] =
-    useState<PageResponse<QuestionWithAnswer>>();
+    useState<PageResponse<QuestionWithAnswerList>>();
   const [totalPages, setTotalPages] = useState(0);
   const [isFirstPage, setIsFirstPage] = useState(true);
   const [isLastPage, setIsLastPage] = useState(false);

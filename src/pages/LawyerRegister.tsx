@@ -4,7 +4,7 @@ import { Logo } from "@/components/Logo";
 import { MobileNav } from "@/components/MobileNav";
 import { useNavigation } from "@/hooks/useNavigation";
 import { LegalSpecialityLabels } from "@/types/speciality";
-import { LawyerInfo } from "@/types/lawyer";
+import { RegisterLawyerInfo } from "@/types/lawyer";
 import { registerLawyer } from "@/api/auth/register";
 
 export const LawyerRegister = (): React.JSX.Element => {
@@ -43,7 +43,7 @@ export const LawyerRegister = (): React.JSX.Element => {
       setError("증명서 이미지를 첨부해주세요.");
       return;
     }
-    const userData: LawyerInfo = {
+    const userData: RegisterLawyerInfo = {
       legalSpecialties: checkedList,
       officeInfo: {
         officeName: officeName,

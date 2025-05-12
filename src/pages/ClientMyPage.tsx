@@ -3,7 +3,7 @@ import { Logo } from "@/components/Logo";
 import { Link } from "react-router-dom";
 import { QuestionItem } from "@/components/QuestionItem";
 import { PageResponse } from "@/types/page";
-import { QuestionWithAnswer } from "@/types/questionWithAnswer";
+import { QuestionWithAnswerList } from "@/types/questionWithAnswer";
 import { fetchClientQuestionsWithAnswers } from "@/services/questionService";
 import { useNavigation } from "@/hooks/useNavigation";
 import { useLogout } from "@/hooks/useLogout";
@@ -15,7 +15,7 @@ export const ClientMyPage = (): React.JSX.Element => {
   const navigate = useNavigation();
   const [totalElements, setTotalElements] = useState<number>(0);
   const [questionList, setQuestionList] =
-    useState<PageResponse<QuestionWithAnswer>>();
+    useState<PageResponse<QuestionWithAnswerList>>();
   const [totalPages, setTotalPages] = useState(0);
   const [isFirstPage, setIsFirstPage] = useState(true);
   const [isLastPage, setIsLastPage] = useState(false);

@@ -1,4 +1,4 @@
-import { QuestionWithAnswer } from "@/types/questionWithAnswer";
+import { QuestionWithAnswerList } from "@/types/questionWithAnswer";
 import { searchQuestion } from "@/api/questions";
 import { Question } from "@/types/question";
 import { getAnswers } from "@/api/answers";
@@ -12,7 +12,7 @@ export const fetchQuestionsWithAnswers = async (
   page: number = DEFAULT_PAGE,
   legalSpeciality: string,
   keyword: string
-): Promise<PageResponse<QuestionWithAnswer>> => {
+): Promise<PageResponse<QuestionWithAnswerList>> => {
   // undefined인 경우 빈 문자열로 처리
   const speciality = legalSpeciality || "";
   const searchKeyword = keyword || "";
@@ -50,7 +50,7 @@ export const fetchQuestionsWithAnswers = async (
 
 export const fetchClientQuestionsWithAnswers = async (
   page: number = DEFAULT_PAGE
-): Promise<PageResponse<QuestionWithAnswer>> => {
+): Promise<PageResponse<QuestionWithAnswerList>> => {
   const questionResponse = await getClientQuestions(page);
 
   const questions = questionResponse.data.content;

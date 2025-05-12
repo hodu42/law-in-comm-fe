@@ -15,3 +15,8 @@ export interface Answer {
     path: string;
   };
 }
+
+export type WrittenAnswer = Omit<
+  Answer,
+  "author" | "authorName" | "profileImageInfo" | "authorId"
+> & { questionId: number };
