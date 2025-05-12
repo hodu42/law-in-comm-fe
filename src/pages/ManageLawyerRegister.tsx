@@ -138,36 +138,6 @@ export const ManageLawyerRegister = (): React.JSX.Element => {
                         {detailedLawyer.description}
                       </div>
                     </div>
-                    {/* 변호사 사진 */}
-                    <div className="flex flex-col items-center">
-                      <div className="w-full text-[15px] pc:text-[17px] font-bold">
-                        변호사 사진 (눌러서 확대)
-                      </div>
-                      {/* 사진이 존재할 시 보여주기 */}
-                      {detailedLawyer.profileImageInfo ? (
-                        <div
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            handleImageClick();
-                          }}
-                          className={`w-full ${
-                            isImageZoomed ? "max-w-[300px]" : "max-w-[100px]"
-                          } my-9`}
-                        >
-                          <img
-                            src={`${IMAGE_URL}${detailedLawyer.profileImageInfo.path}`}
-                            alt={detailedLawyer.profileImageInfo.name}
-                            className="w-full h-full object-contain cursor-pointer"
-                          />
-                        </div>
-                      ) : (
-                        <div className="flex items-center justify-center w-[40%] h-[180px] border-2 border-dashed border-[#E2E4E5] my-9">
-                          <p className="text-[#B4B4B4] text-[14px] pc:text-[16px]">
-                            등록된 사진이 없습니다.
-                          </p>
-                        </div>
-                      )}
-                    </div>
                     {/* 합격 증명서 */}
                     <div className="flex flex-col items-center">
                       <div className="w-full text-[15px] pc:text-[17px] font-bold">
