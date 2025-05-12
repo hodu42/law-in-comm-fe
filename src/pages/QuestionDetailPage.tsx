@@ -20,6 +20,7 @@ import { useNavigation } from "@/hooks/useNavigation";
 import { getCurrentRole } from "@/hooks/tokenDecoder";
 import { IMAGE_URL } from "@/config/Config";
 import { formatDate } from "@/utils/dateFormat";
+import { AI_ASSISTANT_ID } from "@/config/Config";
 
 export const QuestionDetailPage = (): React.JSX.Element => {
   const navigate = useNavigation();
@@ -62,6 +63,7 @@ export const QuestionDetailPage = (): React.JSX.Element => {
       String(currentPage),
       String(DEFAULT_SIZE)
     );
+    console.log(response.data);
     setAnswers(response.data);
     setTotalPages(response.data.totalPages);
     setIsFirstPage(response.data.first);
@@ -348,7 +350,9 @@ export const QuestionDetailPage = (): React.JSX.Element => {
                   <div className="flex-grow">
                     <div className="flex justify-between items-center">
                       <h4 className="text-[19px] pc:text-[21px] font-bold">
-                        {`${answer.authorName} 변호사`}
+                        {answer.authorId === AI_ASSISTANT_ID
+                          ? `${answer.authorName}`
+                          : `${answer.authorName} 변호사`}
                       </h4>
                       {answer.author && (
                         <div className="flex gap-2">
@@ -461,21 +465,23 @@ export const QuestionDetailPage = (): React.JSX.Element => {
                       </svg>
                     </button>
                   </div>
-                  <button className="flex items-center gap-2 bg-[#9CB395] hover:bg-[#8AA082] transition-colors p-2 rounded-[10px] text-white">
-                    <svg
-                      className="w-6 h-6 pc:w-6 pc:h-6"
-                      fill="none"
-                      viewBox="0 0 50 50"
-                    >
-                      <path
-                        fill="currentColor"
-                        d="M25 6.25c11.459 0 20.834 7.458 20.834 16.667 0 9.208-9.375 16.666-20.834 16.666-2.583 0-5.062-.375-7.354-1.041C11.563 43.75 4.167 43.75 4.167 43.75c4.854-4.854 5.625-8.125 5.73-9.375-3.543-2.98-5.73-7.02-5.73-11.458C4.167 13.708 13.542 6.25 25 6.25Z"
-                      />
-                    </svg>
-                    <span className="text-[14px] pc:text-[16px]">
-                      채팅 신청
-                    </span>
-                  </button>
+                  {answer.authorId !== AI_ASSISTANT_ID && (
+                    <button className="flex items-center gap-2 bg-[#9CB395] hover:bg-[#8AA082] transition-colors p-2 rounded-[10px] text-white">
+                      <svg
+                        className="w-6 h-6 pc:w-6 pc:h-6"
+                        fill="none"
+                        viewBox="0 0 50 50"
+                      >
+                        <path
+                          fill="currentColor"
+                          d="M25 6.25c11.459 0 20.834 7.458 20.834 16.667 0 9.208-9.375 16.666-20.834 16.666-2.583 0-5.062-.375-7.354-1.041C11.563 43.75 4.167 43.75 4.167 43.75c4.854-4.854 5.625-8.125 5.73-9.375-3.543-2.98-5.73-7.02-5.73-11.458C4.167 13.708 13.542 6.25 25 6.25Z"
+                        />
+                      </svg>
+                      <span className="text-[14px] pc:text-[16px]">
+                        채팅 신청
+                      </span>
+                    </button>
+                  )}
                 </div>
               </div>
             ))}
