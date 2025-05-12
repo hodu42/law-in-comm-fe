@@ -16,7 +16,7 @@ export const MainPage = (): React.JSX.Element => {
 
   useEffect(() => {
     const fetchRecentQuestions = async () => {
-      const response = await searchQuestion("", "", 0, 5);
+      const response = await searchQuestion();
       setRecentQuestions(response.data.content);
     };
     fetchRecentQuestions();

@@ -1,4 +1,4 @@
-import { api } from '../index';
+import { api } from "../index";
 
 export const deleteQuestion = async (id: string) => {
   return api.delete<any>(`/questions/${id}`);
@@ -8,12 +8,28 @@ export const getQuestion = async (id: string) => {
   return api.get<any>(`/questions/${id}`);
 };
 
-export const searchQuestion = async (keyword: string, legalSpeciality: string, page: number, size: number) => {
-  return api.get<any>(`/questions/search`, { keyword, legalSpeciality, page, size });
+export const searchQuestion = async (
+  keyword: string = "",
+  legalSpeciality: string = "",
+  page: number = 0,
+  size: number = 5
+) => {
+  return api.get<any>(`/questions/search`, {
+    keyword,
+    legalSpeciality,
+    page,
+    size,
+  });
 };
 
-export const createQuestion = async (title: string, legalSpeciality: string, content: string, firstOccurenceDate: string, isAnonymous: boolean) => {
-  return api.post<any>('/questions', {
+export const createQuestion = async (
+  title: string,
+  legalSpeciality: string,
+  content: string,
+  firstOccurenceDate: string,
+  isAnonymous: boolean
+) => {
+  return api.post<any>("/questions", {
     title: title,
     legalSpeciality: legalSpeciality,
     content: content,
@@ -22,7 +38,14 @@ export const createQuestion = async (title: string, legalSpeciality: string, con
   });
 };
 
-export const updateQuestion = async (id: string, title: string, legalSpeciality: string, content: string, firstOccurenceDate: string, anonymous: boolean) => {
+export const updateQuestion = async (
+  id: string,
+  title: string,
+  legalSpeciality: string,
+  content: string,
+  firstOccurenceDate: string,
+  anonymous: boolean
+) => {
   return api.put<any>(`/questions/${id}`, {
     title: title,
     legalSpeciality: legalSpeciality,
