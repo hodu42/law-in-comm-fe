@@ -199,9 +199,12 @@ export const QuestionDetailPage = (): React.JSX.Element => {
         {/* 질문 영역 */}
         {question && (
           <article className="bg-white mb-12 rounded-[10px] shadow-sm">
-            <div className="flex flex-col gap-[20px] p-8">
+            <div className="flex flex-col p-8">
               <div className="flex flex-col gap-4">
-                <div className="flex justify-end items-start px-4">
+                <div className="flex justify-between items-center">
+                  <span className="text-[18px] pc:text-[16px] text-[#848484]">
+                    {LegalSpecialityLabels[question.legalSpeciality]}
+                  </span>
                   {question.author && (
                     <div className="flex gap-2">
                       <button
@@ -251,34 +254,31 @@ export const QuestionDetailPage = (): React.JSX.Element => {
                 </div>
               </div>
 
-              <div className="flex flex-col gap-2">
-                <div className="flex items-center">
-                  <h2 className="text-[19px] pc:text-[21px] font-bold mr-2">
-                    {question.title}
-                  </h2>
-                  <span className="text-[18px] pc:text-[20px] text-[#848484]">
-                    {LegalSpecialityLabels[question.legalSpeciality]}
-                  </span>
-                </div>
-                <div className="flex text-[16px] pc:text-[16px] text-[#999]">
-                  <span className="mr-6">최초 사건 발생일</span>
-                  <p>{question.firstOccurrenceDate}</p>
-                </div>
-                {question.authorName && (
-                  <div className="flex text-[14px] pc:text-[16px] pl-6">
-                    <span className="font-bold text-[#5C6E56] mr-2">
-                      작성자
-                    </span>
-                    <h1 className="font-bold text-[#555]">
-                      {question.authorName}
-                    </h1>
+              <div className="flex flex-col gap-3">
+                <h2 className="text-[21px] pc:text-[27px] font-bold mr-2">
+                  {question.title}
+                </h2>
+                <div className="flex flex-col pl-3">
+                  {question.authorName && (
+                    <div className="flex text-[12px] pc:text-[14px]">
+                      <span className="font-bold text-[#5C6E56] mr-2">
+                        작성자
+                      </span>
+                      <h1 className="font-bold text-[#555]">
+                        {question.authorName}
+                      </h1>
+                    </div>
+                  )}
+                  <div className="flex text-[14px] pc:text-[16px] text-[#999]">
+                    <span className="mr-6">최초 사건 발생일</span>
+                    <p>{question.firstOccurrenceDate}</p>
                   </div>
-                )}
+                </div>
+                <p className="text-[#656565] text-[15px] pc:text-[17px] whitespace-pre-line">
+                  {question.content}
+                </p>
               </div>
-              <p className="text-[#656565] text-[15px] pc:text-[17px] whitespace-pre-line">
-                {question.content}
-              </p>
-              <div className="flex text-[14px] pc:text-[16px] text-[#B4B4B4] justify-end">
+              <div className="flex mt-5 text-[14px] pc:text-[16px] text-[#B4B4B4] justify-end">
                 <span className="mr-3">
                   {question.updatedAt
                     ? formatDate(question.updatedAt)
@@ -332,7 +332,7 @@ export const QuestionDetailPage = (): React.JSX.Element => {
             answers.content.map((answer) => (
               <div
                 key={answer.answerId}
-                className="flex flex-col gap-4 bg-white p-10 rounded-[10px] shadow-sm border-2 border-[#9CB395] mb-24"
+                className="flex flex-col gap-4 bg-white p-8 rounded-[10px] shadow-sm border-2 border-[#9CB395] mb-24"
               >
                 <div className="flex items-center gap-6 mb-4 px-4">
                   {/* TODO: 기본 이미지 URL 수정하기 , 프로필 사진 존재 할 시 프로필 사진 출력, 없을 시 기본 이미지 출력 */}
@@ -397,7 +397,7 @@ export const QuestionDetailPage = (): React.JSX.Element => {
                         </div>
                       )}
                     </div>
-                    <p className="text-[16px] pc:text-[18px] text-gray-500">
+                    <p className="text-[14px] pc:text-[16px] text-gray-500">
                       {answer.updatedAt
                         ? formatDate(answer.updatedAt)
                         : formatDate(answer.createdAt)}
