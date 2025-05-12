@@ -42,7 +42,7 @@ export const ClientRegister = (): React.JSX.Element => {
         name: name,
         nickname: nickname,
         password: password,
-        birthDate: birthDate,
+        birth: birthDate,
       };
       await registerGeneral(userData);
       alert("회원가입이 완료되었습니다.");
@@ -206,7 +206,7 @@ export const ClientRegister = (): React.JSX.Element => {
             </div>
             {nicknameDuplicateMessage && (
               <div
-                className={`text-sm absolute bottom-[9.5rem] pc:bottom-[2.7rem] ${
+                className={`text-sm pl-4 ${
                   nicknameDuplicateMessage.includes("사용 가능한")
                     ? "text-green-500"
                     : "text-red-500"
