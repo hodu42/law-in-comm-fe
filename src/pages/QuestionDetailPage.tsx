@@ -15,12 +15,13 @@ import {
   createAnswer,
   updateAnswer,
 } from "@/api/answers";
-import { DEFAULT_SIZE } from "@/services/questionService";
 import { useNavigation } from "@/hooks/useNavigation";
 import { getCurrentRole } from "@/hooks/tokenDecoder";
 import { IMAGE_URL } from "@/config/Config";
 import { formatDate } from "@/utils/dateFormat";
 import { AI_ASSISTANT_ID } from "@/config/Config";
+
+const ANSWER_DEFAULT_SIZE = 5;
 
 export const QuestionDetailPage = (): React.JSX.Element => {
   const navigate = useNavigation();
@@ -61,9 +62,8 @@ export const QuestionDetailPage = (): React.JSX.Element => {
     const response = await getAnswers(
       String(questionId),
       String(currentPage),
-      String(DEFAULT_SIZE)
+      String(ANSWER_DEFAULT_SIZE)
     );
-    console.log(response.data);
     setAnswers(response.data);
     setTotalPages(response.data.totalPages);
     setIsFirstPage(response.data.first);
