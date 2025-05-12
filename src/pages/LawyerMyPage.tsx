@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { useNavigation } from "@/hooks/useNavigation";
 import { useLogout } from "@/hooks/useLogout";
 import { MobileNav } from "@/components/MobileNav";
-import { fetchLawyerMypageData, getLawyerAnswers } from "@/api/users/lawyer";
+import { getLawyerMypageData, getLawyerAnswers } from "@/api/users/lawyer";
 import { LawyerInfo } from "@/types/lawyer";
 import { AnswerItem } from "@/components/AnswerItem";
 import { PageResponse } from "@/types/page";
@@ -24,7 +24,7 @@ export const LawyerMyPage = (): React.JSX.Element => {
   const [isLastPage, setIsLastPage] = useState(false);
 
   const loadLawyerMypageData = async () => {
-    const response = await fetchLawyerMypageData();
+    const response = await getLawyerMypageData();
     setLawyerData(response.data);
   };
 

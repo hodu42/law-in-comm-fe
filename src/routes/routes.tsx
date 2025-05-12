@@ -21,6 +21,7 @@ import { ManageLawyerRegister } from "@/pages/ManageLawyerRegister";
 import { ClientMyPage } from "@/pages/ClientMyPage";
 import { LawyerMyPage } from "@/pages/LawyerMyPage";
 import { ClientMyPageModify } from "@/pages/ClientMyPageModify";
+import { LawyerMyPageModify } from "@/pages/LawyerMyPageModify";
 
 export const protectedRoutes: RouteObject[] = [
   {
@@ -58,6 +59,10 @@ export const protectedRoutes: RouteObject[] = [
   {
     path: "/client/my-page/modify",
     element: <ClientMyPageModify />,
+  },
+  {
+    path: "/lawyer/my-page/modify",
+    element: <LawyerMyPageModify />,
   },
 ];
 

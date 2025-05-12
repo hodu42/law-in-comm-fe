@@ -1,9 +1,39 @@
 import { api } from "@/api/index";
 
-export const fetchLawyerMypageData = async () => {
+export const getLawyerMypageData = async () => {
   return api.get<any>("users/my-page/lawyer");
 };
 
 export const getLawyerAnswers = async (page: number = 0, size: number = 5) => {
   return api.get<any>(`/users/my-page/lawyer/answers`, { page, size });
+};
+
+export const updateLawyerMypageData = async (
+  phoneNumber: string,
+  description: string,
+  legalSpecialties: string[],
+  educations: string[],
+  careers: string[],
+  officeName: string,
+  officeAddress: string,
+  officePhoneNumber: string
+) => {
+  return api.put<any>(`/users/my-page/lawyer`, {
+    phoneNumber,
+    description,
+    officeInfo: {
+      officeName,
+      officeAddress,
+      officePhoneNumber,
+    },
+    careers,
+    educations,
+    legalSpecialties,
+  });
+};
+
+export const updateLawyerProfileImage = async (profileImage: File | string) => {
+  const formData = new FormData();
+  formData.append("file", profileImage);
+  return api.post<any>(`/files/images/profile`, formData);
 };
