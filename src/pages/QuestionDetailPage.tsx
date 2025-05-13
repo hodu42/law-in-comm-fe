@@ -464,7 +464,9 @@ export const QuestionDetailPage = (): React.JSX.Element => {
                         strong: ({ children }) => (
                           <strong className="font-bold">{children}</strong>
                         ),
-                        p: ({ children }) => <p className="my-2">{children}</p>,
+                        p: ({ children }) => (
+                          <span className="my-2">{children}</span>
+                        ),
                       }}
                     >
                       {answer.content}
