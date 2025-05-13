@@ -132,7 +132,7 @@ export const LawyerMyPage = (): React.JSX.Element => {
                   className="w-full bg-black h-96 object-contain rounded-lg border border-[#E0E0E0]"
                 />
               ) : (
-                <div className="w-full bg-[#E0E0E0] h-96 object-cover rounded-lg border border-[#E0E0E0] flex items-center justify-center">
+                <div className="w-full bg-[#E0E0E0] h-96 object-cover rounded-lg border border-[#272424] flex items-center justify-center">
                   <span className="text-[#555] font-bold text-[25px] pc:text-[30px]">
                     등록된 사진이 없습니다.
                   </span>

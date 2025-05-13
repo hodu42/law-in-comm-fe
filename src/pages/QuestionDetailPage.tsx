@@ -20,6 +20,8 @@ import { getCurrentRole } from "@/hooks/tokenDecoder";
 import { IMAGE_URL } from "@/config/Config";
 import { formatDate } from "@/utils/dateFormat";
 import { AI_ASSISTANT_ID } from "@/config/Config";
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
 
 const ANSWER_DEFAULT_SIZE = 5;
 
@@ -420,9 +422,54 @@ export const QuestionDetailPage = (): React.JSX.Element => {
                     onChange={(e) => setEditedAnswer(e.target.value)}
                   ></textarea>
                 ) : (
-                  <p className="text-[15px] pc:text-[17px] text-[#555] whitespace-pre-line">
-                    {answer.content}
-                  </p>
+                  <div className="text-[15px] pc:text-[17px] text-[#555]">
+                    <ReactMarkdown
+                      components={{
+                        a: ({ children, href }) => (
+                          <a
+                            href={href}
+                            className="text-[#9CB395] hover:text-[#8AA082] hover:underline"
+                          >
+                            {children}
+                          </a>
+                        ),
+                        ul: ({ children }) => (
+                          <ul className="my-2">{children}</ul>
+                        ),
+                        li: ({ children }) => (
+                          <li className="my-6">{children}</li>
+                        ),
+                        h1: ({ children }) => (
+                          <h1 className="text-2xl font-bold my-4">
+                            {children}
+                          </h1>
+                        ),
+                        h2: ({ children }) => (
+                          <h2 className="text-xl font-bold my-3">{children}</h2>
+                        ),
+                        h3: ({ children }) => (
+                          <h3 className="text-lg font-bold my-2">{children}</h3>
+                        ),
+                        ol: ({ children }) => (
+                          <ol className="my-2 list-decimal">{children}</ol>
+                        ),
+                        blockquote: ({ children }) => (
+                          <blockquote className="border-gray-300 my-4">
+                            {children}
+                          </blockquote>
+                        ),
+                        em: ({ children }) => (
+                          <em className="italic">{children}</em>
+                        ),
+                        strong: ({ children }) => (
+                          <strong className="font-bold">{children}</strong>
+                        ),
+                        p: ({ children }) => <p className="my-2">{children}</p>,
+                      }}
+                    >
+                      {answer.content}
+                    </ReactMarkdown>
+                  </div>
                 )}
                 {/*답변 수정 id와 답변의 id의 일치 여부에 따른 조건부 렌더링*/}
                 {answer.answerId === editingAnswerId && (

@@ -1,12 +1,12 @@
-@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap");
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 @font-face {
-  font-family: 'NotoSansKR';
-  src: url('../public/fonts/NotoSansKR-VariableFont_wght.ttf');
+  font-family: "NotoSansKR";
+  src: url("../public/fonts/NotoSansKR-VariableFont_wght.ttf");
 }
 @layer base {
   * {
@@ -14,10 +14,12 @@
   }
 }
 
-.recentQuestion-slider-container .slick-arrow:before, .slick-arrow:after {
-  @apply hidden
+.recentQuestion-slider-container .slick-arrow:before,
+.slick-arrow:after {
+  @apply hidden;
 }
-.recentQuestion-slider-container .slick-prev, .slick-next {
+.recentQuestion-slider-container .slick-prev,
+.slick-next {
   width: 33px !important;
   height: 66px !important;
 }
@@ -50,7 +52,7 @@
   padding: 0;
 }
 .dots_custom li button {
-  border: 1px solid #5C6E56;
+  border: 1px solid #5c6e56;
   background: none;
   color: transparent;
   cursor: pointer;
@@ -61,7 +63,7 @@
   padding: 0;
 }
 .dots_custom li.slick-active button {
-  background-color: #5C6E56;
+  background-color: #5c6e56;
 }
 .questionContents {
   display: -webkit-box;
@@ -83,4 +85,10 @@
   .question-form-container {
     padding-bottom: 4rem;
   }
+}
+
+ol {
+  margin-block-start: 0;
+  margin-block-end: 0;
+  padding-inline-start: 0;
 }
