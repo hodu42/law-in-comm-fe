@@ -12,7 +12,7 @@ export const getLawyerAnswers = async (page: number = 0, size: number = 5) => {
 export const updateLawyerMypageData = async (
   phoneNumber: string,
   description: string,
-  legalSpecialties: string[],
+  legalSpecialities: string[],
   educations: string[],
   careers: string[],
   officeName: string,
@@ -29,11 +29,15 @@ export const updateLawyerMypageData = async (
     },
     careers,
     educations,
-    legalSpecialties,
+    legalSpecialities,
   });
 };
 
-export const updateLawyerProfileImage = async (
+export const deleteLawyerProfileImage = async (imageId: number) => {
+  return api.delete<any>(`/files/images/${imageId}`);
+};
+
+export const addLawyerProfileImage = async (
   profileImage: File | string,
   imageType: ImageType
 ) => {

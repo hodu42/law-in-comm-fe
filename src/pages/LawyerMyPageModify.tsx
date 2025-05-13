@@ -7,16 +7,20 @@ import { LegalSpecialityLabels } from "@/types/speciality";
 import {
   getLawyerMypageData,
   updateLawyerMypageData,
-  updateLawyerProfileImage,
+  addLawyerProfileImage,
+  deleteLawyerProfileImage,
 } from "@/api/users/lawyer";
-import { ImageType } from "@/types/image";
+import { ImageInfo, ImageType } from "@/types/image";
 import { getUserProfileImage } from "@/api/users";
 import { IMAGE_URL } from "@/config/Config";
 
 export const LawyerMyPageModify = (): React.JSX.Element => {
   const { goToLawyerMyPage, goToPreviousPage } = useNavigation();
   const [phoneNumber, setPhoneNumber] = useState<string>("");
-  const [profileImage, setProfileImage] = useState<File | string>();
+  const [prevProfileImage, setPrevProfileImage] = useState<ImageInfo | null>(
+    null
+  );
+  const [profileImage, setProfileImage] = useState<File | string>("");
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [checkedList, setCheckedList] = useState<string[]>([]);
   const [isChecked, setIsChecked] = useState<boolean>(false);
@@ -32,7 +36,11 @@ export const LawyerMyPageModify = (): React.JSX.Element => {
       const response = await getLawyerMypageData();
       const lawyerProfileImage = await getUserProfileImage(response.data.id);
       setPhoneNumber(response.data.phoneNumber);
-      setProfileImage(lawyerProfileImage.path);
+      // 프로필 이미지 존재시
+      if (lawyerProfileImage) {
+        setProfileImage(lawyerProfileImage.path);
+        setPrevProfileImage(lawyerProfileImage);
+      }
       setDescription(response.data.description);
       setCheckedList(response.data.legalSpecialties);
       setEducations(response.data.educations.join("\n"));
@@ -76,6 +84,7 @@ export const LawyerMyPageModify = (): React.JSX.Element => {
 
   const handleInfoModify = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    console.log(prevProfileImage);
     try {
       await updateLawyerMypageData(
         phoneNumber,
@@ -88,7 +97,10 @@ export const LawyerMyPageModify = (): React.JSX.Element => {
         officePhone
       );
       if (profileImage && typeof profileImage !== "string") {
-        await updateLawyerProfileImage(profileImage, ImageType.PROFILE);
+        if (prevProfileImage) {
+          await deleteLawyerProfileImage(prevProfileImage.id);
+        }
+        await addLawyerProfileImage(profileImage, ImageType.PROFILE);
       }
       alert("정보가 수정되었습니다.");
       goToLawyerMyPage();
