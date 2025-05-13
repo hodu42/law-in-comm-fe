@@ -9,6 +9,9 @@ import {
   updateLawyerMypageData,
   updateLawyerProfileImage,
 } from "@/api/users/lawyer";
+import { ImageType } from "@/types/image";
+import { getUserProfileImage } from "@/api/users";
+import { IMAGE_URL } from "@/config/Config";
 
 export const LawyerMyPageModify = (): React.JSX.Element => {
   const { goToLawyerMyPage, goToPreviousPage } = useNavigation();
@@ -27,8 +30,9 @@ export const LawyerMyPageModify = (): React.JSX.Element => {
   const loadLawyerMypageData = async () => {
     try {
       const response = await getLawyerMypageData();
+      const lawyerProfileImage = await getUserProfileImage(response.data.id);
       setPhoneNumber(response.data.phoneNumber);
-      setProfileImage(response.data.profileImage);
+      setProfileImage(lawyerProfileImage.path);
       setDescription(response.data.description);
       setCheckedList(response.data.legalSpecialties);
       setEducations(response.data.educations.join("\n"));
@@ -45,8 +49,6 @@ export const LawyerMyPageModify = (): React.JSX.Element => {
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
       setProfileImage(e.target.files[0]);
-    } else {
-      setProfileImage(undefined);
     }
   };
 
@@ -85,8 +87,8 @@ export const LawyerMyPageModify = (): React.JSX.Element => {
         officeAddress,
         officePhone
       );
-      if (profileImage) {
-        await updateLawyerProfileImage(profileImage);
+      if (profileImage && typeof profileImage !== "string") {
+        await updateLawyerProfileImage(profileImage, ImageType.PROFILE);
       }
       alert("정보가 수정되었습니다.");
       goToLawyerMyPage();
@@ -197,7 +199,7 @@ export const LawyerMyPageModify = (): React.JSX.Element => {
                     <img
                       src={
                         typeof profileImage === "string"
-                          ? profileImage
+                          ? `${IMAGE_URL}${profileImage}`
                           : URL.createObjectURL(profileImage)
                       }
                       alt="프로필 사진 미리보기"

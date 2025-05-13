@@ -1,4 +1,5 @@
 import { api } from "@/api/index";
+import { ImageType } from "@/types/image";
 
 export const getLawyerMypageData = async () => {
   return api.get<any>("users/my-page/lawyer");
@@ -32,8 +33,18 @@ export const updateLawyerMypageData = async (
   });
 };
 
-export const updateLawyerProfileImage = async (profileImage: File | string) => {
+export const updateLawyerProfileImage = async (
+  profileImage: File | string,
+  imageType: ImageType
+) => {
   const formData = new FormData();
   formData.append("file", profileImage);
-  return api.post<any>(`/files/images/profile`, formData);
+  return api.post<any>(`/files/image`, formData, {
+    params: {
+      imageType: imageType,
+    },
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+  });
 };

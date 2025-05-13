@@ -11,7 +11,8 @@ import { PageResponse } from "@/types/page";
 import { WrittenAnswer } from "@/types/answer";
 import { LegalSpecialityLabels } from "@/types/speciality";
 import { LegalSpeciality } from "@/types/speciality";
-import { getUserInfo } from "@/api/users";
+import { getUserProfileImage } from "@/api/users";
+import { IMAGE_URL } from "@/config/Config";
 
 export const LawyerMyPage = (): React.JSX.Element => {
   const navigate = useNavigation();
@@ -27,8 +28,7 @@ export const LawyerMyPage = (): React.JSX.Element => {
   const loadLawyerMypageData = async () => {
     const lawyerDataResponse = await getLawyerMypageData();
     const lawyerMypageData = lawyerDataResponse.data;
-    const lawyerProfileImageResponse = await getUserInfo(lawyerMypageData.id);
-    const lawyerProfileImage = lawyerProfileImageResponse.data.profileImage;
+    const lawyerProfileImage = await getUserProfileImage(lawyerMypageData.id);
     setLawyerData({
       ...lawyerMypageData,
       profileImage: lawyerProfileImage,
@@ -123,10 +123,10 @@ export const LawyerMyPage = (): React.JSX.Element => {
           <div className="flex flex-col items-center w-full">
             {/* 프로필 이미지 + 자기소개 */}
             <div className="w-full relative mb-6">
-              {/* TODO: 프로필 이미지 넣도록 수정 필요 */}
+              {/* 프로필 이미지 존재여부에 따라 이미지 렌더링 */}
               {lawyerData?.profileImage ? (
                 <img
-                  src={lawyerData.profileImage.path}
+                  src={`${IMAGE_URL}${lawyerData.profileImage.path}`}
                   alt={lawyerData.profileImage.name}
                   className="w-full bg-[#E0E0E0] h-96 object-cover rounded-lg border border-[#E0E0E0]"
                 />
