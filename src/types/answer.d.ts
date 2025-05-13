@@ -7,7 +7,7 @@ export interface Answer {
   reportCount: number;
   authorName: string;
   authorId: number;
-  profileImageInfo: {
+  profileImage: {
     id: number;
     name: string;
     contentType: string;
@@ -18,7 +18,7 @@ export interface Answer {
 
 export type WrittenAnswer = Omit<
   Answer,
-  "author" | "authorName" | "profileImageInfo" | "authorId"
+  "author" | "authorName" | "profileImage" | "authorId"
 > & {
   questionId: number;
   questionLegalSpeciality: string;

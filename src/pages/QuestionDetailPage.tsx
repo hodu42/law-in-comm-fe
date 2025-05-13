@@ -64,6 +64,7 @@ export const QuestionDetailPage = (): React.JSX.Element => {
       String(currentPage),
       String(ANSWER_DEFAULT_SIZE)
     );
+    console.log(response.data);
     setAnswers(response.data);
     setTotalPages(response.data.totalPages);
     setIsFirstPage(response.data.first);
@@ -337,11 +338,11 @@ export const QuestionDetailPage = (): React.JSX.Element => {
                 className="flex flex-col gap-4 bg-white p-8 rounded-[10px] shadow-sm border-2 border-[#9CB395] mb-24"
               >
                 <div className="flex items-center gap-6 mb-4 px-4">
-                  {/* TODO: 기본 이미지 URL 수정하기 , 프로필 사진 존재 할 시 프로필 사진 출력, 없을 시 기본 이미지 출력 */}
+                  {/* 프로필 사진 존재 할 시 프로필 사진 출력, 없을 시 기본 이미지 출력 */}
                   <img
                     src={
-                      answer.profileImageInfo
-                        ? `${IMAGE_URL}${answer.profileImageInfo.path}`
+                      answer.profileImage
+                        ? `${IMAGE_URL}${answer.profileImage.path}`
                         : "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%239CB395'%3E%3Cpath d='M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z'/%3E%3C/svg%3E"
                     }
                     alt={`프로필 사진`}
