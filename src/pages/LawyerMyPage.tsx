@@ -129,7 +129,7 @@ export const LawyerMyPage = (): React.JSX.Element => {
                 <img
                   src={`${IMAGE_URL}${lawyerData.profileImage.path}`}
                   alt={lawyerData.profileImage.name}
-                  className="w-full bg-[#E0E0E0] h-96 object-cover rounded-lg border border-[#E0E0E0]"
+                  className="w-full bg-[#E0E0E0] h-96 object-contain rounded-lg border border-[#E0E0E0]"
                 />
               ) : (
                 <div className="w-full bg-[#E0E0E0] h-96 object-cover rounded-lg border border-[#E0E0E0] flex items-center justify-center">
