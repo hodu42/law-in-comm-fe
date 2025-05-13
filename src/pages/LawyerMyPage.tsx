@@ -30,6 +30,7 @@ export const LawyerMyPage = (): React.JSX.Element => {
 
   const loadAnswers = async (currentPage: number) => {
     const response = await getLawyerAnswers(currentPage);
+    console.log(response.data);
     setAnswerList(response.data);
     setTotalElements(response.data.totalElements);
     setTotalPages(response.data.totalPages);

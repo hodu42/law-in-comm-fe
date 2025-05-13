@@ -2,6 +2,8 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { WrittenAnswer } from "@/types/answer";
 import { formatDate } from "@/utils/dateFormat";
+import { LegalSpecialityLabels } from "@/types/speciality";
+import { LegalSpeciality } from "@/types/speciality";
 
 export const AnswerItem: React.FC<{
   answer: WrittenAnswer;
@@ -12,11 +14,23 @@ export const AnswerItem: React.FC<{
       className="bg-white rounded-[10px] shadow-sm mb-10 p-[20px] pc:p-[30px] border-2 border-transparent hover:border-[#9CB395] transition-colors"
     >
       <div className="flex flex-col justify-between gap-[15px]">
-        <span className="ml-auto text-[0.81rem] pc:text-[1rem] text-[#999999]">
-          {answer.updatedAt
-            ? formatDate(answer.updatedAt)
-            : formatDate(answer.createdAt)}
-        </span>
+        <div className="flex items-center text-sm px-2">
+          <span className="mr-4 text-[1rem] pc:text-[1.1rem] text-[#848484]">
+            {
+              LegalSpecialityLabels[
+                answer.questionLegalSpeciality as LegalSpeciality
+              ]
+            }
+          </span>
+          <span className="ml-auto text-[0.81rem] pc:text-[1rem] text-[#999999]">
+            {answer.updatedAt
+              ? formatDate(answer.updatedAt)
+              : formatDate(answer.createdAt)}
+          </span>
+        </div>
+        <h3 className="text-[1.12rem] pc:text-[1.31rem]">
+          {answer.questionTitle}
+        </h3>
         <p className="text-[0.81rem] pc:text-[1.06rem] text-[#333333] line-clamp-2 mb-2">
           {answer.content}
         </p>

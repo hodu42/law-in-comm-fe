@@ -19,4 +19,8 @@ export interface Answer {
 export type WrittenAnswer = Omit<
   Answer,
   "author" | "authorName" | "profileImageInfo" | "authorId"
-> & { questionId: number };
+> & {
+  questionId: number;
+  questionLegalSpeciality: string;
+  questionTitle: string;
+};
