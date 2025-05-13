@@ -11,6 +11,7 @@ import { PageResponse } from "@/types/page";
 import { WrittenAnswer } from "@/types/answer";
 import { LegalSpecialityLabels } from "@/types/speciality";
 import { LegalSpeciality } from "@/types/speciality";
+import { getUserInfo } from "@/api/users";
 
 export const LawyerMyPage = (): React.JSX.Element => {
   const navigate = useNavigation();
@@ -24,13 +25,18 @@ export const LawyerMyPage = (): React.JSX.Element => {
   const [isLastPage, setIsLastPage] = useState(false);
 
   const loadLawyerMypageData = async () => {
-    const response = await getLawyerMypageData();
-    setLawyerData(response.data);
+    const lawyerDataResponse = await getLawyerMypageData();
+    const lawyerMypageData = lawyerDataResponse.data;
+    const lawyerProfileImageResponse = await getUserInfo(lawyerMypageData.id);
+    const lawyerProfileImage = lawyerProfileImageResponse.data.profileImage;
+    setLawyerData({
+      ...lawyerMypageData,
+      profileImage: lawyerProfileImage,
+    });
   };
 
   const loadAnswers = async (currentPage: number) => {
     const response = await getLawyerAnswers(currentPage);
-    console.log(response.data);
     setAnswerList(response.data);
     setTotalElements(response.data.totalElements);
     setTotalPages(response.data.totalPages);
@@ -121,7 +127,7 @@ export const LawyerMyPage = (): React.JSX.Element => {
               {lawyerData?.profileImage ? (
                 <img
                   src={lawyerData.profileImage.path}
-                  alt="프로필 사진"
+                  alt={lawyerData.profileImage.name}
                   className="w-full bg-[#E0E0E0] h-96 object-cover rounded-lg border border-[#E0E0E0]"
                 />
               ) : (
