@@ -84,7 +84,6 @@ export const LawyerMyPageModify = (): React.JSX.Element => {
 
   const handleInfoModify = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    console.log(prevProfileImage);
     try {
       await updateLawyerMypageData(
         phoneNumber,

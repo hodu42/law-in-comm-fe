@@ -29,6 +29,7 @@ export const LawyerMyPage = (): React.JSX.Element => {
     const lawyerDataResponse = await getLawyerMypageData();
     const lawyerMypageData = lawyerDataResponse.data;
     const lawyerProfileImage = await getUserProfileImage(lawyerMypageData.id);
+    console.log(lawyerProfileImage);
     setLawyerData({
       ...lawyerMypageData,
       profileImage: lawyerProfileImage,
