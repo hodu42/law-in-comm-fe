@@ -194,12 +194,6 @@ export const LawyerRegister = (): React.JSX.Element => {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                 />
-                {/* 에러 메시지 표시 */}
-                {error && (
-                  <div className="absolute text-red-500 text-sm bottom-[-1.8rem]">
-                    {error}
-                  </div>
-                )}
               </div>
               {/* 이름 입력 필드 */}
               <div className="flex flex-col gap-5 pc:gap-6">
@@ -450,13 +444,17 @@ export const LawyerRegister = (): React.JSX.Element => {
               </div>
             </div>
           </div>
-          {/* 회원가입 버튼 */}
-          <button
-            type="submit"
-            className="transition-colors inline-block bg-[#CBD8B7] text-black font-bold text-[16px] pc:text-[18px] mb-10 pc:mb-0 py-3 rounded-md hover:bg-[#A9BE8C]"
-          >
-            회원가입
-          </button>
+          <div className="flex flex-col gap-y-5 justify-center items-center">
+            {/* 에러 메시지 표시 */}
+            {error && <div className="text-red-500 text-sm">{error}</div>}
+            {/* 회원가입 버튼 */}
+            <button
+              type="submit"
+              className="transition-colors w-full bg-[#CBD8B7] text-black font-bold text-[16px] pc:text-[18px] mb-10 pc:mb-0 py-3 rounded-md hover:bg-[#A9BE8C]"
+            >
+              회원가입
+            </button>
+          </div>
         </form>
       </div>
       {/* 모바일 하단 네비게이션 */}
