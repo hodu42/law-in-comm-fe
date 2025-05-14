@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { MainHeader } from "@/components/MainHeader";
-import { MobileNav } from "@/components/MobileNav";
 import { Question } from "@/types/question";
 import { Answer } from "@/types/answer";
 import { PageResponse } from "@/types/page";
@@ -196,13 +194,12 @@ export const QuestionDetailPage = (): React.JSX.Element => {
   };
 
   return (
-    <div className="flex flex-col min-h-screen bg-gray-50">
-      <MainHeader />
+    <>
       {/* 메인 콘텐츠 */}
-      <main className="w-full px-4 max-w-[800px] mx-auto mt-24 pc:mt-[200px]">
+      <main className="w-full px-4 max-w-[800px] mx-auto mt-[72px] pc:mt-[144px]">
         {/* 질문 영역 */}
         {question && (
-          <article className="bg-white mb-12 rounded-[10px] shadow-sm">
+          <article className="bg-white my-10 rounded-[10px] shadow-sm">
             <div className="flex flex-col p-8">
               <div className="flex flex-col gap-4">
                 <div className="flex justify-between items-center">
@@ -336,20 +333,20 @@ export const QuestionDetailPage = (): React.JSX.Element => {
             answers.content.map((answer) => (
               <div
                 key={answer.answerId}
-                className="flex flex-col gap-4 bg-white p-8 rounded-[10px] shadow-sm border-2 border-[#9CB395] mb-24"
+                className="flex flex-col gap-4 bg-white p-8 rounded-[10px] shadow-sm border-2 border-[#9CB395] mb-20"
               >
                 <div className="flex items-center gap-6 mb-4 px-4">
                   {/* 프로필 사진 존재 할 시 프로필 사진 출력, 없을 시 기본 프로필 아이콘 출력 */}
-                  <div className="w-16 h-16 pc:w-20 pc:h-20 rounded-full">
+                  <div className="rounded-full flex w-16 h-16 pc:w-20 pc:h-20 overflow-hidden flex-shrink-0">
                     {answer.profileImage ? (
                       <img
                         src={`${IMAGE_URL}${answer.profileImage.path}`}
                         alt={answer.profileImage.name}
-                        className="rounded-full w-full h-full object-cover border-2 border-[#9CB395]"
+                        className="rounded-full object-cover border-2 border-[#9CB395]"
                       />
                     ) : (
                       <svg
-                        className="text-[#9CB395] w-full h-full"
+                        className="rounded-full text-[#9CB395]"
                         viewBox="0 0 24 24"
                         fill="currentColor"
                       >
@@ -357,7 +354,7 @@ export const QuestionDetailPage = (): React.JSX.Element => {
                       </svg>
                     )}
                   </div>
-                  <div className="flex flex-col gap-1">
+                  <div className="flex flex-col w-full gap-1 justify-center">
                     <div className="flex justify-between items-center">
                       <h4 className="text-[19px] pc:text-[21px] font-bold">
                         {answer.authorId === AI_ASSISTANT_ID
@@ -365,7 +362,7 @@ export const QuestionDetailPage = (): React.JSX.Element => {
                           : `${answer.authorName} 변호사`}
                       </h4>
                       {answer.author && (
-                        <div className="flex gap-2">
+                        <div className="flex gap-2 justify-center">
                           <button
                             onClick={() =>
                               setEditInfo(answer.answerId, answer.content)
@@ -544,7 +541,7 @@ export const QuestionDetailPage = (): React.JSX.Element => {
             ))}
         </div>
         {/* 페이지네이션 */}
-        <div className="mt-8 mb-32 pc:mb-10 flex justify-center">
+        <div className="mb-32 pc:mb-10 flex justify-center">
           <div className="flex items-center gap-2">
             <button
               onClick={() => setCurrentPage(Math.max(0, currentPage - 1))}
@@ -663,8 +660,6 @@ export const QuestionDetailPage = (): React.JSX.Element => {
           </div>
         </div>
       )}
-
-      <MobileNav />
-    </div>
+    </>
   );
 };

@@ -30,10 +30,6 @@ export const protectedRoutesWithoutLayout: RouteObject[] = [
     element: <QuestionWrite />,
   },
   {
-    path: "/question/:questionId",
-    element: <QuestionDetailPage />,
-  },
-  {
     path: "/question/modify/:questionId",
     element: <QuestionModify />,
   },
@@ -67,6 +63,10 @@ export const protectedRoutesWithLayout: RouteObject[] = [
   {
     path: "/questions",
     element: <QuestionListPage />,
+  },
+  {
+    path: "/question/:questionId",
+    element: <QuestionDetailPage />,
   },
 ];
 

@@ -100,10 +100,10 @@ export const QuestionListPage = (): React.JSX.Element => {
       </div>
 
       {/* 메인 콘텐츠 */}
-      <main className="container mx-auto mt-[30px] px-4 pb-20 flex-grow">
+      <main className="container mx-auto px-4 pb-20 flex-grow">
         <div className="flex flex-col justify-between max-w-[800px] mx-auto mt-[144px]">
           {/* 분야 필터 */}
-          <div className="mb-6">
+          <div className="my-6">
             <label
               htmlFor="speciality"
               className="block text-[1.5rem] font-bold text-[#9CB395] mb-3 pl-4"
