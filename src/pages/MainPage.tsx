@@ -1,9 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { MainHeader } from "@/components/MainHeader";
 import { RecentQuestions } from "@/components/RecentQuestions";
 import { QuestionCategories } from "@/components/QuestionCategories";
 import { MobileSearch } from "@/components/MobileSearch";
-import { MobileNav } from "@/components/MobileNav";
 import { searchQuestion } from "@/api/questions";
 import { Question } from "@/types/question";
 import { useAppDispatch } from "@/hooks/useAppDispatch";
@@ -22,8 +20,7 @@ export const MainPage = (): React.JSX.Element => {
   }, []);
 
   return (
-    <div className="main-container flex flex-col items-center bg-gray-50">
-      <MainHeader />
+    <>
       <MobileSearch />
       <RecentQuestions recentQuestions={recentQuestions} />
       <div className="w-[90%] pc:hidden flex justify-between px-[20px]">
@@ -60,7 +57,6 @@ export const MainPage = (): React.JSX.Element => {
         </Link>
       </div>
       <QuestionCategories />
-      <MobileNav />
-    </div>
+    </>
   );
 };

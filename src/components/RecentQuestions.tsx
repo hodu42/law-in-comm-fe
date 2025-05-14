@@ -34,7 +34,7 @@ export const RecentQuestions = ({
   };
 
   return (
-    <section className="flex flex-col gap-[28px] max-w-1350px pc:w-full w-[90%] pc:mt-[144px] mt-[0px] py-[37.6px] bg-[#F7F7FA]">
+    <section className="flex flex-col gap-[28px] max-w-1350px pc:w-full w-[90%] pc:mt-[144px] mt-[0px] py-[37.6px]">
       <h1 className="w-full pc:text-center text-left text-[20px] pc:text-[26px] text-[#1F2225] font-bold">
         최근 질문
       </h1>

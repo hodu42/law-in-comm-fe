@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { Link, useSearchParams } from "react-router-dom";
-import { MobileNav } from "@/components/MobileNav";
-import { MainHeader } from "@/components/MainHeader";
 import { QuestionItem } from "@/components/QuestionItem";
 import { fetchQuestionsWithAnswers } from "@/services/questionService";
 import { QuestionWithAnswerList } from "@/types/questionWithAnswer";
@@ -69,10 +67,7 @@ export const QuestionListPage = (): React.JSX.Element => {
   };
 
   return (
-    <div className="flex flex-col items-center bg-gray-50">
-      {/* 헤더 */}
-      <MainHeader />
-
+    <>
       {/* 모바일 검색창 */}
       <div className="block pc:hidden fixed top-[72px] left-0 right-0 z-10 bg-white p-4 shadow-md">
         <form onSubmit={handleSearch} className="relative">
@@ -215,9 +210,6 @@ export const QuestionListPage = (): React.JSX.Element => {
           </svg>
         </Link>
       </div>
-
-      {/* 모바일 하단 네비게이션 */}
-      <MobileNav />
-    </div>
+    </>
   );
 };

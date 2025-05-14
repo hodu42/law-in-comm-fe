@@ -16,25 +16,18 @@ import { QuestionModify } from "@/pages/QuestionModify";
 import { Role } from "@/types/role";
 import { ClientRegister } from "@/pages/ClientRegister";
 import { LawyerRegister } from "@/pages/LawyerRegister";
-import { ProtectedRoute } from "@/components/route/ProtectedRoute";
 import { ManageLawyerRegister } from "@/pages/ManageLawyerRegister";
 import { ClientMyPage } from "@/pages/ClientMyPage";
 import { LawyerMyPage } from "@/pages/LawyerMyPage";
 import { ClientMyPageModify } from "@/pages/ClientMyPageModify";
 import { LawyerMyPageModify } from "@/pages/LawyerMyPageModify";
+import { ProtectedRoute } from "@/components/route/ProtectedRoute";
+import { Layout } from "@/components/Layout";
 
-export const protectedRoutes: RouteObject[] = [
-  {
-    path: "/main",
-    element: <MainPage />,
-  },
+export const protectedRoutesWithoutLayout: RouteObject[] = [
   {
     path: "/question/write",
     element: <QuestionWrite />,
-  },
-  {
-    path: "/questions",
-    element: <QuestionListPage />,
   },
   {
     path: "/question/:questionId",
@@ -63,6 +56,17 @@ export const protectedRoutes: RouteObject[] = [
   {
     path: "/lawyer/my-page/modify",
     element: <LawyerMyPageModify />,
+  },
+];
+
+export const protectedRoutesWithLayout: RouteObject[] = [
+  {
+    path: "/main",
+    element: <MainPage />,
+  },
+  {
+    path: "/questions",
+    element: <QuestionListPage />,
   },
 ];
 
@@ -122,7 +126,13 @@ export const routes: RouteObject[] = [
   {
     path: "/",
     element: <ProtectedRoute />,
-    children: [...protectedRoutes],
+    children: [
+      {
+        element: <Layout />,
+        children: protectedRoutesWithLayout,
+      },
+      ...protectedRoutesWithoutLayout,
+    ],
   },
 ];
 
