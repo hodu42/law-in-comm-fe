@@ -21,7 +21,6 @@ import { IMAGE_URL } from "@/config/Config";
 import { formatDate } from "@/utils/dateFormat";
 import { AI_ASSISTANT_ID } from "@/config/Config";
 import ReactMarkdown from "react-markdown";
-import remarkGfm from "remark-gfm";
 
 const ANSWER_DEFAULT_SIZE = 5;
 

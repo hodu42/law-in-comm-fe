@@ -92,3 +92,32 @@ ol {
   margin-block-end: 0;
   padding-inline-start: 0;
 }
+
+#animated-scale {
+  /* 애니메이션 정의 */
+  animation: sway 5s ease-in-out infinite;
+  /* 회전 중심축 설정: SVG의 viewBox(0 0 48 49)를 기준으로 대략적인 중심점입니다.
+     X축은 중앙(24), Y축은 저울의 받침대 상단 부근(39.5)으로 설정합니다.
+     필요에 따라 이 값을 미세 조정하여 자연스러운 움직임을 만드세요. */
+  transform-origin: 24px 39.5px; /* viewBox 단위 기준 */
+  /* 또는 퍼센트로 transform-origin: 50% 80.6%; (39.5/49 * 100) */
+}
+
+/* 저울이 흔들리는 애니메이션 키프레임 */
+@keyframes sway {
+  0% {
+    transform: rotate(0deg);
+  }
+  25% {
+    transform: rotate(10deg); /* 오른쪽으로 살짝 기울임 */
+  }
+  50% {
+    transform: rotate(0deg);
+  }
+  75% {
+    transform: rotate(-10deg); /* 왼쪽으로 살짝 기울임 */
+  }
+  100% {
+    transform: rotate(0deg);
+  }
+}

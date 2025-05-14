@@ -23,7 +23,7 @@ export const MainPage = (): React.JSX.Element => {
   }, []);
 
   return (
-    <div className="main-container flex flex-col items-center bg-[#F7F7FA]">
+    <div className="main-container flex flex-col items-center bg-gray-50">
       <MainHeader />
       <MobileSearch />
       <RecentQuestions recentQuestions={recentQuestions} />
