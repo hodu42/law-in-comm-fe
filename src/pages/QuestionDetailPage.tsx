@@ -358,7 +358,7 @@ export const QuestionDetailPage = (): React.JSX.Element => {
                       </svg>
                     )}
                   </div>
-                  <div className="flex-grow">
+                  <div className="flex flex-col gap-1">
                     <div className="flex justify-between items-center">
                       <h4 className="text-[19px] pc:text-[21px] font-bold">
                         {answer.authorId === AI_ASSISTANT_ID
