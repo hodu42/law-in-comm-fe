@@ -69,7 +69,7 @@ export const QuestionListPage = (): React.JSX.Element => {
   return (
     <>
       {/* 모바일 검색창 */}
-      <div className="block pc:hidden fixed top-[72px] left-0 right-0 z-10 bg-white p-4 shadow-md">
+      <div className="block pc:hidden fixed top-[72px] left-0 right-0 z-10 bg-white px-4 pb-3 shadow-md">
         <form onSubmit={handleSearch} className="relative">
           <input
             type="text"
