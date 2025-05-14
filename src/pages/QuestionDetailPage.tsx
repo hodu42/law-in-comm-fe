@@ -428,7 +428,7 @@ export const QuestionDetailPage = (): React.JSX.Element => {
                         a: ({ children, href }) => (
                           <a
                             href={href}
-                            className="text-[#9CB395] hover:text-[#8AA082] hover:underline"
+                            className="text-[#9CB395] hover:text-[#8AA082] underline"
                           >
                             {children}
                           </a>
