@@ -23,7 +23,7 @@ export const QuestionCategories = (): React.JSX.Element => {
   ];
 
   return (
-    <div className="flex w-[90%] justify-center py-[30px] mb-[80px] pc:m-0 mt-[3rem]">
+    <div className="flex w-[90%] justify-center mb-[80px] pc:m-0 mt-[3rem]">
       <nav className="flex flex-col gap-[28px] w-full justify-center max-w-1350px">
         <h1 className="text-[#1F2225] text-[20px] pc:text-[28px] font-bold">
           분야별 질문글 찾기

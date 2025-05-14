@@ -4,7 +4,6 @@ import { RecentQuestions } from "@/components/RecentQuestions";
 import { QuestionCategories } from "@/components/QuestionCategories";
 import { MobileSearch } from "@/components/MobileSearch";
 import { MobileNav } from "@/components/MobileNav";
-import { MobileSuggest } from "@/components/MobileSuggest";
 import { searchQuestion } from "@/api/questions";
 import { Question } from "@/types/question";
 import { useAppDispatch } from "@/hooks/useAppDispatch";
@@ -62,7 +61,6 @@ export const MainPage = (): React.JSX.Element => {
       </div>
       <QuestionCategories />
       <MobileNav />
-      <MobileSuggest />
     </div>
   );
 };

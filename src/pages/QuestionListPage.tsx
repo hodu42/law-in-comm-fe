@@ -81,7 +81,7 @@ export const QuestionListPage = (): React.JSX.Element => {
             value={currentKeyword}
             onChange={(e) => setKeyword(e.target.value)}
             placeholder="검색어를 입력하세요"
-            className="w-full p-2 pl-10 border-2 border-[#9CB395] rounded-full text-sm focus:border-[#5C6E56] focus:outline-none"
+            className="w-full p-2 pl-10 border-2 border-gray-200 rounded-[10px] text-sm focus:border-[#9CB395] focus:outline-none placeholder:text-[#E2E4E5]"
           />
           <button
             type="submit"
