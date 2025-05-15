@@ -24,12 +24,15 @@ export class ApiClient {
     this.axiosInstance.interceptors.request.use(
       (config) => {
         // 공개 API는 토큰 추가하지 않음
+        // TODO: 비회원도 사용 가능하도록 수정중
         if (
           config.url?.includes("/login") ||
           config.url?.includes("/register") ||
           config.url?.includes("/register-lawyer") ||
           config.url?.includes("/auth/token/refresh") ||
-          config.url?.includes("/users/join/nickname/dupe-check")
+          config.url?.includes("/users/join/nickname/dupe-check") ||
+          config.url?.includes("/question/:questionId/answers") ||
+          config.url?.includes("/questions/:id")
         ) {
           return config;
         }

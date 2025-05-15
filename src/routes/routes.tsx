@@ -21,8 +21,8 @@ import { ClientMyPage } from "@/pages/ClientMyPage";
 import { LawyerMyPage } from "@/pages/LawyerMyPage";
 import { ClientMyPageModify } from "@/pages/ClientMyPageModify";
 import { LawyerMyPageModify } from "@/pages/LawyerMyPageModify";
-import { ProtectedRoute } from "@/components/route/ProtectedRoute";
 import { Layout } from "@/components/Layout";
+import { ProtectedRoute } from "@/components/route/ProtectedRoute";
 
 export const protectedRoutesWithoutLayout: RouteObject[] = [
   {
@@ -32,10 +32,6 @@ export const protectedRoutesWithoutLayout: RouteObject[] = [
   {
     path: "/question/modify/:questionId",
     element: <QuestionModify />,
-  },
-  {
-    path: "/lawyer/manage",
-    element: <ManageLawyerRegister />,
   },
   {
     path: "/client/my-page",
@@ -55,7 +51,7 @@ export const protectedRoutesWithoutLayout: RouteObject[] = [
   },
 ];
 
-export const protectedRoutesWithLayout: RouteObject[] = [
+export const RoutesWithLayout: RouteObject[] = [
   {
     path: "/main",
     element: <MainPage />,
@@ -67,6 +63,10 @@ export const protectedRoutesWithLayout: RouteObject[] = [
   {
     path: "/question/:questionId",
     element: <QuestionDetailPage />,
+  },
+  {
+    path: "/lawyer/manage",
+    element: <ManageLawyerRegister />,
   },
 ];
 
@@ -122,19 +122,34 @@ export const testRoutes: RouteObject[] = [
 
 export const routes: RouteObject[] = [
   ...publicRoutes,
-  ...testRoutes,
+  {
+    path: "/",
+    element: <Layout />,
+    children: RoutesWithLayout,
+  },
   {
     path: "/",
     element: <ProtectedRoute />,
-    children: [
-      {
-        element: <Layout />,
-        children: protectedRoutesWithLayout,
-      },
-      ...protectedRoutesWithoutLayout,
-    ],
+    children: protectedRoutesWithoutLayout,
   },
 ];
+
+// TODO: Protected Route 코드
+// export const routes: RouteObject[] = [
+//   ...publicRoutes,
+//   ...testRoutes,
+//   {
+//     path: "/",
+//     element: <ProtectedRoute />,
+//     children: [
+//       {
+//         element: <Layout />,
+//         children: RoutesWithLayout,
+//       },
+//       ...protectedRoutesWithoutLayout,
+//     ],
+//   },
+// ];
 
 export const headerPaths = [
   {

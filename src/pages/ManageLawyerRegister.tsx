@@ -40,8 +40,7 @@ export const ManageLawyerRegister = (): React.JSX.Element => {
   }, [currentPage]);
 
   return (
-    <div className="flex flex-col min-h-screen bg-gray-50">
-      <MainHeader />
+    <>
       {/* 메인 콘텐츠 */}
       <main className="container mx-auto mt-[72px] pc:mt-[144px] px-4 pb-20 flex-grow">
         <div className="mt-10 pl-4">
@@ -285,6 +284,6 @@ export const ManageLawyerRegister = (): React.JSX.Element => {
           </div>
         </div>
       </main>
-    </div>
+    </>
   );
 };
