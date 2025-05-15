@@ -1,4 +1,4 @@
-import { RouteObject } from "react-router-dom";
+import { RouteObject, Navigate } from "react-router-dom";
 import { MainPage } from "@/pages/MainPage";
 import { Test } from "@/pages/testPages/Test";
 import { RegisterTest } from "@/pages/testPages/RegisterTest";
@@ -23,6 +23,7 @@ import { ClientMyPageModify } from "@/pages/ClientMyPageModify";
 import { LawyerMyPageModify } from "@/pages/LawyerMyPageModify";
 import { Layout } from "@/components/Layout";
 import { ProtectedRoute } from "@/components/route/ProtectedRoute";
+import { ManageQuestions } from "@/pages/ManageQuestions";
 
 export const protectedRoutesWithoutLayout: RouteObject[] = [
   {
@@ -53,6 +54,10 @@ export const protectedRoutesWithoutLayout: RouteObject[] = [
 
 export const RoutesWithLayout: RouteObject[] = [
   {
+    index: true,
+    element: <Navigate to="main" replace />,
+  },
+  {
     path: "/main",
     element: <MainPage />,
   },
@@ -67,6 +72,10 @@ export const RoutesWithLayout: RouteObject[] = [
   {
     path: "/lawyer/manage",
     element: <ManageLawyerRegister />,
+  },
+  {
+    path: "/manage/questions",
+    element: <ManageQuestions />,
   },
 ];
 
@@ -169,8 +178,8 @@ export const headerPaths = [
   },
   {
     title: "질문 관리",
-    link: "/question/manage",
-    currentCheck: "/question/manage",
+    link: "/manage/questions",
+    currentCheck: "/manage/questions",
     roles: [Role.ADMIN],
   },
   {

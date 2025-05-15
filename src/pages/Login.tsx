@@ -10,6 +10,7 @@ export const Login = (): React.JSX.Element => {
   const [userId, setUserId] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [error, setError] = useState<string>("");
+  const [showRegisterModal, setShowRegisterModal] = useState<boolean>(false);
 
   // 아이디 또는 비밀번호가 입력되면 에러 메시지 초기화
   useEffect(() => {
@@ -133,14 +134,45 @@ export const Login = (): React.JSX.Element => {
           <span className="font-NotoSansKR text-[16px] pc:text-[20px]">
             아직 회원이 아니신가요?
           </span>
-          <Link
-            to="/users/join/general"
+          <button
+            onClick={() => setShowRegisterModal(!showRegisterModal)}
             className="font-NotoSansKR text-[16px] pc:text-[20px] text-[#A9BE8C] hover:text-[#9CB395] hover:underline transition-colors font-bold"
           >
             회원가입
-          </Link>
+          </button>
         </div>
       </div>
+
+      {/* 회원가입 모달 */}
+      {showRegisterModal && (
+        <div
+          onClick={(e) => {
+            e.stopPropagation();
+            setShowRegisterModal(!showRegisterModal);
+          }}
+          className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50"
+        >
+          <div className="relative bg-white flex flex-col rounded-lg w-[40%] h-[70%]">
+            <h1 className="text-center text-[35px] font-bold my-10">
+              회원가입
+            </h1>
+            <div className="flex justify-evenly">
+              <Link
+                className="bg-[#A9BE8C] font-bold text-5xl p-10 rounded-lg"
+                to="/users/join/general"
+              >
+                의뢰인
+              </Link>
+              <Link
+                className="bg-[#A9BE8C] font-bold text-5xl p-10 rounded-lg"
+                to="/users/join/lawyer"
+              >
+                변호사
+              </Link>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* 모바일 하단 네비게이션 */}
       <MobileNav />
