@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import { MainHeader } from "@/components/MainHeader";
 import { fetchPendingLawyers } from "@/services/pendingLawyersService";
 import { PageResponse } from "@/types/page";
 import { DetailedPendingLawyer } from "@/types/admin";

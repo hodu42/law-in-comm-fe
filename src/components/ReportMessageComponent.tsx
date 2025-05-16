@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { PageResponse } from "@/types/page";
 import { AnswerReportMessage } from "@/types/report";
 import { formatDate } from "@/utils/dateFormat";
-import { getReportMessages } from "@/api/users/admin";
+import { getReportedQuestionsMessages } from "@/api/users/admin";
 
 export const ReportMessageComponent = ({
   questionId,
@@ -21,7 +21,10 @@ export const ReportMessageComponent = ({
   };
 
   const loadReportMessages = async () => {
-    const response = await getReportMessages(questionId, currentPage);
+    const response = await getReportedQuestionsMessages(
+      questionId,
+      currentPage
+    );
     setReportMessages(response.data);
     setTotalPages(response.data.totalPages);
     setIsFirstPage(response.data.first);

@@ -1,47 +1,46 @@
-import { LegalSpecialityLabels } from "@/types/speciality";
-import { Question } from "@/types/question";
 import { formatDate } from "@/utils/dateFormat";
 import { useState, useEffect } from "react";
 import { PageResponse } from "@/types/page";
-import { getReportedQuestions } from "@/api/users/admin";
-import { ReportMessageComponent } from "@/components/ReportMessageComponent";
-import { deleteQuestions } from "@/api/users/admin";
+import { getReportedAnswers } from "@/api/users/admin";
+import { deleteAnswers } from "@/api/users/admin";
+import { IMAGE_URL } from "@/config/Config";
+import ReactMarkdown from "react-markdown";
+import { Answer } from "@/types/answer";
+import { AI_ASSISTANT_ID } from "@/config/Config";
 
-export const ManageQuestions = (): React.JSX.Element => {
+export const ManageAnswers = (): React.JSX.Element => {
   const [threshold, setThreshold] = useState<number>(1);
-  const [reportedQuestions, setReportedQuestions] =
-    useState<PageResponse<Question>>();
+  const [reportedAnswers, setReportedAnswers] =
+    useState<PageResponse<Answer>>();
   const [currentPage, setCurrentPage] = useState(0);
   const [totalPages, setTotalPages] = useState(0);
   const [isFirstPage, setIsFirstPage] = useState(true);
   const [isLastPage, setIsLastPage] = useState(false);
-  const [selectedQuestions, setSelectedQuestions] = useState<Set<number>>(
+  const [selectedAnswers, setSelectedAnswers] = useState<Set<number>>(
     new Set()
   );
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [errorMsg, setErrorMsg] = useState("");
 
   const isAllSelected =
-    reportedQuestions?.content &&
-    reportedQuestions.content.length > 0 &&
-    reportedQuestions.content.every((question) =>
-      selectedQuestions.has(question.questionId)
+    reportedAnswers?.content &&
+    reportedAnswers.content.length > 0 &&
+    reportedAnswers.content.every((answer) =>
+      selectedAnswers.has(answer.answerId)
     );
 
-  const loadReportedQuestions = async () => {
-    const response = await getReportedQuestions(threshold, currentPage);
-    setReportedQuestions(response.data);
+  const loadReportedAnswers = async () => {
+    const response = await getReportedAnswers(threshold, currentPage);
+    setReportedAnswers(response.data);
     setTotalPages(response.data.totalPages);
     setIsFirstPage(response.data.first);
     setIsLastPage(response.data.last);
   };
 
-  const handleSelectQuestion = (questionId: number) => {
-    setSelectedQuestions((prev) => {
+  const handleSelectAnswer = (answerId: number) => {
+    setSelectedAnswers((prev) => {
       const newSet = new Set(prev);
-      newSet.has(questionId)
-        ? newSet.delete(questionId)
-        : newSet.add(questionId);
+      newSet.has(answerId) ? newSet.delete(answerId) : newSet.add(answerId);
       return newSet;
     });
   };
@@ -49,25 +48,25 @@ export const ManageQuestions = (): React.JSX.Element => {
   const handleSelectAll = (e: React.ChangeEvent<HTMLInputElement>) => {
     const isChecked = e.target.checked;
     if (isChecked) {
-      const allQuestionIds =
-        reportedQuestions?.content.map((question) => question.questionId) || [];
-      setSelectedQuestions(new Set(allQuestionIds));
+      const allAnswerIds =
+        reportedAnswers?.content.map((answer) => answer.answerId) || [];
+      setSelectedAnswers(new Set(allAnswerIds));
     } else {
-      setSelectedQuestions(new Set());
+      setSelectedAnswers(new Set());
     }
   };
 
-  const deleteSelectedQuestions = async () => {
+  const deleteSelectedAnswers = async () => {
     try {
-      const response = await deleteQuestions(Array.from(selectedQuestions));
+      const response = await deleteAnswers(Array.from(selectedAnswers));
       if (response.isSuccess) {
-        alert(`${response.data.removedCount}개의 질문이 삭제되었습니다.`);
+        alert(`${response.data.removedCount}개의 답변이 삭제되었습니다.`);
         setShowDeleteModal(false);
-        setSelectedQuestions(new Set());
-        loadReportedQuestions();
+        setSelectedAnswers(new Set());
+        loadReportedAnswers();
       }
     } catch (error) {
-      setErrorMsg("질문 삭제 중 오류가 발생했습니다.");
+      setErrorMsg("답변 삭제 중 오류가 발생했습니다.");
     }
   };
 
@@ -76,7 +75,7 @@ export const ManageQuestions = (): React.JSX.Element => {
   };
 
   useEffect(() => {
-    loadReportedQuestions();
+    loadReportedAnswers();
   }, [currentPage]);
 
   return (
@@ -85,7 +84,7 @@ export const ManageQuestions = (): React.JSX.Element => {
       <form
         onSubmit={(e) => {
           e.preventDefault();
-          loadReportedQuestions();
+          loadReportedAnswers();
         }}
         className="flex flex-col gap-2 my-6"
       >
@@ -123,8 +122,7 @@ export const ManageQuestions = (): React.JSX.Element => {
             checked={isAllSelected || false}
             onChange={handleSelectAll}
             disabled={
-              !reportedQuestions?.content ||
-              reportedQuestions.content.length === 0
+              !reportedAnswers?.content || reportedAnswers.content.length === 0
             }
           />
           <label
@@ -136,19 +134,19 @@ export const ManageQuestions = (): React.JSX.Element => {
         </div>
         <button
           onClick={() => setShowDeleteModal(true)}
-          disabled={selectedQuestions.size === 0}
+          disabled={selectedAnswers.size === 0}
           className="bg-red-500 hover:bg-red-700 text-white text-[1rem] font-bold py-2 px-4 rounded disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
         >
-          선택 삭제 ({selectedQuestions.size})
+          선택 삭제 ({selectedAnswers.size})
         </button>
       </div>
-      {/* 질문 영역 */}
-      {reportedQuestions?.content &&
-        reportedQuestions.content.map((question) => (
-          <article
-            key={question.questionId}
+      {/* 답변 영역*/}
+      {reportedAnswers?.content &&
+        reportedAnswers.content.map((answer) => (
+          <div
+            key={answer.answerId}
             className={`bg-white my-4 rounded-[10px] shadow-sm transition-colors ${
-              selectedQuestions.has(question.questionId) ? "bg-green-50" : ""
+              selectedAnswers.has(answer.answerId) ? "bg-green-50" : ""
             }`}
           >
             <div className="flex items-start p-4">
@@ -156,50 +154,95 @@ export const ManageQuestions = (): React.JSX.Element => {
               <input
                 type="checkbox"
                 className="mt-1 w-5 h-5 text-green-600 border-gray-300 rounded focus:ring-green-500 flex-shrink-0" // mt-1은 제목과의 수직 정렬을 위함
-                checked={selectedQuestions.has(question.questionId)}
-                onChange={() => handleSelectQuestion(question.questionId)}
+                checked={selectedAnswers.has(answer.answerId)}
+                onChange={() => handleSelectAnswer(answer.answerId)}
               />
               <div className="flex flex-grow flex-col p-8">
-                <div className="flex flex-col gap-4">
-                  <div className="flex justify-between items-center">
-                    <span className="text-[18px] pc:text-[16px] text-[#848484]">
-                      {LegalSpecialityLabels[question.legalSpeciality]}
-                    </span>
-                  </div>
-                </div>
-                <div className="flex flex-col gap-3">
-                  <h2 className="text-[21px] pc:text-[27px] font-bold mr-2">
-                    {question.title}
-                  </h2>
-                  <div className="flex flex-col pl-3">
-                    {question.authorName && (
-                      <div className="flex text-[12px] pc:text-[14px]">
-                        <span className="font-bold text-[#5C6E56] mr-2">
-                          작성자
-                        </span>
-                        <h1 className="font-bold text-[#555]">
-                          {question.authorName}
-                        </h1>
-                      </div>
+                <div className="flex items-center gap-6 mb-4 px-4">
+                  {/* 프로필 사진 존재 할 시 프로필 사진 출력, 없을 시 기본 프로필 아이콘 출력 */}
+                  <div className="rounded-full flex w-16 h-16 pc:w-20 pc:h-20 overflow-hidden flex-shrink-0">
+                    {answer.profileImage ? (
+                      <img
+                        src={`${IMAGE_URL}${answer.profileImage.path}`}
+                        alt={answer.profileImage.name}
+                        className="rounded-full object-cover border-2 border-[#9CB395]"
+                      />
+                    ) : (
+                      <svg
+                        className="rounded-full text-[#9CB395]"
+                        viewBox="0 0 24 24"
+                        fill="currentColor"
+                      >
+                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z" />
+                      </svg>
                     )}
-                    <div className="flex text-[14px] pc:text-[16px] text-[#999]">
-                      <span className="mr-6">최초 사건 발생일</span>
-                      <p>{question.firstOccurrenceDate}</p>
-                    </div>
                   </div>
-                  <p className="text-[#656565] text-[15px] pc:text-[17px] whitespace-pre-line">
-                    {question.content}
-                  </p>
+                  <div className="flex flex-col w-full gap-1 justify-center">
+                    <div className="flex justify-between items-center">
+                      <h4 className="text-[19px] pc:text-[21px] font-bold">
+                        {answer.authorId === AI_ASSISTANT_ID
+                          ? `${answer.authorName}`
+                          : `${answer.authorName} 변호사`}
+                      </h4>
+                    </div>
+                    <p className="text-[14px] pc:text-[16px] text-gray-500">
+                      {answer.updatedAt
+                        ? formatDate(answer.updatedAt)
+                        : formatDate(answer.createdAt)}
+                    </p>
+                  </div>
                 </div>
-                <div className="flex mt-5 text-[14px] pc:text-[16px] text-[#B4B4B4] justify-end">
-                  <span className="mr-3">
-                    {question.updatedAt
-                      ? formatDate(question.updatedAt)
-                      : formatDate(question.createdAt)}
-                  </span>
-                  <span className="mr-3">조회수 {question.viewCount}</span>
-                  <div className="flex items-center gap-2">
-                    <span>신고 {question.reportCount}</span>
+                <div className="text-[15px] pc:text-[17px] text-[#555]">
+                  <ReactMarkdown
+                    components={{
+                      a: ({ children, href }) => (
+                        <a
+                          href={href}
+                          className="text-[#9CB395] hover:text-[#8AA082] underline"
+                        >
+                          {children}
+                        </a>
+                      ),
+                      ul: ({ children }) => (
+                        <ul className="my-2">{children}</ul>
+                      ),
+                      li: ({ children }) => (
+                        <li className="my-6">{children}</li>
+                      ),
+                      h1: ({ children }) => (
+                        <h1 className="text-2xl font-bold my-4">{children}</h1>
+                      ),
+                      h2: ({ children }) => (
+                        <h2 className="text-xl font-bold my-3">{children}</h2>
+                      ),
+                      h3: ({ children }) => (
+                        <h3 className="text-lg font-bold my-2">{children}</h3>
+                      ),
+                      ol: ({ children }) => (
+                        <ol className="my-2 list-decimal">{children}</ol>
+                      ),
+                      blockquote: ({ children }) => (
+                        <blockquote className="border-gray-300 my-4">
+                          {children}
+                        </blockquote>
+                      ),
+                      em: ({ children }) => (
+                        <em className="italic">{children}</em>
+                      ),
+                      strong: ({ children }) => (
+                        <strong className="font-bold">{children}</strong>
+                      ),
+                      p: ({ children }) => (
+                        <span className="my-2">{children}</span>
+                      ),
+                    }}
+                  >
+                    {answer.content}
+                  </ReactMarkdown>
+                </div>
+                <div className="flex text-[14px] pc:text-[16px] text-[#B4B4B4] justify-end items-center gap-2">
+                  <div className="flex mr-3 gap-2">
+                    <span>신고 {answer.reportCount}</span>
                     <div>
                       <svg
                         className="w-[14px] h-[14px] pc:w-[18px] pc:h-[18px] text-[#EF4242] hover:text-[#D63030] transition-colors flex-shrink-0"
@@ -221,11 +264,7 @@ export const ManageQuestions = (): React.JSX.Element => {
                 </div>
               </div>
             </div>
-            {/* 신고 사유 영역 */}
-            {question.reportCount > 0 && (
-              <ReportMessageComponent questionId={question.questionId} />
-            )}
-          </article>
+          </div>
         ))}
       {/* 질문 페이지네이션 */}
       <div className="mt-8 mb-28 pc:mb-10 flex justify-center">
@@ -268,7 +307,7 @@ export const ManageQuestions = (): React.JSX.Element => {
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
           <div className="bg-white rounded-lg p-6 w-full max-w-md">
             <h2 className="text-lg font-bold mb-4">
-              선택된 {selectedQuestions.size}개의 질문을 삭제하시겠습니까?
+              선택된 {selectedAnswers.size}개의 답변을 삭제하시겠습니까?
             </h2>
             <div className="text-red-500 text-sm">{errorMsg}</div>
             <div className="flex justify-end gap-2">
@@ -280,7 +319,7 @@ export const ManageQuestions = (): React.JSX.Element => {
               </button>
               <button
                 className="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600"
-                onClick={deleteSelectedQuestions}
+                onClick={deleteSelectedAnswers}
               >
                 삭제
               </button>

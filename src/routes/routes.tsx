@@ -24,6 +24,7 @@ import { LawyerMyPageModify } from "@/pages/LawyerMyPageModify";
 import { Layout } from "@/components/Layout";
 import { ProtectedRoute } from "@/components/route/ProtectedRoute";
 import { ManageQuestions } from "@/pages/ManageQuestions";
+import { ManageAnswers } from "@/pages/ManageAnswers";
 
 export const protectedRoutesWithoutLayout: RouteObject[] = [
   {
@@ -76,6 +77,10 @@ export const RoutesWithLayout: RouteObject[] = [
   {
     path: "/manage/questions",
     element: <ManageQuestions />,
+  },
+  {
+    path: "/manage/answers",
+    element: <ManageAnswers />,
   },
 ];
 
@@ -184,8 +189,8 @@ export const headerPaths = [
   },
   {
     title: "답변 관리",
-    link: "/answer/manage",
-    currentCheck: "/answer/manage",
+    link: "/manage/answers",
+    currentCheck: "/manage/answers",
     roles: [Role.ADMIN],
   },
   {
