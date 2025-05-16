@@ -80,6 +80,17 @@
   }
 }
 
+/* 숫자 입력 필드 화살표 숨기기 */
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type="number"] {
+  -moz-appearance: textfield;
+}
+
 /* 모바일에서 하단 네비게이션의 여백을 위한 패딩 추가 */
 @media (max-width: 768px) {
   .question-form-container {

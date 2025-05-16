@@ -134,12 +134,19 @@ export const Login = (): React.JSX.Element => {
           <span className="font-NotoSansKR text-[16px] pc:text-[20px]">
             아직 회원이 아니신가요?
           </span>
-          <button
+          <Link
+            to="/users/join/general"
+            className="font-NotoSansKR text-[16px] pc:text-[20px] text-[#A9BE8C] hover:text-[#9CB395] hover:underline transition-colors font-bold"
+          >
+            회원가입
+          </Link>
+          {/* TODO: 회원가입 방식 변경하기  */}
+          {/* <button
             onClick={() => setShowRegisterModal(!showRegisterModal)}
             className="font-NotoSansKR text-[16px] pc:text-[20px] text-[#A9BE8C] hover:text-[#9CB395] hover:underline transition-colors font-bold"
           >
             회원가입
-          </button>
+          </button> */}
         </div>
       </div>
 
