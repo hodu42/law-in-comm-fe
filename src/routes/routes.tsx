@@ -148,23 +148,6 @@ export const routes: RouteObject[] = [
   },
 ];
 
-// TODO: Protected Route 코드
-// export const routes: RouteObject[] = [
-//   ...publicRoutes,
-//   ...testRoutes,
-//   {
-//     path: "/",
-//     element: <ProtectedRoute />,
-//     children: [
-//       {
-//         element: <Layout />,
-//         children: RoutesWithLayout,
-//       },
-//       ...protectedRoutesWithoutLayout,
-//     ],
-//   },
-// ];
-
 export const headerPaths = [
   {
     title: "홈",
