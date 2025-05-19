@@ -25,8 +25,6 @@ import { Layout } from "@/components/Layout";
 import { ProtectedRoute } from "@/components/route/ProtectedRoute";
 import { ManageQuestions } from "@/pages/ManageQuestions";
 import { ManageAnswers } from "@/pages/ManageAnswers";
-import { ChatRoomPage } from "@/pages/ChatRoomPage";
-import { ChatLayout } from "@/components/ChatLayout";
 
 export const protectedRoutesWithoutLayout: RouteObject[] = [
   {
@@ -86,13 +84,6 @@ export const RoutesWithLayout: RouteObject[] = [
   },
 ];
 
-export const RoutesWithChatLayout: RouteObject[] = [
-  {
-    path: "/chatroom",
-    element: <ChatRoomPage />,
-  },
-];
-
 export const publicRoutes: RouteObject[] = [
   {
     path: "/login",
@@ -149,11 +140,6 @@ export const routes: RouteObject[] = [
     path: "/",
     element: <Layout />,
     children: RoutesWithLayout,
-  },
-  {
-    path: "/",
-    element: <ChatLayout />,
-    children: RoutesWithChatLayout,
   },
   {
     path: "/",

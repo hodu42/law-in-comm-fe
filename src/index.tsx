@@ -6,6 +6,7 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import store from "@/store";
 import { BrowserRouter } from "react-router-dom";
+import ChatWidget from "./components/ChatWidget";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
@@ -14,6 +15,7 @@ const root = ReactDOM.createRoot(
 root.render(
   <Provider store={store}>
     <BrowserRouter>
+      <ChatWidget />
       <App />
     </BrowserRouter>
   </Provider>
