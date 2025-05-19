@@ -252,7 +252,7 @@ const ChatWidget: React.FC = () => {
                   // 프로필 이미지 JSX (상대방 메시지일 경우에만)
                   const profileImage = !isMe ? (
                     <img
-                      className="w-14 h-14 object-cover rounded-full shrink-0" // 크기 조정 및 shrink-0 추가
+                      className="w-12 h-12 object-cover rounded-full shrink-0" // 크기 조정 및 shrink-0 추가
                       src={testImg} // 실제로는 msg.profileImageUrl 등 사용
                       alt={`${msg.sender} profile`}
                     />
