@@ -63,7 +63,6 @@ export const QuestionDetailPage = (): React.JSX.Element => {
       String(currentPage),
       String(ANSWER_DEFAULT_SIZE)
     );
-    console.log(response.data);
     setAnswers(response.data);
     setTotalPages(response.data.totalPages);
     setIsFirstPage(response.data.first);
@@ -519,8 +518,14 @@ export const QuestionDetailPage = (): React.JSX.Element => {
                       </svg>
                     </button>
                   </div>
-                  {answer.authorId !== AI_ASSISTANT_ID && (
-                    <button className="flex items-center gap-2 bg-[#9CB395] hover:bg-[#8AA082] transition-colors p-2 rounded-[10px] text-white">
+                  {/* AI 답변이 아니고 해당 질문의 작성자 일때 */}
+                  {answer.authorId !== AI_ASSISTANT_ID && question?.author && (
+                    <a
+                      href=""
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center gap-2 bg-[#9CB395] hover:bg-[#8AA082] transition-colors p-2 rounded-[10px] text-white"
+                    >
                       <svg
                         className="w-6 h-6 pc:w-6 pc:h-6"
                         fill="none"
@@ -534,7 +539,7 @@ export const QuestionDetailPage = (): React.JSX.Element => {
                       <span className="text-[14px] pc:text-[16px]">
                         채팅 신청
                       </span>
-                    </button>
+                    </a>
                   )}
                 </div>
               </div>
