@@ -17,7 +17,7 @@ const ChatWidget: React.FC = () => {
   const [selectedRoomId, setSelectedRoomId] = useState<string | number | null>(
     null
   );
-
+  //TODO: 컴포넌트 분리하기
   // 실제 애플리케이션에서는 API 호출 등으로 데이터를 가져옵니다.
   const [chatRooms, setChatRooms] = useState<ChatRoom[]>([
     { id: "room1", name: "김민준", lastMessage: "네, 확인해 보겠습니다." },
