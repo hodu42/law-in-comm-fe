@@ -58,6 +58,7 @@ export const QuestionDetailPage = (): React.JSX.Element => {
 
   const fetchQuestion = async () => {
     const response = await getQuestion(String(questionId));
+    console.log(response.data);
     setQuestion(response.data);
   };
 
@@ -198,8 +199,9 @@ export const QuestionDetailPage = (): React.JSX.Element => {
 
   const handleChatRequest = async (otherUserId: number) => {
     try {
-      // await createChatRequest(otherUserId);
+      const response = await createChatRequest(otherUserId); // 채팅방 생성 테스트 필요
       dispatch(chatWidgetActions.openChat());
+      dispatch(chatWidgetActions.setChatroomId(response.data.chatRoomId)); // 선택된 채팅방 id 상태 설정
     } catch (error: any) {
       console.error(error);
     }

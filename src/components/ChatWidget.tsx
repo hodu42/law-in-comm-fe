@@ -14,22 +14,25 @@ import { chatWidgetActions } from "@/store/chatWidget";
 const ChatWidget: React.FC = () => {
   const dispatch = useAppDispatch();
   const { isOpen } = useAppSelector((state) => state.chatWidget);
-  const [currentView, setCurrentView] = useState<"roomList" | "chatRoom">(
-    "roomList"
-  );
-  const [selectedRoomId, setSelectedRoomId] = useState<string | number | null>(
-    null
-  );
-  //TODO: 컴포넌트 분리하기
+  const { selectedChatroomId } = useAppSelector((state) => state.chatWidget);
+
   // 실제 애플리케이션에서는 API 호출 등으로 데이터를 가져옵니다.
   const [chatRooms, setChatRooms] = useState<ChatRoom[]>([
-    { id: "room1", name: "김민준", lastMessage: "네, 확인해 보겠습니다." },
     {
-      id: "room2",
-      name: "기술 지원팀",
-      lastMessage: "해결되셨다니 다행입니다!",
+      chatRoomId: 1,
+      otherMemberName: "김민준",
+      lastMessageAt: "네, 확인해 보겠습니다.",
     },
-    { id: "room3", name: "새로운 이벤트 안내" },
+    {
+      chatRoomId: 2,
+      otherMemberName: "김명태",
+      lastMessageAt: "수고하세요",
+    },
+    {
+      chatRoomId: 3,
+      otherMemberName: "김태명",
+      lastMessageAt: "안녕하세요.",
+    },
   ]);
 
   const testImg =
@@ -45,20 +48,18 @@ const ChatWidget: React.FC = () => {
       dispatch(chatWidgetActions.closeChat());
     } else {
       // 열릴 때
-      dispatch(chatWidgetActions.closeChat());
-      setCurrentView("roomList"); // 항상 방 목록부터 보여줌
-      setSelectedRoomId(null);
+      dispatch(chatWidgetActions.openChat());
+      dispatch(chatWidgetActions.clearChatroomId());
       setMessages([]); // 이전 방 메시지 초기화
     }
   };
 
-  const handleRoomSelect = (roomId: string | number) => {
-    setSelectedRoomId(roomId);
-    setCurrentView("chatRoom");
+  const handleRoomSelect = (roomId: number) => {
+    dispatch(chatWidgetActions.setChatroomId(roomId));
     // TODO: 실제로는 여기서 roomId에 해당하는 메시지를 서버에서 가져옵니다.
     // STOMP 구독도 이 시점에서 해당 방 ID로 이루어져야 합니다.
     // 예시: 선택된 방에 따라 다른 테스트 메시지 로드
-    if (roomId === "room1") {
+    if (roomId === 1) {
       setMessages([
         {
           id: 1,
@@ -78,7 +79,7 @@ const ChatWidget: React.FC = () => {
           timestamp: "오후 2:31",
         },
       ]);
-    } else if (roomId === "room2") {
+    } else if (roomId === 2) {
       setMessages([
         { id: 1, sender: "system", content: "기술 지원팀입니다." },
         {
@@ -93,15 +94,14 @@ const ChatWidget: React.FC = () => {
         {
           id: "placeholder",
           sender: "system",
-          content: `${chatRooms.find((r) => r.id === roomId)?.name || ""} 채팅방입니다.`,
+          content: `${chatRooms.find((r) => r.chatRoomId === roomId)?.otherMemberName || ""} 채팅방입니다.`,
         },
       ]);
     }
   };
 
   const handleGoBackToRoomList = () => {
-    setCurrentView("roomList");
-    setSelectedRoomId(null);
+    dispatch(chatWidgetActions.clearChatroomId());
     setMessages([]); // 메시지 목록 초기화
     // TODO: 이전 STOMP 구독이 있었다면 여기서 해제(unsubscribe)해야 할 수 있습니다.
   };
@@ -112,7 +112,7 @@ const ChatWidget: React.FC = () => {
 
   const handleSendMessage = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    if (newMessage.trim() === "" || !selectedRoomId) return;
+    if (newMessage.trim() === "" || !selectedChatroomId) return;
 
     const messageToSend: Message = {
       id: `msg-${Date.now()}`, // 더 나은 ID 생성 방식 필요
@@ -129,13 +129,14 @@ const ChatWidget: React.FC = () => {
   };
 
   useEffect(() => {
-    if (isOpen && currentView === "chatRoom" && messagesEndRef.current) {
+    if (isOpen && selectedChatroomId && messagesEndRef.current) {
       messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
     }
-  }, [messages, isOpen, currentView]);
+  }, [messages, isOpen, selectedChatroomId]);
 
   const currentRoomName =
-    chatRooms.find((room) => room.id === selectedRoomId)?.name || "채팅";
+    chatRooms.find((room) => room.chatRoomId === selectedChatroomId)
+      ?.otherMemberName || "채팅";
 
   return (
     <>
@@ -162,7 +163,7 @@ const ChatWidget: React.FC = () => {
         >
           {/* 헤더 */}
           <div className="bg-slate-100 p-4 border-b border-gray-200 flex justify-between items-center shrink-0">
-            {currentView === "chatRoom" && (
+            {selectedChatroomId && (
               <button
                 className="p-2 mr-2 text-[#7D9277] hover:text-[#5E6F5A] transition-colors duration-150 rounded-full"
                 onClick={handleGoBackToRoomList}
@@ -172,13 +173,13 @@ const ChatWidget: React.FC = () => {
               </button>
             )}
             <span
-              className={`font-bold text-gray-800 text-lg ${currentView === "chatRoom" && selectedRoomId ? "flex-grow text-center" : ""} ${currentView === "chatRoom" && !selectedRoomId ? "flex-grow" : ""} ${currentView === "roomList" ? "flex-grow" : ""}`}
+              className={`font-bold text-gray-800 text-lg ${selectedChatroomId ? "flex-grow text-center" : "flex-grow"}`}
             >
-              {currentView === "roomList" ? "채팅방 목록" : currentRoomName}
+              {selectedChatroomId ? currentRoomName : "채팅방 목록"}
             </span>
             {/* 오른쪽 정렬 및 중앙 정렬을 위한 공간 확보. Back 버튼이 없을 경우 공간을 덜 차지하도록 조정 */}
             <div
-              className={`${currentView === "chatRoom" ? "w-10 pc:w-8" : "w-0"}`}
+              className={`${selectedChatroomId} ? "w-10 pc:w-8" : "w-0"}`}
             ></div>
             <button
               className="p-1.5 text-[#7D9277] hover:text-[#5E6F5A] transition-colors duration-150 rounded-full" // 수정된 스타일
@@ -189,40 +190,8 @@ const ChatWidget: React.FC = () => {
             </button>
           </div>
 
-          {/* 본문: 뷰에 따라 다르게 렌더링 */}
-          {currentView === "roomList" ? (
-            <div className="flex-grow p-3 overflow-y-auto bg-slate-50">
-              {chatRooms.map((room) => (
-                <div
-                  key={room.id}
-                  className="flex items-center gap-3 p-4 mb-2 bg-white hover:bg-gray-50 rounded-lg shadow-sm cursor-pointer border border-gray-200 transition-colors duration-150"
-                  onClick={() => handleRoomSelect(room.id)}
-                  role="button"
-                  tabIndex={0}
-                  onKeyPress={(e) =>
-                    e.key === "Enter" && handleRoomSelect(room.id)
-                  }
-                >
-                  <img
-                    className="w-12 h-12 object-cover rounded-full"
-                    src={testImg}
-                  ></img>
-                  <div className="flex flex-col">
-                    <h3 className="font-semibold text-gray-700 text-md">
-                      {room.name}
-                    </h3>
-                    {room.lastMessage && (
-                      <p className="text-sm text-gray-500 truncate mt-1">
-                        {room.lastMessage}
-                      </p>
-                    )}
-                    {/* 예: {room.unreadCount > 0 && <span className="float-right bg-red-500 text-white text-xs rounded-full px-2 py-0.5">{room.unreadCount}</span>} */}
-                  </div>
-                </div>
-              ))}
-            </div>
-          ) : (
-            // currentView === 'chatRoom'
+          {/* 선택된 채팅방 ID가 있으면 채팅방 / 없으면 채팅방 목록 */}
+          {selectedChatroomId !== null ? (
             <>
               <div className="flex-grow p-4 overflow-y-auto bg-slate-50 space-y-3">
                 {messages.map((msg) => {
@@ -295,6 +264,37 @@ const ChatWidget: React.FC = () => {
                 </button>
               </form>
             </>
+          ) : (
+            <div className="flex-grow p-3 overflow-y-auto bg-slate-50">
+              {chatRooms.map((room) => (
+                <div
+                  key={room.chatRoomId}
+                  className="flex items-center gap-3 p-4 mb-2 bg-white hover:bg-gray-50 rounded-lg shadow-sm cursor-pointer border border-gray-200 transition-colors duration-150"
+                  onClick={() => handleRoomSelect(room.chatRoomId)}
+                  role="button"
+                  tabIndex={0}
+                  onKeyPress={(e) =>
+                    e.key === "Enter" && handleRoomSelect(room.chatRoomId)
+                  }
+                >
+                  <img
+                    className="w-12 h-12 object-cover rounded-full"
+                    src={testImg}
+                  ></img>
+                  <div className="flex flex-col">
+                    <h3 className="font-semibold text-gray-700 text-md">
+                      {room.otherMemberName}
+                    </h3>
+                    {room.lastMessageAt && (
+                      <p className="text-sm text-gray-500 truncate mt-1">
+                        {room.lastMessageAt}
+                      </p>
+                    )}
+                    {/* 예: {room.unreadCount > 0 && <span className="float-right bg-red-500 text-white text-xs rounded-full px-2 py-0.5">{room.unreadCount}</span>} */}
+                  </div>
+                </div>
+              ))}
+            </div>
           )}
         </div>
       )}

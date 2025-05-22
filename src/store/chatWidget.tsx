@@ -4,6 +4,7 @@ const chatWidgetSlice = createSlice({
   name: "chatWidget",
   initialState: {
     isOpen: false,
+    selectedChatroomId: null,
   },
   reducers: {
     openChat: (state) => {
@@ -14,6 +15,12 @@ const chatWidgetSlice = createSlice({
     },
     toggleChat: (state) => {
       state.isOpen = !state.isOpen;
+    },
+    setChatroomId: (state, action) => {
+      state.selectedChatroomId = action.payload;
+    },
+    clearChatroomId: (state) => {
+      state.selectedChatroomId = null;
     },
   },
 });
