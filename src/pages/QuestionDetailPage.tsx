@@ -15,10 +15,13 @@ import {
 } from "@/api/answers";
 import { useNavigation } from "@/hooks/useNavigation";
 import { getCurrentRole } from "@/hooks/tokenDecoder";
+import { useAppDispatch } from "@/hooks/reduxHooks";
 import { IMAGE_URL } from "@/config/Config";
 import { formatDate } from "@/utils/dateFormat";
 import { AI_ASSISTANT_ID } from "@/config/Config";
 import ReactMarkdown from "react-markdown";
+import { createChatRequest } from "@/api/chat";
+import { chatWidgetActions } from "@/store/chatWidget";
 
 const ANSWER_DEFAULT_SIZE = 5;
 
@@ -42,6 +45,7 @@ export const QuestionDetailPage = (): React.JSX.Element => {
   const [answerContent, setAnswerContent] = useState("");
   const [editingAnswerId, setEditingAnswerId] = useState<number>(-1);
   const [editedAnswer, setEditedAnswer] = useState("");
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
     fetchQuestion();
@@ -189,6 +193,15 @@ export const QuestionDetailPage = (): React.JSX.Element => {
       fetchAnswers();
     } catch (error: any) {
       console.log(error);
+    }
+  };
+
+  const handleChatRequest = async (otherUserId: number) => {
+    try {
+      // await createChatRequest(otherUserId);
+      dispatch(chatWidgetActions.openChat());
+    } catch (error: any) {
+      console.error(error);
     }
   };
 
@@ -520,10 +533,8 @@ export const QuestionDetailPage = (): React.JSX.Element => {
                   </div>
                   {/* AI 답변이 아니고 해당 질문의 작성자 일때 */}
                   {answer.authorId !== AI_ASSISTANT_ID && question?.author && (
-                    <a
-                      href=""
-                      target="_blank"
-                      rel="noopener noreferrer"
+                    <button
+                      onClick={() => handleChatRequest(answer.authorId)}
                       className="flex items-center gap-2 bg-[#9CB395] hover:bg-[#8AA082] transition-colors p-2 rounded-[10px] text-white"
                     >
                       <svg
@@ -539,7 +550,7 @@ export const QuestionDetailPage = (): React.JSX.Element => {
                       <span className="text-[14px] pc:text-[16px]">
                         채팅 신청
                       </span>
-                    </a>
+                    </button>
                   )}
                 </div>
               </div>

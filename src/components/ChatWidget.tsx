@@ -8,9 +8,12 @@ import React, {
 import { CloseIcon } from "@/components/icons/CloseIcon";
 import { BackIcon } from "./icons/BackIcon";
 import { Message, ChatRoom } from "@/types/chat";
+import { useAppSelector, useAppDispatch } from "@/hooks/reduxHooks";
+import { chatWidgetActions } from "@/store/chatWidget";
 
 const ChatWidget: React.FC = () => {
-  const [isOpen, setIsOpen] = useState<boolean>(false);
+  const dispatch = useAppDispatch();
+  const { isOpen } = useAppSelector((state) => state.chatWidget);
   const [currentView, setCurrentView] = useState<"roomList" | "chatRoom">(
     "roomList"
   );
@@ -39,10 +42,10 @@ const ChatWidget: React.FC = () => {
   const toggleChat = () => {
     if (isOpen) {
       // 닫힐 때
-      setIsOpen(false);
+      dispatch(chatWidgetActions.closeChat());
     } else {
       // 열릴 때
-      setIsOpen(true);
+      dispatch(chatWidgetActions.closeChat());
       setCurrentView("roomList"); // 항상 방 목록부터 보여줌
       setSelectedRoomId(null);
       setMessages([]); // 이전 방 메시지 초기화
