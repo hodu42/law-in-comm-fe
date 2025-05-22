@@ -3,13 +3,14 @@ import { Logo } from "./Logo";
 import { SearchBoxPC } from "./SearchBoxPC";
 import { HeaderTags } from "./HeaderTags";
 import { Link } from "react-router-dom";
-import { useAppDispatch } from "@/hooks/useAppDispatch";
+import { useAppDispatch } from "@/hooks/reduxHooks";
 import { getCurrentRole } from "@/hooks/tokenDecoder";
 import { Role } from "@/types/role";
 import { useLogout } from "@/hooks/useLogout";
+import { searchActions } from "@/store/search";
 
 export const MainHeader = (): React.JSX.Element => {
-  const { clearKeyword } = useAppDispatch();
+  const dispatch = useAppDispatch();
   const userRole = getCurrentRole();
   const { handleLogout } = useLogout();
 
@@ -22,7 +23,7 @@ export const MainHeader = (): React.JSX.Element => {
               className="flex justify-between items-center gap-x-5"
               to="/main"
               onClick={() => {
-                clearKeyword();
+                dispatch(searchActions.setKeyword(""));
               }}
             >
               <Logo />

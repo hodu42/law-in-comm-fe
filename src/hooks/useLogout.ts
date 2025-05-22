@@ -1,14 +1,15 @@
 import { useNavigation } from "@/hooks/useNavigation";
-import { useAppDispatch } from "@/hooks/useAppDispatch";
+import { useAppDispatch } from "@/hooks/reduxHooks";
 import { clearTokens } from "@/api/auth/token";
+import { searchActions } from "@/store/search";
 
 export const useLogout = () => {
   const navigate = useNavigation();
-  const { clearKeyword } = useAppDispatch();
+  const dispatch = useAppDispatch();
 
   const handleLogout = () => {
     clearTokens();
-    clearKeyword();
+    dispatch(searchActions.setKeyword(""));
     navigate.goToLogin();
   };
 

@@ -5,13 +5,13 @@ import { fetchQuestionsWithAnswers } from "@/services/questionService";
 import { QuestionWithAnswerList } from "@/types/questionWithAnswer";
 import { PageResponse } from "@/types/page";
 import { LegalSpecialityLabels } from "@/types/speciality";
-import { useAppSelector } from "@/hooks/useAppSelector";
-import { useAppDispatch } from "@/hooks/useAppDispatch";
+import { useAppSelector, useAppDispatch } from "@/hooks/reduxHooks";
+import { searchActions } from "@/store/search";
 
 export const QuestionListPage = (): React.JSX.Element => {
   const [searchParams, setSearchParams] = useSearchParams();
-  const { keyword: currentKeyword } = useAppSelector();
-  const { setKeyword } = useAppDispatch();
+  const { keyword: currentKeyword } = useAppSelector((state) => state.search);
+  const dispatch = useAppDispatch();
   const [questionList, setQuestionList] =
     useState<PageResponse<QuestionWithAnswerList>>();
   const [totalPages, setTotalPages] = useState(0);
@@ -74,7 +74,7 @@ export const QuestionListPage = (): React.JSX.Element => {
           <input
             type="text"
             value={currentKeyword}
-            onChange={(e) => setKeyword(e.target.value)}
+            onChange={(e) => dispatch(searchActions.setKeyword(e.target.value))}
             placeholder="검색어를 입력하세요"
             className="w-full p-2 pl-10 border-2 border-gray-200 rounded-[10px] text-sm focus:border-[#9CB395] focus:outline-none placeholder:text-[#E2E4E5]"
           />

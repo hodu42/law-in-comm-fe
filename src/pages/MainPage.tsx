@@ -4,12 +4,13 @@ import { QuestionCategories } from "@/components/QuestionCategories";
 import { MobileSearch } from "@/components/MobileSearch";
 import { searchQuestion } from "@/api/questions";
 import { Question } from "@/types/question";
-import { useAppDispatch } from "@/hooks/useAppDispatch";
+import { useAppDispatch } from "@/hooks/reduxHooks";
 import { Link } from "react-router-dom";
+import { searchActions } from "@/store/search";
 
 export const MainPage = (): React.JSX.Element => {
   const [recentQuestions, setRecentQuestions] = useState<Question[]>([]);
-  const { clearKeyword } = useAppDispatch();
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
     const fetchRecentQuestions = async () => {
@@ -40,7 +41,7 @@ export const MainPage = (): React.JSX.Element => {
         </Link>
         <Link
           to="/questions?keyword=&category=&page=0"
-          onClick={clearKeyword}
+          onClick={() => dispatch(searchActions.setKeyword(""))}
           className="w-[155px] flex justify-evenly items-center bg-[#C9D8B7] px-[10px] py-[5px] rounded-10px"
         >
           <svg className="text-[#5C6E56]" width="40" height="40">
