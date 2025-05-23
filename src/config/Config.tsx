@@ -5,5 +5,8 @@ export const BACKEND_URL: string = "http://202.31.202.38/api";
 export const IMAGE_URL: string =
   "https://kit-law-in-comm-image.s3.ap-northeast-2.amazonaws.com/";
 
+// 웹소켓 주소
+export const WEBSOCKET_URL: string = BACKEND_URL + "/ws-stomp";
+
 // AI 어시스턴트 ID
 export const AI_ASSISTANT_ID = 2;

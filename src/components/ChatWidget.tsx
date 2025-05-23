@@ -12,12 +12,15 @@ import { useAppSelector, useAppDispatch } from "@/hooks/reduxHooks";
 import { chatWidgetActions } from "@/store/chatWidget";
 import { Client } from "@stomp/stompjs";
 import SockJS from "sockjs-client";
+import { WEBSOCKET_URL } from "@/config/Config";
 
 const ChatWidget: React.FC = () => {
   const dispatch = useAppDispatch();
   const { isOpen } = useAppSelector((state) => state.chatWidget);
   const userRole =  useAppSelector((state)  => state.userRole.userRole);
   const { selectedChatroomId } = useAppSelector((state) => state.chatWidget);
+  const clientRef = useRef<Client | null>(null);
+  const chatRoomList = useState<ChatRoom[]>([]);
 
   // 실제 애플리케이션에서는 API 호출 등으로 데이터를 가져옵니다.
   const [chatRooms, setChatRooms] = useState<ChatRoom[]>([
@@ -128,6 +131,38 @@ const ChatWidget: React.FC = () => {
     setNewMessage("");
     // TODO: 실제 STOMP client.publish(`/pub/chat/${selectedRoomId}`, {}, JSON.stringify(messageToSend)) 로직
   };
+
+  // TODO:STOMP 연결 관련 진행중
+  // useEffect(() => {
+  //   if (userRole) { // 로그인 했을 시 STOMP 연결 시작
+  //     const token = {
+  //       accessToken: localStorage.getItem('accessToken') || '',
+  //       tokenType: localStorage.getItem('tokenType') || '',
+  //       tokenHeader: localStorage.getItem('tokenHeader') || '',
+  //     }
+  //     const client = new Client({
+  //       webSocketFactory: () => new SockJS(WEBSOCKET_URL),
+  //       reconnectDelay: 5000,
+  //       connectHeaders: {
+  //         [token.tokenHeader]: `${token.tokenType}${token.accessToken}`,
+  //       },
+  //       onConnect: (frame) => {
+  //         frame.headers[token.tokenHeader] = `${token.tokenType}${token.accessToken}`;
+  //         client.subscribe(`/sub/chatRoomList/${userId}`, (message) => {
+  //           const receivedMessage = JSON.parse(message.body);
+  //           setChatRooms(receivedMessage);
+  //         });
+  //       },
+  //       onStompError: (frame) => {
+  //         console.error("STOMP ERROR: ", frame.headers.message);
+  //       },
+  //     })
+  //     clientRef.current = client;
+  //     client.activate();
+
+  //     return () => client.deactivate();
+  //   }
+  // }, [userRole])
 
   useEffect(() => {
     if (isOpen && selectedChatroomId && messagesEndRef.current) {

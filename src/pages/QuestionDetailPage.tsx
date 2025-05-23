@@ -58,7 +58,6 @@ export const QuestionDetailPage = (): React.JSX.Element => {
 
   const fetchQuestion = async () => {
     const response = await getQuestion(String(questionId));
-    console.log(response.data);
     setQuestion(response.data);
   };
 
@@ -203,7 +202,10 @@ export const QuestionDetailPage = (): React.JSX.Element => {
       dispatch(chatWidgetActions.setChatroomId(response.data.chatRoomId)); // 선택된 채팅방 id 상태 설정
       dispatch(chatWidgetActions.openChat());
     } catch (error: any) {
-      console.error(error);
+      console.log(error);
+      if (error.response.status === 409 && error.response.data.code === 4090800) { // 채팅방이 이미 존재하는 경우
+
+      }
     }
   };
 
