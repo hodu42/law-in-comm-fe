@@ -8,7 +8,7 @@ import { searchActions } from "@/store/search";
 export const HeaderTags = (): React.JSX.Element => {
   const dispatch = useAppDispatch();
   const location = useLocation();
-  const userRole = useAppSelector((state) => state.userRole.userRole);
+  const userRole = useAppSelector((state) => state.user.role);
 
   const handleQuestionListClick = () => {
     dispatch(searchActions.setKeyword(""));

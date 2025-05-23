@@ -17,7 +17,8 @@ import { WEBSOCKET_URL } from "@/config/Config";
 const ChatWidget: React.FC = () => {
   const dispatch = useAppDispatch();
   const { isOpen } = useAppSelector((state) => state.chatWidget);
-  const userRole =  useAppSelector((state)  => state.userRole.userRole);
+  const userRole =  useAppSelector((state)  => state.user.role);
+  const username = useAppSelector((state) => state.user.username);
   const { selectedChatroomId } = useAppSelector((state) => state.chatWidget);
   const clientRef = useRef<Client | null>(null);
   const chatRoomList = useState<ChatRoom[]>([]);
@@ -132,37 +133,45 @@ const ChatWidget: React.FC = () => {
     // TODO: 실제 STOMP client.publish(`/pub/chat/${selectedRoomId}`, {}, JSON.stringify(messageToSend)) 로직
   };
 
-  // TODO:STOMP 연결 관련 진행중
-  // useEffect(() => {
-  //   if (userRole) { // 로그인 했을 시 STOMP 연결 시작
-  //     const token = {
-  //       accessToken: localStorage.getItem('accessToken') || '',
-  //       tokenType: localStorage.getItem('tokenType') || '',
-  //       tokenHeader: localStorage.getItem('tokenHeader') || '',
-  //     }
-  //     const client = new Client({
-  //       webSocketFactory: () => new SockJS(WEBSOCKET_URL),
-  //       reconnectDelay: 5000,
-  //       connectHeaders: {
-  //         [token.tokenHeader]: `${token.tokenType}${token.accessToken}`,
-  //       },
-  //       onConnect: (frame) => {
-  //         frame.headers[token.tokenHeader] = `${token.tokenType}${token.accessToken}`;
-  //         client.subscribe(`/sub/chatRoomList/${userId}`, (message) => {
-  //           const receivedMessage = JSON.parse(message.body);
-  //           setChatRooms(receivedMessage);
-  //         });
-  //       },
-  //       onStompError: (frame) => {
-  //         console.error("STOMP ERROR: ", frame.headers.message);
-  //       },
-  //     })
-  //     clientRef.current = client;
-  //     client.activate();
-
-  //     return () => client.deactivate();
-  //   }
-  // }, [userRole])
+  //TODO:STOMP 연결 관련 진행중
+  useEffect(() => {
+    if (userRole) { // 로그인 했을 시 STOMP 연결 시작
+      const token = {
+        accessToken: localStorage.getItem('accessToken') || '',
+        tokenType: localStorage.getItem('tokenType') || '',
+        tokenHeader: localStorage.getItem('tokenHeader') || '',
+      }
+      const client = new Client({
+        webSocketFactory: () => new SockJS(WEBSOCKET_URL),
+        reconnectDelay: 5000,
+        connectHeaders: {
+          [token.tokenHeader]: `${token.tokenType}${token.accessToken}`,
+        },
+        onConnect: () => {
+          client.subscribe(`/sub/chatRoomList/${username}`, (message) => {
+            const receivedMessage = JSON.parse(message.body);
+            setChatRooms(receivedMessage);
+            console.log(chatRoomList);
+          });
+        },
+        onStompError: (frame) => {
+          console.error("STOMP ERROR: ", frame.headers.message);
+        },
+      })
+      clientRef.current = client;
+      client.activate();
+  
+      return () => { // cleanUp 함수를 리턴
+        (async () => {
+          if (clientRef.current && clientRef.current.active) {
+            console.log("STOMP 연결 해제 중...");
+            await clientRef.current.deactivate(); // 비동기 함수지만, cleanup은 Promise를 반환하면 안 됨
+            console.log("STOMP 연결 해제 완료.");
+          }
+        })();
+      };
+    }
+  }, [userRole]);
 
   useEffect(() => {
     if (isOpen && selectedChatroomId && messagesEndRef.current) {

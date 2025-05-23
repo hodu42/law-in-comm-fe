@@ -10,7 +10,7 @@ import { searchActions } from "@/store/search";
 
 export const MainHeader = (): React.JSX.Element => {
   const dispatch = useAppDispatch();
-  const userRole = useAppSelector((state) => state.userRole.userRole);
+  const userRole = useAppSelector((state) => state.user.role);
   const { handleLogout } = useLogout();
 
   return (

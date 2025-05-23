@@ -23,3 +23,13 @@ export const getCurrentRole = (): string => {
     return "";
   }
 };
+
+export const getCurrentUsername = (): string => {
+  const payload = getCurrentPayload();
+  if (payload) {
+    const username = payload.jti;
+    return username;
+  } else {
+    return "";
+  }
+};

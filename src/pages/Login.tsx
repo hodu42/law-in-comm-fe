@@ -5,7 +5,7 @@ import { MobileNav } from "@/components/MobileNav";
 import { login } from "@/api/auth/login";
 import { useNavigation } from "@/hooks/useNavigation";
 import { useAppDispatch } from "@/hooks/reduxHooks";
-import { userRoleActions } from "@/store/userRole";
+import { userActions } from "@/store/user";
 
 export const Login = (): React.JSX.Element => {
   const dispatch = useAppDispatch();
@@ -28,7 +28,7 @@ export const Login = (): React.JSX.Element => {
 
     try {
       await login(userId, password);
-      dispatch(userRoleActions.login());
+      dispatch(userActions.login());
       goToMain();
     } catch (error: any) {
       if (error.response?.status === 401) {

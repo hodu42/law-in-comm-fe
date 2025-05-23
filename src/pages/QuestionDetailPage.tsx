@@ -44,7 +44,7 @@ export const QuestionDetailPage = (): React.JSX.Element => {
   const [answerContent, setAnswerContent] = useState("");
   const [editingAnswerId, setEditingAnswerId] = useState<number>(-1);
   const [editedAnswer, setEditedAnswer] = useState("");
-  const userRole = useAppSelector((state) => state.userRole.userRole);
+  const userRole = useAppSelector((state) => state.user.role);
   const dispatch = useAppDispatch();
 
   useEffect(() => {

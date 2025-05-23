@@ -5,7 +5,7 @@ import { useAppSelector } from "@/hooks/reduxHooks";
 
 export const MobileNav = (): React.JSX.Element => {
   const location = useLocation();
-  const userRole = useAppSelector((state) => state.userRole.userRole);
+  const userRole = useAppSelector((state) => state.user.role);
   return (
     <nav className="fixed bottom-0 flex justify-between items-center pc:hidden w-full h-[80px] px-[30px] border-t border-t-[#CFCFCF] bg-white">
       <Link
