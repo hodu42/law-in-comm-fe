@@ -10,10 +10,13 @@ import { BackIcon } from "./icons/BackIcon";
 import { Message, ChatRoom } from "@/types/chat";
 import { useAppSelector, useAppDispatch } from "@/hooks/reduxHooks";
 import { chatWidgetActions } from "@/store/chatWidget";
+import { Client } from "@stomp/stompjs";
+import SockJS from "sockjs-client";
 
 const ChatWidget: React.FC = () => {
   const dispatch = useAppDispatch();
   const { isOpen } = useAppSelector((state) => state.chatWidget);
+  const userRole =  useAppSelector((state)  => state.userRole.userRole);
   const { selectedChatroomId } = useAppSelector((state) => state.chatWidget);
 
   // 실제 애플리케이션에서는 API 호출 등으로 데이터를 가져옵니다.
@@ -49,8 +52,6 @@ const ChatWidget: React.FC = () => {
     } else {
       // 열릴 때
       dispatch(chatWidgetActions.openChat());
-      dispatch(chatWidgetActions.clearChatroomId());
-      setMessages([]); // 이전 방 메시지 초기화
     }
   };
 
@@ -141,7 +142,7 @@ const ChatWidget: React.FC = () => {
   return (
     <>
       {/* 채팅 토글 버튼 */}
-      {!isOpen && (
+      {!isOpen && userRole && (
         <button
           onClick={toggleChat}
           aria-label="채팅 열기"

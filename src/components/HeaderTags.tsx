@@ -1,15 +1,14 @@
 import React from "react";
 import { Link, useLocation } from "react-router-dom";
 import { headerPaths } from "@/routes/routes";
-import { useAppDispatch } from "@/hooks/reduxHooks";
-import { getCurrentRole } from "@/hooks/tokenDecoder";
+import { useAppDispatch, useAppSelector } from "@/hooks/reduxHooks";
 import { Role } from "@/types/role";
 import { searchActions } from "@/store/search";
 
 export const HeaderTags = (): React.JSX.Element => {
   const dispatch = useAppDispatch();
   const location = useLocation();
-  const userRole = getCurrentRole();
+  const userRole = useAppSelector((state) => state.userRole.userRole);
 
   const handleQuestionListClick = () => {
     dispatch(searchActions.setKeyword(""));

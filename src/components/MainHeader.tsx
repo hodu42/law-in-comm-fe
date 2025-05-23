@@ -3,15 +3,14 @@ import { Logo } from "./Logo";
 import { SearchBoxPC } from "./SearchBoxPC";
 import { HeaderTags } from "./HeaderTags";
 import { Link } from "react-router-dom";
-import { useAppDispatch } from "@/hooks/reduxHooks";
-import { getCurrentRole } from "@/hooks/tokenDecoder";
+import { useAppDispatch, useAppSelector } from "@/hooks/reduxHooks";
 import { Role } from "@/types/role";
 import { useLogout } from "@/hooks/useLogout";
 import { searchActions } from "@/store/search";
 
 export const MainHeader = (): React.JSX.Element => {
   const dispatch = useAppDispatch();
-  const userRole = getCurrentRole();
+  const userRole = useAppSelector((state) => state.userRole.userRole);
   const { handleLogout } = useLogout();
 
   return (

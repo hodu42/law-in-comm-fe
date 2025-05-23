@@ -1,11 +1,11 @@
 import React from "react";
 import { Link, useLocation } from "react-router-dom";
-import { getCurrentRole } from "@/hooks/tokenDecoder";
 import { Role } from "@/types/role";
+import { useAppSelector } from "@/hooks/reduxHooks";
 
 export const MobileNav = (): React.JSX.Element => {
   const location = useLocation();
-  const userRole = getCurrentRole();
+  const userRole = useAppSelector((state) => state.userRole.userRole);
   return (
     <nav className="fixed bottom-0 flex justify-between items-center pc:hidden w-full h-[80px] px-[30px] border-t border-t-[#CFCFCF] bg-white">
       <Link

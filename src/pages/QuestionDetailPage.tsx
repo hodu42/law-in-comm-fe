@@ -14,8 +14,7 @@ import {
   updateAnswer,
 } from "@/api/answers";
 import { useNavigation } from "@/hooks/useNavigation";
-import { getCurrentRole } from "@/hooks/tokenDecoder";
-import { useAppDispatch } from "@/hooks/reduxHooks";
+import { useAppDispatch, useAppSelector } from "@/hooks/reduxHooks";
 import { IMAGE_URL } from "@/config/Config";
 import { formatDate } from "@/utils/dateFormat";
 import { AI_ASSISTANT_ID } from "@/config/Config";
@@ -45,6 +44,7 @@ export const QuestionDetailPage = (): React.JSX.Element => {
   const [answerContent, setAnswerContent] = useState("");
   const [editingAnswerId, setEditingAnswerId] = useState<number>(-1);
   const [editedAnswer, setEditedAnswer] = useState("");
+  const userRole = useAppSelector((state) => state.userRole.userRole);
   const dispatch = useAppDispatch();
 
   useEffect(() => {
@@ -200,8 +200,8 @@ export const QuestionDetailPage = (): React.JSX.Element => {
   const handleChatRequest = async (otherUserId: number) => {
     try {
       const response = await createChatRequest(otherUserId); // 채팅방 생성 테스트 필요
-      dispatch(chatWidgetActions.openChat());
       dispatch(chatWidgetActions.setChatroomId(response.data.chatRoomId)); // 선택된 채팅방 id 상태 설정
+      dispatch(chatWidgetActions.openChat());
     } catch (error: any) {
       console.error(error);
     }
@@ -594,7 +594,7 @@ export const QuestionDetailPage = (): React.JSX.Element => {
             </button>
           </div>
         </div>
-        {getCurrentRole() === "ROLE_LAWYER" && (
+        {userRole === "ROLE_LAWYER" && (
           <form
             onSubmit={handleAnswerSubmit}
             className="flex flex-col max-w-3xl mx-auto mt-9 justify-end border-t-[1px] py-10 border-[#CFCFCF]"

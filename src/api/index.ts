@@ -2,6 +2,8 @@
 import axios, { AxiosInstance, AxiosRequestConfig } from "axios";
 import { BACKEND_URL } from "@/config/Config";
 import { getTokens, updateTokens } from "./auth/token";
+import { userRoleActions } from "@/store/userRole";
+import { store } from "@/store/index";
 
 let isRefreshing = false;
 
@@ -74,8 +76,10 @@ export class ApiClient {
             if (tokenType && tokenHeader) {
               originalRequest.headers[tokenHeader] = `${tokenType}${newToken}`;
             }
+            store.dispatch(userRoleActions.login());
             return this.axiosInstance(originalRequest);
           } catch (refreshError) {
+            store.dispatch(userRoleActions.logout());
             window.location.href = "/login";
             return Promise.reject(refreshError);
           } finally {

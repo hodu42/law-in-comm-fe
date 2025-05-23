@@ -1,11 +1,13 @@
 import { configureStore } from "@reduxjs/toolkit";
 import searchReducer from "./search";
 import chatWidgetReducer from "./chatWidget";
+import userRoleReducer from "./userRole";
 
-const store = configureStore({
+export const store = configureStore({
   reducer: {
     search: searchReducer,
     chatWidget: chatWidgetReducer,
+    userRole: userRoleReducer,
   },
 });
 

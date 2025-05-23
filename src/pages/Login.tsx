@@ -4,8 +4,11 @@ import { Logo } from "@/components/Logo";
 import { MobileNav } from "@/components/MobileNav";
 import { login } from "@/api/auth/login";
 import { useNavigation } from "@/hooks/useNavigation";
+import { useAppDispatch } from "@/hooks/reduxHooks";
+import { userRoleActions } from "@/store/userRole";
 
 export const Login = (): React.JSX.Element => {
+  const dispatch = useAppDispatch();
   const { goToMain, goToPreviousPage } = useNavigation();
   const [userId, setUserId] = useState<string>("");
   const [password, setPassword] = useState<string>("");
@@ -25,6 +28,7 @@ export const Login = (): React.JSX.Element => {
 
     try {
       await login(userId, password);
+      dispatch(userRoleActions.login());
       goToMain();
     } catch (error: any) {
       if (error.response?.status === 401) {
