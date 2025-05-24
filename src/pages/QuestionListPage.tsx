@@ -190,7 +190,7 @@ export const QuestionListPage = (): React.JSX.Element => {
       </main>
 
       {/* 플로팅 작성 버튼 (모바일) */}
-      <div className="pc:hidden fixed bottom-[100px] right-[20px] z-10">
+      <div className="pc:hidden fixed bottom-[100px] left-[20px] z-10">
         <Link
           to="/question/write"
           className="flex items-center justify-center w-[60px] h-[60px] bg-[#9CB395] rounded-full shadow-lg"

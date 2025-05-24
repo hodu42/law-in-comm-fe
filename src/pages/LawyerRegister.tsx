@@ -6,9 +6,10 @@ import { useNavigation } from "@/hooks/useNavigation";
 import { LegalSpecialityLabels } from "@/types/speciality";
 import { RegisterLawyerInfo } from "@/types/lawyer";
 import { registerLawyer } from "@/api/auth/register";
+import { MobileBackButton } from "@/components/MobileBackButton";
 
 export const LawyerRegister = (): React.JSX.Element => {
-  const { goToMain, goToPreviousPage, goToLogin } = useNavigation();
+  const { goToLogin } = useNavigation();
   const [userId, setUserId] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [name, setName] = useState<string>("");
@@ -116,24 +117,7 @@ export const LawyerRegister = (): React.JSX.Element => {
       <header className="fixed top-0 left-0 right-0 w-full h-[72px] flex items-center justify-center bg-white z-20 shadow-sm">
         <div className="relative w-full min-w-[355px] max-w-[1350px] pc:w-[70.31%] h-full flex items-center">
           {/* 모바일 뒤로가기 버튼 */}
-          <button
-            onClick={() => goToPreviousPage()}
-            className="pc:hidden flex items-center text-black z-10 ml-6"
-          >
-            <svg
-              className="w-6 h-6"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M15 19l-7-7 7-7"
-              ></path>
-            </svg>
-          </button>
+          <MobileBackButton />
           {/* 데스크탑 로고 */}
           <Link
             to="/main"
