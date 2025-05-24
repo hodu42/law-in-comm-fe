@@ -1,5 +1,4 @@
 import React, { useEffect, useState, useRef } from "react";
-import { Link } from "react-router-dom";
 import { Logo } from "@/components/Logo";
 import { MobileNav } from "@/components/MobileNav";
 import { useNavigation } from "@/hooks/useNavigation";
@@ -52,16 +51,7 @@ export const ClientMyPageModify = (): React.JSX.Element => {
           {/* 모바일 뒤로가기 버튼 */}
           <MobileBackButton />
           {/* 데스크탑 로고 */}
-          <Link
-            to="/main"
-            className="hidden pc:flex items-center absolute left-4 z-10"
-          >
-            <div className="text-[#A9BE8C] font-bold text-2xl flex items-center">
-              <Logo />
-              <span className="ml-5 text-[#9CB395] text-[36px]">로인컴</span>
-            </div>
-          </Link>
-
+          <Logo />
           <div className="flex items-center justify-between w-full">
             {/* 타이틀 */}
             <div className="absolute left-1/2 -translate-x-1/2 text-[21px] font-bold">

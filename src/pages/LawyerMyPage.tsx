@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import { Logo } from "@/components/Logo";
 import { Link } from "react-router-dom";
-import { useNavigation } from "@/hooks/useNavigation";
 import { useLogout } from "@/hooks/useLogout";
 import { MobileNav } from "@/components/MobileNav";
 import { getLawyerMypageData, getLawyerAnswers } from "@/api/users/lawyer";
@@ -13,9 +12,9 @@ import { LegalSpecialityLabels } from "@/types/speciality";
 import { LegalSpeciality } from "@/types/speciality";
 import { getUserProfileImage } from "@/api/users";
 import { IMAGE_URL } from "@/config/Config";
+import { MobileBackButton } from "@/components/MobileBackButton";
 
 export const LawyerMyPage = (): React.JSX.Element => {
-  const navigate = useNavigation();
   const { handleLogout } = useLogout();
   const [lawyerData, setLawyerData] = useState<LawyerInfo>();
   const [answerList, setAnswerList] = useState<PageResponse<WrittenAnswer>>();
@@ -62,35 +61,9 @@ export const LawyerMyPage = (): React.JSX.Element => {
       <header className="fixed top-0 left-0 right-0 w-full h-[72px] flex items-center justify-center bg-white z-20 shadow-sm">
         <div className="relative w-full min-w-[355px] max-w-[1350px] pc:w-[70.31%] h-full flex items-center">
           {/* 모바일 뒤로가기 버튼 */}
-          <button
-            onClick={() => navigate.goToPreviousPage()}
-            className="pc:hidden flex items-center text-black z-10 ml-6"
-          >
-            <svg
-              className="w-6 h-6"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M15 19l-7-7 7-7"
-              ></path>
-            </svg>
-          </button>
+          <MobileBackButton />
           {/* 데스크탑 로고 */}
-          <Link
-            to="/main"
-            className="hidden pc:flex items-center absolute left-4 z-10"
-          >
-            <div className="text-[#A9BE8C] font-bold text-2xl flex items-center">
-              <Logo />
-              <span className="ml-5 text-[#9CB395] text-[36px]">로인컴</span>
-            </div>
-          </Link>
-
+          <Logo />
           <div className="flex items-center justify-between w-full">
             {/* 타이틀 */}
             <div className="absolute left-1/2 -translate-x-1/2 text-[21px] font-bold">
