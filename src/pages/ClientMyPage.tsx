@@ -121,7 +121,7 @@ export const ClientMyPage = (): React.JSX.Element => {
           <div className="w-[50%] pc:w-[40%] bg-white border-2 border-[#C9D8B7] rounded-lg p-4 mx-auto">
             <div className="flex flex-col gap-4 px-2 pc:px-6 my-4">
               <div className="flex items-center justify-between pc:justify-evenly">
-                <div className="w-16 text-[14px] pc:text-[17px] font-bold">
+                <div className="w-16 text-[14px] text-[#5C6E56] pc:text-[17px] font-bold">
                   이름
                 </div>
                 <div className="text-[14px] pc:text-[17px] ml-2 pc:ml-5 break-all">
@@ -129,7 +129,7 @@ export const ClientMyPage = (): React.JSX.Element => {
                 </div>
               </div>
               <div className="flex items-center justify-between pc:justify-evenly">
-                <div className="w-16 text-[14px] pc:text-[17px] font-bold">
+                <div className="w-16 text-[14px] text-[#5C6E56] pc:text-[17px] font-bold">
                   닉네임
                 </div>
                 <div className="text-[14px] pc:text-[17px] ml-2 pc:ml-5 break-all">
@@ -137,7 +137,7 @@ export const ClientMyPage = (): React.JSX.Element => {
                 </div>
               </div>
               <div className="flex items-center justify-between pc:justify-evenly">
-                <div className="w-16 text-[14px] pc:text-[17px] font-bold">
+                <div className="w-16 text-[14px] text-[#5C6E56] pc:text-[17px] font-bold">
                   생년월일
                 </div>
                 <div className="text-[14px] pc:text-[17px] ml-2 pc:ml-5 break-all">
