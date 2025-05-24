@@ -15,6 +15,8 @@ import SockJS from "sockjs-client";
 import { WEBSOCKET_URL } from "@/config/Config";
 import { getChatRooms } from "@/api/chat";
 import { IMAGE_URL } from "@/config/Config";
+import { getPreviousChatMessages } from "@/api/chat";
+import { formatChatDate } from "@/utils/dateFormat";
 
 const ChatWidget: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -42,60 +44,10 @@ const ChatWidget: React.FC = () => {
     }
   };
 
-  const handleRoomSelect = (roomId: number) => {
-    dispatch(chatWidgetActions.setChatroomId(roomId));
-    // TODO: 실제로는 여기서 roomId에 해당하는 메시지를 서버에서 가져옵니다.
-    // STOMP 구독도 이 시점에서 해당 방 ID로 이루어져야 합니다.
-    // 예시: 선택된 방에 따라 다른 테스트 메시지 로드
-    if (roomId === 1) {
-      setMessages([
-        {
-          id: 1,
-          sender: "system",
-          content: "일반 문의방입니다. 무엇을 도와드릴까요?",
-        },
-        {
-          id: 2,
-          sender: "other",
-          content: "제품 A에 대해 궁금한 점이 있습니다.",
-          timestamp: "오후 2:30",
-        },
-        {
-          id: 3,
-          sender: "me",
-          content: "가격과 주요 기능이 궁금합니다.",
-          timestamp: "오후 2:31",
-        },
-      ]);
-    } else if (roomId === 2) {
-      setMessages([
-        { id: 1, sender: "system", content: "기술 지원팀입니다." },
-        {
-          id: 2,
-          sender: "me",
-          content: "로그인이 안돼요ㅠㅠ",
-          timestamp: "오전 10:15",
-        },
-      ]);
-    } else {
-      setMessages([
-        {
-          id: "placeholder",
-          sender: "system",
-          content: `${
-            chatRooms.find((r) => r.chatRoomId === roomId)?.otherMemberName ||
-            ""
-          } 채팅방입니다.`,
-        },
-      ]);
-    }
-  };
-
   const handleGoBackToRoomList = () => {
     dispatch(chatWidgetActions.clearChatroomId());
+    clientRef.current?.unsubscribe(`/sub/chat/${selectedChatroomId}`); // 기존 채팅방 구독 해제
     setMessages([]); // 메시지 목록 초기화
-    getChatRoomList(); // 채팅방 목록 페치
-    // TODO: 이전 STOMP 구독이 있었다면 여기서 해제(unsubscribe)해야 할 수 있습니다.
   };
 
   const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -103,21 +55,18 @@ const ChatWidget: React.FC = () => {
   };
 
   const handleSendMessage = (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    if (newMessage.trim() === "" || !selectedChatroomId) return;
-
-    const messageToSend: Message = {
-      id: `msg-${Date.now()}`, // 더 나은 ID 생성 방식 필요
-      sender: "me",
-      content: newMessage,
-      timestamp: new Date().toLocaleTimeString([], {
-        hour: "2-digit",
-        minute: "2-digit",
-      }),
-    };
-    setMessages((prevMessages) => [...prevMessages, messageToSend]);
-    setNewMessage("");
-    // TODO: 실제 STOMP client.publish(`/pub/chat/${selectedRoomId}`, {}, JSON.stringify(messageToSend)) 로직
+    if (clientRef.current && clientRef.current.active) {
+      event.preventDefault();
+      if (newMessage.trim() === "" || !selectedChatroomId) return;
+      const messageToSend = {
+        content: newMessage,
+      };
+      setNewMessage("");
+      clientRef.current.publish({
+        destination: `/pub/chat/${selectedChatroomId}`,
+        body: JSON.stringify(messageToSend),
+      });
+    }
   };
 
   const getChatRoomList = async () => {
@@ -143,7 +92,7 @@ const ChatWidget: React.FC = () => {
         onConnect: () => {
           client.subscribe(`/sub/chatRoomList/${username}`, (message) => {
             const receivedMessage = JSON.parse(message.body);
-            console.log("receivedMessage : ", receivedMessage);
+            console.log("채팅방 목록 receivedMessage : ", receivedMessage);
             setChatRooms(receivedMessage);
           });
         },
@@ -176,6 +125,32 @@ const ChatWidget: React.FC = () => {
       messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
     }
   }, [messages, isOpen, selectedChatroomId]);
+
+  useEffect(() => {
+    const fetchPreviousMessages = async () => {
+      if (selectedChatroomId === null) return;
+      const response = await getPreviousChatMessages(selectedChatroomId);
+      console.log(response.data);
+    };
+    const subscribeChatRoom = () => {
+      clientRef.current?.subscribe(
+        `/sub/chat/${selectedChatroomId}`,
+        (message) => {
+          const receivedMessage = JSON.parse(message.body);
+          console.log("채팅방 구독 후 receivedMessage : ", receivedMessage);
+          setMessages((prevMessages) => [...prevMessages, receivedMessage]);
+        }
+      );
+    };
+    if (
+      selectedChatroomId !== null &&
+      clientRef.current &&
+      clientRef.current.active
+    ) {
+      fetchPreviousMessages();
+      subscribeChatRoom();
+    }
+  }, [selectedChatroomId]);
 
   const currentRoomName =
     chatRooms.find((room) => room.chatRoomId === selectedChatroomId)
@@ -240,18 +215,21 @@ const ChatWidget: React.FC = () => {
             <>
               <div className="flex-grow p-4 overflow-y-auto bg-slate-50 space-y-3">
                 {messages.map((msg) => {
-                  if (msg.sender === "system") {
+                  if (msg.senderId === "system") {
                     return (
-                      <div key={msg.id} className="w-full text-center my-2">
+                      <div
+                        key={msg.messageId}
+                        className="w-full text-center my-2"
+                      >
                         {" "}
                         <span className="text-xs text-gray-500 bg-white px-2 py-1 rounded-full shadow-sm">
                           {" "}
-                          {msg.content}{" "}
+                          {msg.message}{" "}
                         </span>{" "}
                       </div>
                     );
                   }
-                  const isMe = msg.sender === "me";
+                  const isMe = msg.senderId === username;
                   const messageBubble = (
                     <div
                       className={`max-w-[70%] p-3 rounded-lg break-words ${
@@ -261,13 +239,13 @@ const ChatWidget: React.FC = () => {
                       }`}
                     >
                       {" "}
-                      {msg.content}{" "}
+                      {msg.message}{" "}
                     </div>
                   );
-                  const timestampDisplay = msg.timestamp ? (
+                  const timestampDisplay = msg.createdAt ? (
                     <div className="text-xs text-gray-500 self-end pb-[2px] px-1 whitespace-nowrap">
                       {" "}
-                      {msg.timestamp}{" "}
+                      {formatChatDate(msg.createdAt)}{" "}
                     </div>
                   ) : null;
                   // TODO:프로필 이미지 JSX (상대방 메시지일 경우에만), 없을시 기본 프로필 아이콘 출력
@@ -275,13 +253,13 @@ const ChatWidget: React.FC = () => {
                     <img
                       className="w-12 h-12 object-cover rounded-full shrink-0" // 크기 조정 및 shrink-0 추가
                       src={testImg} // 실제로는 msg.profileImageUrl 등 사용
-                      alt={`${msg.sender} profile`}
+                      alt={`${msg.senderName} profile`}
                     />
                   ) : null;
 
                   return (
                     <div
-                      key={msg.id}
+                      key={msg.messageId}
                       className={`flex items-end gap-x-2 ${
                         isMe ? "justify-end" : "justify-start"
                       }`}
@@ -322,11 +300,14 @@ const ChatWidget: React.FC = () => {
                 <div
                   key={room.chatRoomId}
                   className="flex items-center gap-3 p-4 mb-2 bg-white hover:bg-gray-50 rounded-lg shadow-sm cursor-pointer border border-gray-200 transition-colors duration-150"
-                  onClick={() => handleRoomSelect(room.chatRoomId)}
+                  onClick={() =>
+                    dispatch(chatWidgetActions.setChatroomId(room.chatRoomId))
+                  }
                   role="button"
                   tabIndex={0}
                   onKeyPress={(e) =>
-                    e.key === "Enter" && handleRoomSelect(room.chatRoomId)
+                    e.key === "Enter" &&
+                    dispatch(chatWidgetActions.setChatroomId(room.chatRoomId))
                   }
                 >
                   <div className="w-12 h-12 object-cover rounded-full">

@@ -203,8 +203,11 @@ export const QuestionDetailPage = (): React.JSX.Element => {
       dispatch(chatWidgetActions.openChat());
     } catch (error: any) {
       console.log(error);
-      if (error.response.status === 409 && error.response.data.code === 4090800) { // 채팅방이 이미 존재하는 경우
-
+      if (
+        error.response.status === 409 &&
+        error.response.data.code === 4090800
+      ) {
+        // 채팅방이 이미 존재하는 경우
       }
     }
   };
