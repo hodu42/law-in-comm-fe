@@ -59,15 +59,7 @@ export const QuestionModify = (): React.JSX.Element => {
           {/* 모바일 뒤로가기 버튼 */}
           <MobileBackButton />
           <div className="relative w-full min-w-[355px] max-w-[1350px] pc:w-[70.31%] h-full flex items-center">
-            <Link
-              to="/main"
-              className="hidden pc:flex items-center absolute left-4 z-10"
-            >
-              <div className="text-[#A9BE8C] font-bold text-2xl flex items-center">
-                <Logo />
-                <span className="ml-5 text-[#9CB395] text-[36px]">로인컴</span>
-              </div>
-            </Link>
+            <Logo />
           </div>
           <div className="absolute left-1/2 -translate-x-1/2 text-[21px] font-bold">
             질문 수정
