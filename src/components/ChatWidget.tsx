@@ -13,11 +13,13 @@ import { chatWidgetActions } from "@/store/chatWidget";
 import { Client } from "@stomp/stompjs";
 import SockJS from "sockjs-client";
 import { WEBSOCKET_URL } from "@/config/Config";
+import { getChatRooms } from "@/api/chat";
+import { IMAGE_URL } from "@/config/Config";
 
 const ChatWidget: React.FC = () => {
   const dispatch = useAppDispatch();
   const { isOpen } = useAppSelector((state) => state.chatWidget);
-  const userRole =  useAppSelector((state)  => state.user.role);
+  const userRole = useAppSelector((state) => state.user.role);
   const username = useAppSelector((state) => state.user.username);
   const { selectedChatroomId } = useAppSelector((state) => state.chatWidget);
   const clientRef = useRef<Client | null>(null);
@@ -99,7 +101,10 @@ const ChatWidget: React.FC = () => {
         {
           id: "placeholder",
           sender: "system",
-          content: `${chatRooms.find((r) => r.chatRoomId === roomId)?.otherMemberName || ""} 채팅방입니다.`,
+          content: `${
+            chatRooms.find((r) => r.chatRoomId === roomId)?.otherMemberName ||
+            ""
+          } 채팅방입니다.`,
         },
       ]);
     }
@@ -135,12 +140,14 @@ const ChatWidget: React.FC = () => {
 
   //TODO:STOMP 연결 관련 진행중
   useEffect(() => {
-    if (userRole) { // 로그인 했을 시 STOMP 연결 시작
+    const handleStompConnect = () => {
+      // 로그인 했을 시 STOMP 연결 시작
       const token = {
-        accessToken: localStorage.getItem('accessToken') || '',
-        tokenType: localStorage.getItem('tokenType') || '',
-        tokenHeader: localStorage.getItem('tokenHeader') || '',
-      }
+        accessToken: localStorage.getItem("accessToken") || "",
+        tokenType: localStorage.getItem("tokenType") || "",
+        tokenHeader: localStorage.getItem("tokenHeader") || "",
+      };
+      console.log(token);
       const client = new Client({
         webSocketFactory: () => new SockJS(WEBSOCKET_URL),
         reconnectDelay: 5000,
@@ -150,18 +157,20 @@ const ChatWidget: React.FC = () => {
         onConnect: () => {
           client.subscribe(`/sub/chatRoomList/${username}`, (message) => {
             const receivedMessage = JSON.parse(message.body);
+            console.log("receivedMessage : ", receivedMessage);
             setChatRooms(receivedMessage);
-            console.log(chatRoomList);
           });
         },
         onStompError: (frame) => {
           console.error("STOMP ERROR: ", frame.headers.message);
         },
-      })
+      });
+      console.log(client);
       clientRef.current = client;
       client.activate();
-  
-      return () => { // cleanUp 함수를 리턴
+
+      return () => {
+        // cleanUp 함수를 리턴
         (async () => {
           if (clientRef.current && clientRef.current.active) {
             console.log("STOMP 연결 해제 중...");
@@ -170,8 +179,17 @@ const ChatWidget: React.FC = () => {
           }
         })();
       };
+    };
+    const getChatRoomList = async () => {
+      const response = await getChatRooms(0, 10);
+      console.log("response : ", response);
+      setChatRooms(response.data.content);
+    };
+    if (userRole) {
+      handleStompConnect();
+      getChatRoomList();
     }
-  }, [userRole]);
+  }, [userRole, username]);
 
   useEffect(() => {
     if (isOpen && selectedChatroomId && messagesEndRef.current) {
@@ -218,7 +236,9 @@ const ChatWidget: React.FC = () => {
               </button>
             )}
             <span
-              className={`font-bold text-gray-800 text-lg ${selectedChatroomId ? "flex-grow text-center" : "flex-grow"}`}
+              className={`font-bold text-gray-800 text-lg ${
+                selectedChatroomId ? "flex-grow text-center" : "flex-grow"
+              }`}
             >
               {selectedChatroomId ? currentRoomName : "채팅방 목록"}
             </span>
@@ -254,7 +274,11 @@ const ChatWidget: React.FC = () => {
                   const isMe = msg.sender === "me";
                   const messageBubble = (
                     <div
-                      className={`max-w-[70%] p-3 rounded-lg break-words ${isMe ? "bg-[#C9D8B7] text-gray-800 rounded-br-none" : "bg-gray-200 text-gray-800 rounded-bl-none"}`}
+                      className={`max-w-[70%] p-3 rounded-lg break-words ${
+                        isMe
+                          ? "bg-[#C9D8B7] text-gray-800 rounded-br-none"
+                          : "bg-gray-200 text-gray-800 rounded-bl-none"
+                      }`}
                     >
                       {" "}
                       {msg.content}{" "}
@@ -278,7 +302,9 @@ const ChatWidget: React.FC = () => {
                   return (
                     <div
                       key={msg.id}
-                      className={`flex items-end gap-x-2 ${isMe ? "justify-end" : "justify-start"}`}
+                      className={`flex items-end gap-x-2 ${
+                        isMe ? "justify-end" : "justify-start"
+                      }`}
                     >
                       {!isMe && profileImage}
                       {isMe && timestampDisplay} {messageBubble}{" "}
@@ -310,6 +336,7 @@ const ChatWidget: React.FC = () => {
               </form>
             </>
           ) : (
+            // TODO:채팅방 목록 보여주기 (무한 스크롤로 구현 예정)
             <div className="flex-grow p-3 overflow-y-auto bg-slate-50">
               {chatRooms.map((room) => (
                 <div
@@ -324,7 +351,7 @@ const ChatWidget: React.FC = () => {
                 >
                   <img
                     className="w-12 h-12 object-cover rounded-full"
-                    src={testImg}
+                    src={IMAGE_URL + room.otherMemberProfileImage?.path}
                   ></img>
                   <div className="flex flex-col">
                     <h3 className="font-semibold text-gray-700 text-md">
