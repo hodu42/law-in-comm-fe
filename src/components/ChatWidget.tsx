@@ -26,6 +26,7 @@ const ChatWidget: React.FC = () => {
   const username = useAppSelector((state) => state.user.username);
   const { selectedChatroomId } = useAppSelector((state) => state.chatWidget);
   const clientRef = useRef<Client | null>(null);
+  const subscriptionRef = useRef<any>(null); // 현재 구독을 추적하기 위한 ref
   const [chatRooms, setChatRooms] = useState<ChatRoom[]>([]);
   const [isLoadingPrevMsg, setIsLoadingPrevMsg] = useState<boolean>(false);
   const [isLoadingMore, setIsLoadingMore] = useState<boolean>(false); // 이전 메시지 로딩 중 상태
@@ -45,6 +46,16 @@ const ChatWidget: React.FC = () => {
   const [newMessage, setNewMessage] = useState<string>(""); // 현재 입력된 메시지
   const messagesEndRef = useRef<HTMLDivElement | null>(null);
 
+  // STOMP 연결 해제 함수
+  const disconnectStomp = useCallback(async () => {
+    if (clientRef.current && clientRef.current.active) {
+      console.log("STOMP 연결 해제 중...");
+      await clientRef.current.deactivate();
+      clientRef.current = null;
+      console.log("STOMP 연결 해제 완료.");
+    }
+  }, []);
+
   const toggleChat = () => {
     if (isOpen) {
       // 닫힐 때
@@ -55,9 +66,12 @@ const ChatWidget: React.FC = () => {
     }
   };
 
-  const handleGoBackToRoomList = () => {
+  const handleGoBackToRoomList = async () => {
+    if (clientRef.current && selectedChatroomId) {
+      await clientRef.current.unsubscribe(`/sub/chat/${selectedChatroomId}`); // 기존 채팅방 구독 해제
+      console.log(`${selectedChatroomId}번 채팅방 구독 해제 완료`);
+    }
     dispatch(chatWidgetActions.clearChatroomId());
-    clientRef.current?.unsubscribe(`/sub/chat/${selectedChatroomId}`); // 기존 채팅방 구독 해제
     setMessages([]); // 이전 방 메시지 초기화
     setCurrentPage(0); // 페이지 번호 초기화
     setHasMoreMessages(true); // 더 불러올 메시지가 있다고 가정
@@ -139,7 +153,7 @@ const ChatWidget: React.FC = () => {
     hasMoreMessages,
     getPreviousChatMessages,
     setMessages,
-  ]); // 의존성 배열
+  ]);
 
   // STOMP 연결 부분
   useEffect(() => {
@@ -169,22 +183,19 @@ const ChatWidget: React.FC = () => {
       });
       clientRef.current = client;
       client.activate();
-
-      return () => {
-        // cleanUp 함수를 리턴
-        (async () => {
-          if (clientRef.current && clientRef.current.active) {
-            console.log("STOMP 연결 해제 중...");
-            await clientRef.current.deactivate(); // 비동기 함수지만, cleanup은 Promise를 반환하면 안 됨
-            console.log("STOMP 연결 해제 완료.");
-          }
-        })();
-      };
     };
+
     if (userRole) {
       handleStompConnect();
       getChatRoomList();
+    } else {
+      // userRole이 없을 때(로그아웃 시) STOMP 연결 해제
+      disconnectStomp();
     }
+
+    return () => {
+      disconnectStomp();
+    };
   }, [userRole, username]);
 
   useEffect(() => {
@@ -205,16 +216,33 @@ const ChatWidget: React.FC = () => {
       setMessages(response.data.content.slice().reverse());
       setIsLoadingPrevMsg(false); // 이전 메시지 로딩 끝
     };
-    const subscribeChatRoom = () => {
-      clientRef.current?.subscribe(
-        `/sub/chat/${selectedChatroomId}`,
-        (message) => {
-          const receivedMessage = JSON.parse(message.body);
-          console.log("채팅방 구독 후 receivedMessage : ", receivedMessage);
-          setMessages((prevMessages) => [...prevMessages, receivedMessage]);
+
+    const subscribeChatRoom = async () => {
+      if (!clientRef.current || !selectedChatroomId) return;
+
+      try {
+        // 이전 구독이 있다면 해제
+        if (subscriptionRef.current) {
+          await clientRef.current.unsubscribe(subscriptionRef.current);
+          subscriptionRef.current = null;
         }
-      );
+
+        // 새로운 구독 생성
+        const subscription = clientRef.current.subscribe(
+          `/sub/chat/${selectedChatroomId}`,
+          (message) => {
+            const receivedMessage = JSON.parse(message.body);
+            console.log("채팅방 구독 후 receivedMessage : ", receivedMessage);
+            setMessages((prevMessages) => [...prevMessages, receivedMessage]);
+          }
+        );
+        subscriptionRef.current = subscription.id;
+        console.log(`${selectedChatroomId}번 채팅방 구독 완료`);
+      } catch (error) {
+        console.error("채팅방 구독 중 오류 발생:", error);
+      }
     };
+
     if (
       selectedChatroomId !== null &&
       clientRef.current &&
