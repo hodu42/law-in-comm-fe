@@ -17,6 +17,7 @@ export interface ChatRoom {
     size: number;
     path: string;
   };
+  lastMessage: string;
   lastMessageAt: string;
   unreadMessageCount?: number;
 }

@@ -4,8 +4,8 @@ export const createChatRequest = async (otherUserId: number) => {
   return api.post<any>(`/chat/room`, { otherPersonId: otherUserId });
 };
 
-export const getChatRooms = async (page: number, size: number) => {
-  return api.get<any>(`/chatRooms`, { page, size });
+export const getChatRooms = async () => {
+  return api.get<any>(`/chatRooms`);
 };
 
 export const getPreviousChatMessages = async (
