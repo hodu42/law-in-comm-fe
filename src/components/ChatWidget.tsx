@@ -316,85 +316,91 @@ const ChatWidget: React.FC = () => {
           {/* 선택된 채팅방 ID가 있으면 채팅방 / 없으면 채팅방 목록 */}
           {selectedChatroomId !== null ? (
             <>
-              <div
-                className="flex-grow p-4 overflow-y-auto bg-slate-50 space-y-3"
-                ref={messageAreaRef}
-              >
-                {messages.map((msg) => {
-                  if (msg.senderId === "system") {
+              <div className="flex-grow relative">
+                <div
+                  className="absolute inset-0 p-4 overflow-y-auto bg-slate-50 space-y-3"
+                  ref={messageAreaRef}
+                >
+                  {messages.map((msg) => {
+                    if (msg.senderId === "system") {
+                      return (
+                        <div
+                          key={msg.messageId}
+                          className="w-full text-center my-2"
+                        >
+                          {" "}
+                          <span className="text-xs text-gray-500 bg-white px-2 py-1 rounded-full shadow-sm">
+                            {" "}
+                            {msg.message}{" "}
+                          </span>{" "}
+                        </div>
+                      );
+                    }
+                    const isMe = msg.senderId === username;
+                    const messageBubble = (
+                      <div
+                        className={`max-w-[70%] p-3 rounded-lg break-words ${
+                          isMe
+                            ? "bg-[#C9D8B7] text-gray-800 rounded-br-none"
+                            : "bg-gray-200 text-gray-800 rounded-bl-none"
+                        }`}
+                      >
+                        {" "}
+                        {msg.message}{" "}
+                      </div>
+                    );
+                    const timestampDisplay = msg.createdAt ? (
+                      <div className="text-xs text-gray-500 self-end pb-[2px] px-1 whitespace-nowrap">
+                        {" "}
+                        {formatChatTime(msg.createdAt)}{" "}
+                      </div>
+                    ) : null;
+                    // 프로필 이미지 JSX (상대방 메시지일 경우에만), 없을시 기본 프로필 아이콘 출력
+                    const profileImage = !isMe ? (
+                      <div className="w-12 h-12 object-cover rounded-full">
+                        {activeChatRoom?.otherMemberProfileImage?.path ? (
+                          <img
+                            className="w-12 h-12 object-cover rounded-full shrink-0" // 크기 조정 및 shrink-0 추가
+                            src={
+                              IMAGE_URL +
+                              activeChatRoom.otherMemberProfileImage.path
+                            }
+                            alt={`${activeChatRoom.otherMemberName} profile`}
+                          />
+                        ) : (
+                          <svg
+                            className="rounded-full text-[#9CB395]"
+                            viewBox="0 0 24 24"
+                            fill="currentColor"
+                          >
+                            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.22-1.29 1.94-3.5 3.22-6 3.22z" />
+                          </svg>
+                        )}
+                      </div>
+                    ) : null;
+
                     return (
                       <div
                         key={msg.messageId}
-                        className="w-full text-center my-2"
+                        className={`flex items-end gap-2 ${
+                          isMe ? "justify-end" : "justify-start"
+                        }`}
                       >
-                        {" "}
-                        <span className="text-xs text-gray-500 bg-white px-2 py-1 rounded-full shadow-sm">
-                          {" "}
-                          {msg.message}{" "}
-                        </span>{" "}
+                        {!isMe && profileImage}
+                        {isMe && timestampDisplay} {messageBubble}{" "}
+                        {!isMe && timestampDisplay}{" "}
                       </div>
                     );
-                  }
-                  const isMe = msg.senderId === username;
-                  const messageBubble = (
-                    <div
-                      className={`max-w-[70%] p-3 rounded-lg break-words ${
-                        isMe
-                          ? "bg-[#C9D8B7] text-gray-800 rounded-br-none"
-                          : "bg-gray-200 text-gray-800 rounded-bl-none"
-                      }`}
-                    >
-                      {" "}
-                      {msg.message}{" "}
-                    </div>
-                  );
-                  const timestampDisplay = msg.createdAt ? (
-                    <div className="text-xs text-gray-500 self-end pb-[2px] px-1 whitespace-nowrap">
-                      {" "}
-                      {formatChatTime(msg.createdAt)}{" "}
-                    </div>
-                  ) : null;
-                  // 프로필 이미지 JSX (상대방 메시지일 경우에만), 없을시 기본 프로필 아이콘 출력
-                  const profileImage = !isMe ? (
-                    <div className="w-12 h-12 object-cover rounded-full">
-                      {activeChatRoom?.otherMemberProfileImage?.path ? (
-                        <img
-                          className="w-12 h-12 object-cover rounded-full shrink-0" // 크기 조정 및 shrink-0 추가
-                          src={
-                            IMAGE_URL +
-                            activeChatRoom.otherMemberProfileImage.path
-                          }
-                          alt={`${activeChatRoom.otherMemberName} profile`}
-                        />
-                      ) : (
-                        <svg
-                          className="rounded-full text-[#9CB395]"
-                          viewBox="0 0 24 24"
-                          fill="currentColor"
-                        >
-                          <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.22-1.29 1.94-3.5 3.22-6 3.22z" />
-                        </svg>
-                      )}
-                    </div>
-                  ) : null;
-
-                  return (
-                    <div
-                      key={msg.messageId}
-                      className={`flex items-end gap-2 ${
-                        isMe ? "justify-end" : "justify-start"
-                      }`}
-                    >
-                      {!isMe && profileImage}
-                      {isMe && timestampDisplay} {messageBubble}{" "}
-                      {!isMe && timestampDisplay}{" "}
-                    </div>
-                  );
-                })}
-                <div ref={messagesEndRef} />
+                  })}
+                  <div ref={messagesEndRef} />
+                </div>
                 {isLoadingPrevMsg && (
-                  <div className="text-center text-[#7D9277] py-2">
-                    이전 대화를 불러오는 중...
+                  <div className="absolute inset-0 bg-gray-100 flex items-center justify-center z-50">
+                    <div className="bg-white rounded-lg px-6 py-4 shadow-lg">
+                      <div className="text-[#7D9277] font-medium">
+                        이전 대화를 불러오는 중...
+                      </div>
+                    </div>
                   </div>
                 )}
               </div>

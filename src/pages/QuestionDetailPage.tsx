@@ -202,7 +202,6 @@ export const QuestionDetailPage = (): React.JSX.Element => {
       dispatch(chatWidgetActions.setChatroomId(response.data.chatRoomId)); // 선택된 채팅방 id 상태 설정
       dispatch(chatWidgetActions.openChat());
     } catch (error: any) {
-      console.log(error);
       if (
         error.response.status === 409 &&
         error.response.data.code === 4090803
