@@ -205,9 +205,12 @@ export const QuestionDetailPage = (): React.JSX.Element => {
       console.log(error);
       if (
         error.response.status === 409 &&
-        error.response.data.code === 4090800
+        error.response.data.code === 4090803
       ) {
-        // 채팅방이 이미 존재하는 경우
+        dispatch(
+          chatWidgetActions.setChatroomId(error.response.data.data.chatRoomId) // 이미 존재하는 채팅방 id로 설정
+        );
+        dispatch(chatWidgetActions.openChat());
       }
     }
   };
