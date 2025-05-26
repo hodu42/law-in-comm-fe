@@ -151,7 +151,6 @@ const ChatWidget: React.FC = () => {
     currentPage,
     isLoadingMore,
     hasMoreMessages,
-    getPreviousChatMessages,
     setMessages,
   ]);
 
@@ -196,7 +195,7 @@ const ChatWidget: React.FC = () => {
     return () => {
       disconnectStomp();
     };
-  }, [userRole, username]);
+  }, [userRole, username, disconnectStomp]);
 
   useEffect(() => {
     if (isOpen && selectedChatroomId && messagesEndRef.current) {

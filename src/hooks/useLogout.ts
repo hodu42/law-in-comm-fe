@@ -5,15 +5,10 @@ import { searchActions } from "@/store/search";
 import { userActions } from "@/store/user";
 
 export const useLogout = () => {
-  const navigate = useNavigation();
   const dispatch = useAppDispatch();
-
-  const handleLogout = () => {
-    clearTokens();
-    dispatch(searchActions.setKeyword(""));
-    dispatch(userActions.logout());
-    navigate.goToLogin();
-  };
-
-  return { handleLogout };
+  const navigate = useNavigation();
+  clearTokens();
+  dispatch(searchActions.setKeyword(""));
+  dispatch(userActions.logout());
+  navigate.goToLogin();
 };

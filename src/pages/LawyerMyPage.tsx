@@ -15,7 +15,6 @@ import { IMAGE_URL } from "@/config/Config";
 import { MobileBackButton } from "@/components/MobileBackButton";
 
 export const LawyerMyPage = (): React.JSX.Element => {
-  const { handleLogout } = useLogout();
   const [lawyerData, setLawyerData] = useState<LawyerInfo>();
   const [answerList, setAnswerList] = useState<PageResponse<WrittenAnswer>>();
   const [currentPage, setCurrentPage] = useState(0);
@@ -81,7 +80,7 @@ export const LawyerMyPage = (): React.JSX.Element => {
                 내 정보 수정
               </Link>
               <button
-                onClick={handleLogout}
+                onClick={useLogout}
                 className="text-[14px] pc:text-[16px] hover:underline hover:text-[#9CB395] transition-colors text-nowrap"
               >
                 로그아웃

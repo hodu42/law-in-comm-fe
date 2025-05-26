@@ -1,5 +1,4 @@
 import React from "react";
-import { Logo } from "./Logo";
 import { SearchBoxPC } from "./SearchBoxPC";
 import { HeaderTags } from "./HeaderTags";
 import { Link } from "react-router-dom";
@@ -11,7 +10,6 @@ import { searchActions } from "@/store/search";
 export const MainHeader = (): React.JSX.Element => {
   const dispatch = useAppDispatch();
   const userRole = useAppSelector((state) => state.user.role);
-  const { handleLogout } = useLogout();
 
   return (
     <div className="z-10 shadow-md pc:shadow-sm fixed flex w-full justify-center bg-white border-b-borderGray">
@@ -60,7 +58,7 @@ export const MainHeader = (): React.JSX.Element => {
               )}
               <button
                 className="whitespace-nowrap font-NotoSansKR font-normal text-16px hover:underline hover:text-[#9CB395] transition-colors"
-                onClick={handleLogout}
+                onClick={useLogout}
               >
                 로그아웃
               </button>
