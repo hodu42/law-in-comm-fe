@@ -7,8 +7,13 @@ import { userActions } from "@/store/user";
 export const useLogout = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigation();
-  clearTokens();
-  dispatch(searchActions.setKeyword(""));
-  dispatch(userActions.logout());
-  navigate.goToLogin();
+
+  const handleLogout = () => {
+    clearTokens();
+    dispatch(searchActions.setKeyword(""));
+    dispatch(userActions.logout());
+    navigate.goToLogin();
+  };
+
+  return handleLogout;
 };

@@ -10,7 +10,7 @@ import { searchActions } from "@/store/search";
 export const MainHeader = (): React.JSX.Element => {
   const dispatch = useAppDispatch();
   const userRole = useAppSelector((state) => state.user.role);
-
+  const handleLogout = useLogout();
   return (
     <div className="z-10 shadow-md pc:shadow-sm fixed flex w-full justify-center bg-white border-b-borderGray">
       <header className="flex-col min-w-[355px] max-w-[1350px] w-[70.31%] h-[72px] pc:h-[144px] bg-white justify-between items-center border-b-borderGray">
@@ -58,7 +58,7 @@ export const MainHeader = (): React.JSX.Element => {
               )}
               <button
                 className="whitespace-nowrap font-NotoSansKR font-normal text-16px hover:underline hover:text-[#9CB395] transition-colors"
-                onClick={useLogout}
+                onClick={handleLogout}
               >
                 로그아웃
               </button>

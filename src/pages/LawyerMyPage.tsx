@@ -22,6 +22,7 @@ export const LawyerMyPage = (): React.JSX.Element => {
   const [totalPages, setTotalPages] = useState(0);
   const [isFirstPage, setIsFirstPage] = useState(false);
   const [isLastPage, setIsLastPage] = useState(false);
+  const handleLogout = useLogout();
 
   const loadLawyerMypageData = async () => {
     const lawyerDataResponse = await getLawyerMypageData();
@@ -80,7 +81,7 @@ export const LawyerMyPage = (): React.JSX.Element => {
                 내 정보 수정
               </Link>
               <button
-                onClick={useLogout}
+                onClick={handleLogout}
                 className="text-[14px] pc:text-[16px] hover:underline hover:text-[#9CB395] transition-colors text-nowrap"
               >
                 로그아웃

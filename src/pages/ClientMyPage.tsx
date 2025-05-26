@@ -20,6 +20,7 @@ export const ClientMyPage = (): React.JSX.Element => {
   const [isLastPage, setIsLastPage] = useState(false);
   const [currentPage, setCurrentPage] = useState(0);
   const [clientMypageData, setClientMypageData] = useState<ClientMypageData>();
+  const handleLogout = useLogout();
 
   const loadQuestions = async (currentPage: number) => {
     const response = await fetchClientQuestionsWithAnswers(currentPage);
@@ -74,7 +75,7 @@ export const ClientMyPage = (): React.JSX.Element => {
                 내 정보 수정
               </Link>
               <button
-                onClick={useLogout}
+                onClick={handleLogout}
                 className="text-[14px] pc:text-[16px] hover:underline hover:text-[#9CB395] transition-colors text-nowrap"
               >
                 로그아웃
