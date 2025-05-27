@@ -47,6 +47,16 @@ export const getCurrentUsername = (): string => {
   }
 };
 
+export const getCurrentUserId = (): number | null => {
+  const payload = getCurrentAccessToken();
+  if (payload) {
+    const userId = payload.id;
+    return Number(userId);
+  } else {
+    return null;
+  }
+};
+
 export const isAccessTokenExpired = (): boolean => {
   const payload = getCurrentAccessToken();
   if (payload) {

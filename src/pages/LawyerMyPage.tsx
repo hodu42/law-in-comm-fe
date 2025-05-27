@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Logo } from "@/components/Logo";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { useLogout } from "@/hooks/useLogout";
 import { MobileNav } from "@/components/MobileNav";
 import { getLawyerMypageData, getLawyerAnswers } from "@/api/users/lawyer";
@@ -13,8 +13,11 @@ import { LegalSpeciality } from "@/types/speciality";
 import { getUserProfileImage } from "@/api/users";
 import { IMAGE_URL } from "@/config/Config";
 import { MobileBackButton } from "@/components/MobileBackButton";
+import { getCurrentUserId } from "@/hooks/tokenDecoder";
 
 export const LawyerMyPage = (): React.JSX.Element => {
+  const { id: paramsUserId } = useParams();
+  const currentUserId = getCurrentUserId();
   const [lawyerData, setLawyerData] = useState<LawyerInfo>();
   const [answerList, setAnswerList] = useState<PageResponse<WrittenAnswer>>();
   const [currentPage, setCurrentPage] = useState(0);
@@ -25,13 +28,17 @@ export const LawyerMyPage = (): React.JSX.Element => {
   const handleLogout = useLogout();
 
   const loadLawyerMypageData = async () => {
-    const lawyerDataResponse = await getLawyerMypageData();
-    const lawyerMypageData = lawyerDataResponse.data;
-    const lawyerProfileImage = await getUserProfileImage(lawyerMypageData.id);
-    setLawyerData({
-      ...lawyerMypageData,
-      profileImage: lawyerProfileImage,
-    });
+    if (paramsUserId) {
+      const lawyerDataResponse = await getLawyerMypageData(
+        Number(paramsUserId)
+      );
+      const lawyerMypageData = lawyerDataResponse.data;
+      const lawyerProfileImage = await getUserProfileImage(lawyerMypageData.id);
+      setLawyerData({
+        ...lawyerMypageData,
+        profileImage: lawyerProfileImage,
+      });
+    }
   };
 
   const loadAnswers = async (currentPage: number) => {
@@ -67,19 +74,23 @@ export const LawyerMyPage = (): React.JSX.Element => {
           <div className="flex items-center justify-between w-full">
             {/* 타이틀 */}
             <div className="absolute left-1/2 -translate-x-1/2 text-[21px] font-bold">
-              마이페이지
+              {currentUserId && currentUserId === Number(paramsUserId)
+                ? "마이페이지"
+                : "변호사 정보"}
             </div>
             {/* 균형을 위한 빈 공간 */}
             <div className="pc:hidden w-6"></div>
           </div>
           <div className="mr-6 pc:mr-0">
             <div className="flex items-center gap-x-5">
-              <Link
-                to="/lawyer/my-page/modify"
-                className="text-[14px] pc:text-[16px] hover:underline hover:text-[#9CB395] transition-colors text-nowrap"
-              >
-                내 정보 수정
-              </Link>
+              {currentUserId && currentUserId === Number(paramsUserId) && (
+                <Link
+                  to="/lawyer/my-page/modify"
+                  className="text-[14px] pc:text-[16px] hover:underline hover:text-[#9CB395] transition-colors text-nowrap"
+                >
+                  내 정보 수정
+                </Link>
+              )}
               <button
                 onClick={handleLogout}
                 className="text-[14px] pc:text-[16px] hover:underline hover:text-[#9CB395] transition-colors text-nowrap"

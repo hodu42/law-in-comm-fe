@@ -13,6 +13,7 @@ import { ImageInfo, ImageType } from "@/types/image";
 import { getUserProfileImage } from "@/api/users";
 import { IMAGE_URL } from "@/config/Config";
 import { MobileBackButton } from "@/components/MobileBackButton";
+import { getCurrentUserId } from "@/hooks/tokenDecoder";
 
 export const LawyerMyPageModify = (): React.JSX.Element => {
   const { goToLawyerMyPage } = useNavigation();
@@ -33,7 +34,7 @@ export const LawyerMyPageModify = (): React.JSX.Element => {
 
   const loadLawyerMypageData = async () => {
     try {
-      const response = await getLawyerMypageData();
+      const response = await getLawyerMypageData(Number(getCurrentUserId()));
       const lawyerProfileImage = await getUserProfileImage(response.data.id);
       setPhoneNumber(response.data.phoneNumber);
       // 프로필 이미지 존재시

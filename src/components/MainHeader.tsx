@@ -6,6 +6,7 @@ import { useAppDispatch, useAppSelector } from "@/hooks/reduxHooks";
 import { Role } from "@/types/role";
 import { useLogout } from "@/hooks/useLogout";
 import { searchActions } from "@/store/search";
+import { getCurrentUserId } from "@/hooks/tokenDecoder";
 
 export const MainHeader = (): React.JSX.Element => {
   const dispatch = useAppDispatch();
@@ -50,7 +51,7 @@ export const MainHeader = (): React.JSX.Element => {
                   to={
                     userRole === Role.USER
                       ? "/client/my-page"
-                      : "/lawyer/my-page"
+                      : `/users/lawyer/profile/${getCurrentUserId()}`
                   }
                 >
                   마이페이지

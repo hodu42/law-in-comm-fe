@@ -1,4 +1,5 @@
 import { useNavigate } from "react-router-dom";
+import { getCurrentUserId } from "./tokenDecoder";
 
 export const useNavigation = () => {
   const navigate = useNavigate();
@@ -36,7 +37,7 @@ export const useNavigation = () => {
     navigate("/client/my-page");
   };
   const goToLawyerMyPage = () => {
-    navigate("/lawyer/my-page");
+    navigate(`/users/lawyer/profile/${getCurrentUserId()}`);
   };
 
   return {

@@ -40,10 +40,6 @@ export const protectedRoutesWithoutLayout: RouteObject[] = [
     element: <ClientMyPage />,
   },
   {
-    path: "/lawyer/my-page",
-    element: <LawyerMyPage />,
-  },
-  {
     path: "/client/my-page/modify",
     element: <ClientMyPageModify />,
   },
@@ -96,6 +92,10 @@ export const publicRoutes: RouteObject[] = [
   {
     path: "/users/join/lawyer",
     element: <LawyerRegister />,
+  },
+  {
+    path: "/users/lawyer/profile/:id",
+    element: <LawyerMyPage />,
   },
 ];
 
