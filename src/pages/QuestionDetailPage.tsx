@@ -540,8 +540,8 @@ export const QuestionDetailPage = (): React.JSX.Element => {
                       </svg>
                     </button>
                   </div>
-                  {/* AI 답변이 아니고 해당 질문의 작성자 일때 */}
-                  {answer.authorId !== AI_ASSISTANT_ID && question?.author && (
+                  {/* AI 답변이 아니고 해당 답변의 작성자가 아닐 때 */}
+                  {answer.authorId !== AI_ASSISTANT_ID && !answer.author && (
                     <button
                       onClick={() => handleChatRequest(answer.authorId)}
                       className="flex items-center gap-2 bg-[#9CB395] hover:bg-[#8AA082] transition-colors p-2 rounded-[10px] text-white"
