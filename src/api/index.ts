@@ -80,8 +80,9 @@ export class ApiClient {
             store.dispatch(userActions.login());
             return this.axiosInstance(originalRequest);
           } catch (refreshError) {
+            const goToLogin = useLogout();
+            goToLogin();
             alert("로그인 상태가 만료되어 로그인 페이지로 이동합니다.");
-            useLogout();
             return Promise.reject(refreshError);
           } finally {
             isRefreshing = false;
