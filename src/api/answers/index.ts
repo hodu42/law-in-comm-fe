@@ -1,10 +1,14 @@
-import { api } from '../index';
+import { api } from "../index";
 
 export const deleteAnswer = async (answerId: string) => {
   return api.delete<any>(`/answers/${answerId}`);
 };
 
-export const getAnswers = async (questionId: string, page: string, size: string) => {
+export const getAnswers = async (
+  questionId: string,
+  page: string,
+  size: string
+) => {
   return api.get<any>(`/question/${questionId}/answers`, { page, size });
 };
 

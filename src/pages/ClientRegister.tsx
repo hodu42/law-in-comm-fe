@@ -120,9 +120,10 @@ export const ClientRegister = (): React.JSX.Element => {
               아이디
             </label>
             <input
+              required
               type="text"
               placeholder="아이디를 입력해주세요."
-              className="transition-colors border-b-2 pl-[10px] pc:pl-4 placeholder:text-[15px] text-[18px] pc:placeholder:text-[19px] pc:text-[19px] border-[#E2E4E5] py-[10px] pc:py-4 focus:outline-none focus:border-[#A9BE8C] placeholder-[#E2E4E5]"
+              className="transition-colors border-b-2 pl-[10px] pc:pl-4 text-[15px] pc:text-[19px] border-[#E2E4E5] py-[10px] pc:py-4 focus:outline-none focus:border-[#A9BE8C] placeholder-[#E2E4E5]"
               value={userId}
               onChange={(e) => setUserId(e.target.value)}
             />
@@ -134,9 +135,10 @@ export const ClientRegister = (): React.JSX.Element => {
               비밀번호
             </label>
             <input
+              required
               type="password"
               placeholder="비밀번호를 입력해주세요."
-              className="transition-colors border-b-2 pl-[10px] pc:pl-4 placeholder:text-[15px] text-[18px] pc:placeholder:text-[19px] pc:text-[19px] border-[#E2E4E5] py-[10px] pc:py-4 focus:outline-none focus:border-[#A9BE8C] placeholder-[#E2E4E5]"
+              className="transition-colors border-b-2 pl-[10px] pc:pl-4 text-[15px] pc:text-[19px] border-[#E2E4E5] py-[10px] pc:py-4 focus:outline-none focus:border-[#A9BE8C] placeholder-[#E2E4E5]"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             />
@@ -153,6 +155,7 @@ export const ClientRegister = (): React.JSX.Element => {
               이름
             </label>
             <input
+              required
               type="text"
               placeholder="이름을 입력해주세요."
               className="transition-colors border-b-2 pl-[10px] pc:pl-4 text-[15px] pc:text-[19px] border-[#E2E4E5] py-[10px] pc:py-4 focus:outline-none focus:border-[#A9BE8C] placeholder-[#E2E4E5]"
@@ -172,6 +175,7 @@ export const ClientRegister = (): React.JSX.Element => {
             </div>
             <div className="flex flex-col group">
               <input
+                required
                 type="text"
                 placeholder="닉네임을 입력해주세요."
                 className="transition-colors border-b-2 pl-[10px] pc:pl-4 text-[15px] pc:text-[19px] border-[#E2E4E5] py-[10px] pc:py-4 focus:outline-none focus:border-[#A9BE8C] placeholder-[#E2E4E5]"
@@ -204,6 +208,7 @@ export const ClientRegister = (): React.JSX.Element => {
               생년월일
             </label>
             <input
+              required
               type="date"
               ref={dateInputRef}
               className={`transition-colors border-b-2 pl-[10px] pc:pl-4 py-[10px] pc:py-4 text-[15px] pc:text-[19px] border-[#E2E4E5] focus:outline-none focus:border-[#A9BE8C] placeholder-[#A9BE8C] hover:cursor-pointer [&::-webkit-calendar-picker-indicator]:cursor-pointer ${

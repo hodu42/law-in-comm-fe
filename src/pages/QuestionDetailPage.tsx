@@ -168,12 +168,12 @@ export const QuestionDetailPage = (): React.JSX.Element => {
     }
   };
 
-  const handleAnswerSubmit = async () => {
+  const handleAnswerSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     try {
+      e.preventDefault();
       await createAnswer(String(questionId), answerContent);
-      window.location.reload();
     } catch (error: any) {
-      setErrorMsg(error.reponse.data.message);
+      console.error(error);
     }
   };
 
@@ -203,8 +203,11 @@ export const QuestionDetailPage = (): React.JSX.Element => {
       dispatch(chatWidgetActions.openChat());
     } catch (error: any) {
       console.log(error);
-      if (error.response.status === 409 && error.response.data.code === 4090800) { // 채팅방이 이미 존재하는 경우
-
+      if (
+        error.response.status === 409 &&
+        error.response.data.code === 4090800
+      ) {
+        // 채팅방이 이미 존재하는 경우
       }
     }
   };
@@ -598,7 +601,9 @@ export const QuestionDetailPage = (): React.JSX.Element => {
         </div>
         {userRole === "ROLE_LAWYER" && (
           <form
-            onSubmit={handleAnswerSubmit}
+            onSubmit={(e: React.FormEvent<HTMLFormElement>) =>
+              handleAnswerSubmit(e)
+            }
             className="flex flex-col max-w-3xl mx-auto mt-9 justify-end border-t-[1px] py-10 border-[#CFCFCF]"
           >
             <div className="mb-6">
