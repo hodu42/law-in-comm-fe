@@ -193,7 +193,7 @@ export const QuestionDetailPage = (): React.JSX.Element => {
       setEditInfo(-1, "");
       fetchAnswers();
     } catch (error: any) {
-      console.log(error);
+      console.error(error);
     }
   };
 

@@ -68,7 +68,6 @@ export const ClientRegister = (): React.JSX.Element => {
   const checkNicknameDuplicate = async () => {
     try {
       const response = await checkNicknameDuplication(nickname);
-      console.log("닉네임 중복 확인 응답 : ", response);
       if (response.data) {
         setNicknameDuplicateMessage(
           `${nickname}은 이미 사용중인 닉네임입니다.`
