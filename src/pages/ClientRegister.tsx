@@ -88,7 +88,7 @@ export const ClientRegister = (): React.JSX.Element => {
           <Logo />
           <div className="flex items-center justify-between w-full">
             {/* 타이틀 */}
-            <div className="absolute left-1/2 -translate-x-1/2 text-[21px] font-bold">
+            <div className="absolute left-1/2 -translate-x-1/2 text-[19px] pc:text-[21px] font-bold">
               회원가입
             </div>
 
@@ -116,7 +116,7 @@ export const ClientRegister = (): React.JSX.Element => {
         >
           {/* 아이디 입력 필드 */}
           <div className="flex flex-col gap-5 pc:gap-6">
-            <label className="text-[#656565] text-[18px] pc:text-[20px] font-bold text-nowrap">
+            <label className="text-[#656565] text-[17px] pc:text-[20px] font-bold text-nowrap">
               아이디
             </label>
             <input
@@ -131,7 +131,7 @@ export const ClientRegister = (): React.JSX.Element => {
 
           {/* 비밀번호 입력 필드 */}
           <div className="relative flex flex-col gap-5 pc:gap-6">
-            <label className="text-[#656565] text-[18px] pc:text-[20px] font-bold text-nowrap">
+            <label className="text-[#656565] text-[17px] pc:text-[20px] font-bold text-nowrap">
               비밀번호
             </label>
             <input
@@ -151,7 +151,7 @@ export const ClientRegister = (): React.JSX.Element => {
           </div>
           {/* 이름 입력 필드 */}
           <div className="flex flex-col gap-5 pc:gap-6">
-            <label className="text-[#656565] text-[18px] pc:text-[20px] font-bold">
+            <label className="text-[#656565] text-[17px] pc:text-[20px] font-bold">
               이름
             </label>
             <input
@@ -166,10 +166,10 @@ export const ClientRegister = (): React.JSX.Element => {
           {/* 닉네임 입력 필드 */}
           <div className="flex flex-col gap-5 pc:gap-6">
             <div className="flex items-center gap-6">
-              <label className="text-[#656565] text-[18px] pc:text-[20px] font-bold text-nowrap">
+              <label className="text-[#656565] text-[17px] pc:text-[20px] font-bold text-nowrap">
                 닉네임
               </label>
-              <div className="text-[14px] pc:text-[16px] text-[#A9BE8C] text-nowrap">
+              <div className="text-[14px] pc:text-[16px] text-[#A9BE8C]">
                 2~8자의 한글, 영문 대소문자, 숫자로 이루어져야 합니다.
               </div>
             </div>
@@ -204,7 +204,7 @@ export const ClientRegister = (): React.JSX.Element => {
           </div>
           {/* 생년월일 입력 필드 */}
           <div className="flex flex-col gap-5 pc:gap-6">
-            <label className="text-[#656565] text-[18px] pc:text-[20px] font-bold text-nowrap">
+            <label className="text-[#656565] text-[17px] pc:text-[20px] font-bold text-nowrap">
               생년월일
             </label>
             <input

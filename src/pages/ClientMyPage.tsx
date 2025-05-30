@@ -59,7 +59,7 @@ export const ClientMyPage = (): React.JSX.Element => {
           <Logo />
           <div className="flex items-center justify-between w-full">
             {/* 타이틀 */}
-            <div className="absolute left-1/2 -translate-x-1/2 text-[21px] font-bold">
+            <div className="absolute left-1/2 -translate-x-1/2 text-[19px] pc:text-[21px] font-bold">
               마이페이지
             </div>
 
@@ -68,12 +68,6 @@ export const ClientMyPage = (): React.JSX.Element => {
           </div>
           <div className="mr-6 pc:mr-0">
             <div className="flex items-center gap-x-5">
-              <Link
-                to="/client/my-page/modify"
-                className="text-[14px] pc:text-[16px] hover:underline hover:text-[#9CB395] transition-colors text-nowrap"
-              >
-                내 정보 수정
-              </Link>
               <button
                 onClick={handleLogout}
                 className="text-[14px] pc:text-[16px] hover:underline hover:text-[#9CB395] transition-colors text-nowrap"
@@ -86,41 +80,49 @@ export const ClientMyPage = (): React.JSX.Element => {
       </header>
       <main className="container mx-auto mt-[72px] px-4 pb-20 flex-grow">
         <div className="flex flex-col justify-between max-w-[800px] mx-auto">
-          <div className="my-10 pl-4">
-            <h1 className="text-[1.4rem] pc:text-[1.8rem] font-bold">
-              내 정보
-            </h1>
-          </div>
-          <div className="w-[50%] pc:w-[40%] bg-white border-2 border-[#C9D8B7] rounded-lg p-4 mx-auto">
-            <div className="flex flex-col gap-4 px-2 pc:px-6 my-4">
-              <div className="flex items-center justify-between pc:justify-evenly">
-                <div className="w-16 text-[14px] text-[#5C6E56] pc:text-[17px] font-bold">
-                  이름
+          <div>
+            <div className="my-5 pl-4">
+              <h1 className="text-[1.3rem] pc:text-[1.6rem] font-bold">
+                내 정보
+              </h1>
+            </div>
+            <div className="w-full pc:w-[40%] bg-white border-2 border-[#C9D8B7] rounded-lg p-4 mx-auto">
+              <div className="flex flex-col gap-4 px-2 pc:px-6 my-4">
+                <div className="flex items-center justify-between pc:justify-evenly">
+                  <div className="w-16 text-[14px] text-[#5C6E56] pc:text-[17px] font-bold">
+                    이름
+                  </div>
+                  <div className="text-[14px] pc:text-[17px] ml-2 pc:ml-5 break-all">
+                    {clientMypageData?.name}
+                  </div>
                 </div>
-                <div className="text-[14px] pc:text-[17px] ml-2 pc:ml-5 break-all">
-                  {clientMypageData?.name}
+                <div className="flex items-center justify-between pc:justify-evenly">
+                  <div className="w-16 text-[14px] text-[#5C6E56] pc:text-[17px] font-bold">
+                    닉네임
+                  </div>
+                  <div className="text-[14px] pc:text-[17px] ml-2 pc:ml-5 break-all">
+                    {clientMypageData?.nickname}
+                  </div>
                 </div>
-              </div>
-              <div className="flex items-center justify-between pc:justify-evenly">
-                <div className="w-16 text-[14px] text-[#5C6E56] pc:text-[17px] font-bold">
-                  닉네임
-                </div>
-                <div className="text-[14px] pc:text-[17px] ml-2 pc:ml-5 break-all">
-                  {clientMypageData?.nickname}
-                </div>
-              </div>
-              <div className="flex items-center justify-between pc:justify-evenly">
-                <div className="w-16 text-[14px] text-[#5C6E56] pc:text-[17px] font-bold">
-                  생년월일
-                </div>
-                <div className="text-[14px] pc:text-[17px] ml-2 pc:ml-5 break-all">
-                  {clientMypageData?.birthDate}
+                <div className="flex items-center justify-between pc:justify-evenly">
+                  <div className="w-16 text-[14px] text-[#5C6E56] pc:text-[17px] font-bold">
+                    생년월일
+                  </div>
+                  <div className="text-[14px] pc:text-[17px] ml-2 pc:ml-5 break-all">
+                    {clientMypageData?.birthDate}
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-          <div className="my-10 pl-4">
-            <h1 className="text-[1.4rem] pc:text-[1.8rem] font-bold">
+          <Link
+            to="/client/my-page/modify"
+            className="w-28 text-center mx-auto bg-[#CBD8B7] text-black font-bold text-[14px] pc:text-[18px] py-2 mt-5 rounded-md hover:bg-[#A9BE8C] transition-colors"
+          >
+            내 정보 수정
+          </Link>
+          <div className="my-5 pl-4">
+            <h1 className="text-[1.3rem] pc:text-[1.6rem] font-bold">
               작성한 상담글{" "}
               <span className="text-[#9CB395]">{totalElements}</span>개
             </h1>
@@ -139,7 +141,7 @@ export const ClientMyPage = (): React.JSX.Element => {
               <button
                 onClick={() => handlePageChange(Math.max(0, currentPage - 1))}
                 disabled={isFirstPage}
-                className="px-3 py-1 rounded text-gray-700 hover:bg-[#C9D8B7] disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                className="px-3 py-1 rounded text-sm pc:text-base text-gray-700 hover:bg-[#C9D8B7] disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
               >
                 &lt;
               </button>
@@ -148,7 +150,7 @@ export const ClientMyPage = (): React.JSX.Element => {
                   <button
                     key={pageNum}
                     onClick={() => handlePageChange(pageNum)}
-                    className={`px-3 py-1 rounded ${
+                    className={`px-3 py-1 rounded text-sm pc:text-base ${
                       pageNum === currentPage
                         ? "bg-[#C9D8B7] text-gray-700"
                         : "text-gray-700 hover:bg-[#C9D8B7] transition-colors"
@@ -163,7 +165,7 @@ export const ClientMyPage = (): React.JSX.Element => {
                   handlePageChange(Math.min(totalPages - 1, currentPage + 1))
                 }
                 disabled={isLastPage}
-                className="px-3 py-1 rounded text-gray-700 hover:bg-[#C9D8B7] disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                className="px-3 py-1 rounded text-sm pc:text-base text-gray-700 hover:bg-[#C9D8B7] disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
               >
                 &gt;
               </button>

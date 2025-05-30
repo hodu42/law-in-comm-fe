@@ -20,7 +20,7 @@ export const ClientMyPageModify = (): React.JSX.Element => {
       const response = await getClientMypageData();
       setName(response.data.name);
       setNickname(response.data.nickname);
-      setBirth(response.data.birth);
+      setBirth(response.data.birthDate);
     } catch (error) {
       alert("정보를 불러오는데 실패했습니다.");
       goToClientMyPage();
@@ -54,7 +54,7 @@ export const ClientMyPageModify = (): React.JSX.Element => {
           <Logo />
           <div className="flex items-center justify-between w-full">
             {/* 타이틀 */}
-            <div className="absolute left-1/2 -translate-x-1/2 text-[21px] font-bold">
+            <div className="absolute left-1/2 -translate-x-1/2 text-[19px] pc:text-[21px] font-bold">
               내 정보 수정
             </div>
 
@@ -71,7 +71,7 @@ export const ClientMyPageModify = (): React.JSX.Element => {
           className="flex flex-col gap-12 w-full pc:max-w-[570px] pc:mx-auto mt-10 pc:mt-16 px-5 py-[72px]"
         >
           <div className="flex flex-col gap-y-10">
-            <div className="bg-[#D9D9D9] rounded-md px-4 py-2 text-[18px] font-bold">
+            <div className="bg-[#D9D9D9] rounded-md px-4 py-2 text-[16px] pc:text-[18px] font-bold">
               수정할 항목
             </div>
             <div className="flex flex-col px-6 gap-y-14">
@@ -81,6 +81,7 @@ export const ClientMyPageModify = (): React.JSX.Element => {
                   이름
                 </label>
                 <input
+                  required
                   type="text"
                   placeholder="수정할 이름을 입력해주세요."
                   className="transition-colors border-b-2 pl-[10px] pc:pl-4 placeholder:text-[15px] text-[15px] pc:placeholder:text-[17px] pc:text-[17px] border-[#E2E4E5] py-[10px] pc:py-4 focus:outline-none focus:border-[#A9BE8C] placeholder-[#E2E4E5]"
@@ -94,6 +95,7 @@ export const ClientMyPageModify = (): React.JSX.Element => {
                   닉네임
                 </label>
                 <input
+                  required
                   type="text"
                   placeholder="수정할 닉네임을 입력해주세요."
                   className="transition-colors border-b-2 pl-[10px] pc:pl-4 text-[15px] pc:text-[17px] placeholder:text-[15px] pc:placeholder:text-[17px] border-[#E2E4E5] py-[10px] pc:py-4 focus:outline-none focus:border-[#A9BE8C] placeholder-[#E2E4E5]"
@@ -107,6 +109,7 @@ export const ClientMyPageModify = (): React.JSX.Element => {
                   생년월일
                 </label>
                 <input
+                  required
                   type="date"
                   ref={dateInputRef}
                   className={`transition-colors border-b-2 pl-[10px] pc:pl-4 py-[10px] pc:py-4 text-[15px] pc:text-[17px] border-[#E2E4E5] focus:outline-none focus:border-[#A9BE8C] placeholder-[#A9BE8C] hover:cursor-pointer [&::-webkit-calendar-picker-indicator]:cursor-pointer ${

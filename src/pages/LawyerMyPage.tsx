@@ -73,7 +73,7 @@ export const LawyerMyPage = (): React.JSX.Element => {
           <Logo />
           <div className="flex items-center justify-between w-full">
             {/* 타이틀 */}
-            <div className="absolute left-1/2 -translate-x-1/2 text-[21px] font-bold">
+            <div className="absolute left-1/2 -translate-x-1/2 text-[19px] pc:text-[21px] font-bold">
               {currentUserId && currentUserId === Number(paramsUserId)
                 ? "마이페이지"
                 : "변호사 정보"}
@@ -83,14 +83,6 @@ export const LawyerMyPage = (): React.JSX.Element => {
           </div>
           <div className="mr-6 pc:mr-0">
             <div className="flex items-center gap-x-5">
-              {currentUserId && currentUserId === Number(paramsUserId) && (
-                <Link
-                  to="/lawyer/my-page/modify"
-                  className="text-[14px] pc:text-[16px] hover:underline hover:text-[#9CB395] transition-colors text-nowrap"
-                >
-                  내 정보 수정
-                </Link>
-              )}
               <button
                 onClick={handleLogout}
                 className="text-[14px] pc:text-[16px] hover:underline hover:text-[#9CB395] transition-colors text-nowrap"
@@ -133,7 +125,7 @@ export const LawyerMyPage = (): React.JSX.Element => {
               <div className="flex flex-col justify-evenly">
                 <div className="flex flex-col gap-2">
                   {/* 이름 */}
-                  <div className="text-[22px] font-bold">
+                  <div className="text-[20px] pc:text-[22px] font-bold">
                     {lawyerData?.name}
                   </div>
                   {/* 생년월일, 변호사 연락처 */}
@@ -172,7 +164,7 @@ export const LawyerMyPage = (): React.JSX.Element => {
                 </div>
                 <div className="flex flex-col gap-2">
                   {/* 소속(법률사무소) */}
-                  <div className="text-[20px] font-bold text-[#9CB395]">
+                  <div className="text-[20px] pc:text-[22px] font-bold text-[#9CB395]">
                     {lawyerData?.officeInfo.officeName}
                   </div>
                   {/* 사무실 주소, 사무실 연락처 */}
@@ -246,6 +238,14 @@ export const LawyerMyPage = (): React.JSX.Element => {
                 </div>
               </div>
             </div>
+            {currentUserId && currentUserId === Number(paramsUserId) && (
+              <Link
+                to="/lawyer/my-page/modify"
+                className="w-28 text-center mx-auto bg-[#CBD8B7] text-black font-bold text-[14px] pc:text-[16px] py-2 mt-5 rounded-md hover:bg-[#A9BE8C] transition-colors"
+              >
+                내 정보 수정
+              </Link>
+            )}
           </div>
           <div className="my-10 pl-4">
             <h1 className="text-[1.4rem] pc:text-[1.8rem] font-bold">
@@ -263,7 +263,7 @@ export const LawyerMyPage = (): React.JSX.Element => {
               <button
                 onClick={() => handlePageChange(Math.max(0, currentPage - 1))}
                 disabled={isFirstPage}
-                className="px-3 py-1 rounded text-gray-700 hover:bg-[#C9D8B7] disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                className="px-3 py-1 rounded text-sm pc:text-base text-gray-700 hover:bg-[#C9D8B7] disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
               >
                 &lt;
               </button>
@@ -272,7 +272,7 @@ export const LawyerMyPage = (): React.JSX.Element => {
                   <button
                     key={pageNum}
                     onClick={() => handlePageChange(pageNum)}
-                    className={`px-3 py-1 rounded ${
+                    className={`px-3 py-1 rounded text-sm pc:text-base ${
                       pageNum === currentPage
                         ? "bg-[#C9D8B7] text-gray-700"
                         : "text-gray-700 hover:bg-[#C9D8B7] transition-colors"
@@ -287,7 +287,7 @@ export const LawyerMyPage = (): React.JSX.Element => {
                   handlePageChange(Math.min(totalPages - 1, currentPage + 1))
                 }
                 disabled={isLastPage}
-                className="px-3 py-1 rounded text-gray-700 hover:bg-[#C9D8B7] disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                className="px-3 py-1 rounded text-sm pc:text-base text-gray-700 hover:bg-[#C9D8B7] disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
               >
                 &gt;
               </button>

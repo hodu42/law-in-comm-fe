@@ -121,7 +121,7 @@ export const LawyerRegister = (): React.JSX.Element => {
           <Logo />
           <div className="flex items-center justify-between w-full">
             {/* 타이틀 */}
-            <div className="absolute left-1/2 -translate-x-1/2 text-[21px] font-bold">
+            <div className="absolute left-1/2 -translate-x-1/2 text-[19px] pc:text-[21px] font-bold">
               변호사 회원가입
             </div>
 
@@ -138,20 +138,20 @@ export const LawyerRegister = (): React.JSX.Element => {
           className="flex flex-col gap-12 w-full pc:max-w-[570px] pc:mx-auto mt-10 pc:mt-16 px-5 py-[72px] border-b-[1.7px] border-[#B4B4B4]"
         >
           <div className="flex flex-col gap-y-10">
-            <div className="bg-[#D9D9D9] rounded-md px-4 py-2 text-[18px] font-bold">
+            <div className="bg-[#D9D9D9] rounded-md px-4 py-2 text-[15px] pc:text-[16px] font-bold">
               계정 정보
             </div>
             <div className="flex flex-col px-6 gap-y-14">
               {/* 아이디 입력 필드 */}
               <div className="flex flex-col gap-5 pc:gap-6">
-                <label className="text-[#656565] text-[16px] pc:text-[18px] font-bold text-nowrap">
+                <label className="text-[#656565] text-[17px] pc:text-[20px] font-bold text-nowrap">
                   아이디
                 </label>
                 <input
                   required
                   type="text"
                   placeholder="아이디를 입력해주세요."
-                  className="transition-colors border-b-2 pl-[10px] pc:pl-4 placeholder:text-[15px] text-[15px] pc:placeholder:text-[17px] pc:text-[17px] border-[#E2E4E5] py-[10px] pc:py-4 focus:outline-none focus:border-[#A9BE8C] placeholder-[#E2E4E5]"
+                  className="transition-colors border-b-2 pl-[10px] pc:pl-4 text-[15px] pc:text-[19px] border-[#E2E4E5] py-[10px] pc:py-4 focus:outline-none focus:border-[#A9BE8C] placeholder-[#E2E4E5]"
                   value={userId}
                   onChange={(e) => setUserId(e.target.value)}
                 />
@@ -159,35 +159,35 @@ export const LawyerRegister = (): React.JSX.Element => {
 
               {/* 비밀번호 입력 필드 */}
               <div className="relative flex flex-col gap-5 pc:gap-6">
-                <label className="text-[#656565] text-[16px] pc:text-[18px] font-bold text-nowrap">
+                <label className="text-[#656565] text-[17px] pc:text-[20px] font-bold text-nowrap">
                   비밀번호
                 </label>
                 <input
                   required
                   type="password"
                   placeholder="비밀번호를 입력해주세요."
-                  className="transition-colors border-b-2 pl-[10px] pc:pl-4 placeholder:text-[15px] text-[15px] pc:placeholder:text-[17px] pc:text-[17px] border-[#E2E4E5] py-[10px] pc:py-4 focus:outline-none focus:border-[#A9BE8C] placeholder-[#E2E4E5]"
+                  className="transition-colors border-b-2 pl-[10px] pc:pl-4 text-[15px] pc:text-[19px] border-[#E2E4E5] py-[10px] pc:py-4 focus:outline-none focus:border-[#A9BE8C] placeholder-[#E2E4E5]"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                 />
               </div>
               {/* 이름 입력 필드 */}
               <div className="flex flex-col gap-5 pc:gap-6">
-                <label className="text-[#656565] text-[16px] pc:text-[18px] font-bold">
+                <label className="text-[#656565] text-[17px] pc:text-[20px] font-bold">
                   이름
                 </label>
                 <input
                   required
                   type="text"
                   placeholder="이름을 입력해주세요."
-                  className="transition-colors border-b-2 pl-[10px] pc:pl-4 text-[15px] pc:text-[17px] placeholder:text-[15px] pc:placeholder:text-[17px] border-[#E2E4E5] py-[10px] pc:py-4 focus:outline-none focus:border-[#A9BE8C] placeholder-[#E2E4E5]"
+                  className="transition-colors border-b-2 pl-[10px] pc:pl-4 text-[15px] pc:text-[19px] border-[#E2E4E5] py-[10px] pc:py-4 focus:outline-none focus:border-[#A9BE8C] placeholder-[#E2E4E5]"
                   value={name}
                   onChange={(e) => setName(e.target.value)}
                 />
               </div>
               {/* 휴대폰 번호 입력 필드 */}
               <div className="flex flex-col gap-5 pc:gap-6">
-                <label className="text-[#656565] text-[16px] pc:text-[18px] font-bold text-nowrap">
+                <label className="text-[#656565] text-[17px] pc:text-[20px] font-bold text-nowrap">
                   휴대폰 번호
                 </label>
                 <div className="relative group">
@@ -210,7 +210,7 @@ export const LawyerRegister = (): React.JSX.Element => {
                     type="text"
                     inputMode="numeric"
                     placeholder="휴대폰 번호를 입력해주세요."
-                    className="transition-colors border-b-2 w-full pl-14 pc:pl-16 text-[15px] pc:text-[17px] placeholder:text-[15px] pc:placeholder:text-[17px] border-[#E2E4E5] py-[10px] pc:py-4 focus:outline-none focus:border-[#A9BE8C] placeholder-[#E2E4E5]"
+                    className="transition-colors border-b-2 w-full pl-14 pc:pl-16 text-[15px] pc:text-[19px] placeholder:text-[15px] pc:placeholder:text-[17px] border-[#E2E4E5] py-[10px] pc:py-4 focus:outline-none focus:border-[#A9BE8C] placeholder-[#E2E4E5]"
                     value={phoneNumber}
                     onChange={(e) => {
                       const value = e.target.value.replace(/[^0-9]/g, "");
@@ -221,14 +221,14 @@ export const LawyerRegister = (): React.JSX.Element => {
               </div>
               {/* 생년월일 입력 필드 */}
               <div className="flex flex-col gap-5 pc:gap-6">
-                <label className="text-[#656565] text-[16px] pc:text-[18px] font-bold text-nowrap">
+                <label className="text-[#656565] text-[17px] pc:text-[20px] font-bold text-nowrap">
                   생년월일
                 </label>
                 <input
                   required
                   type="date"
                   ref={dateInputRef}
-                  className={`transition-colors border-b-2 pl-[10px] pc:pl-4 py-[10px] pc:py-4 text-[15px] pc:text-[17px] border-[#E2E4E5] focus:outline-none focus:border-[#A9BE8C] placeholder-[#A9BE8C] hover:cursor-pointer [&::-webkit-calendar-picker-indicator]:cursor-pointer ${
+                  className={`transition-colors border-b-2 pl-[10px] pc:pl-4 py-[10px] pc:py-4 text-[15px] pc:text-[19px] border-[#E2E4E5] focus:outline-none focus:border-[#A9BE8C] placeholder-[#A9BE8C] hover:cursor-pointer [&::-webkit-calendar-picker-indicator]:cursor-pointer ${
                     birthDate ? "text-black" : "text-[#E2E4E5]"
                   }`}
                   value={birthDate}
@@ -238,7 +238,7 @@ export const LawyerRegister = (): React.JSX.Element => {
               </div>
               {/* 증명서 첨부 필드 */}
               <div className="flex flex-col gap-5 pc:gap-6">
-                <label className="text-[#656565] text-[16px] pc:text-[18px] font-bold text-nowrap">
+                <label className="text-[#656565] text-[17px] pc:text-[20px] font-bold text-nowrap">
                   합격 증명서 첨부
                 </label>
                 <div className="w-full h-[200px] border-2 border-dashed border-[#E2E4E5] rounded-lg flex items-center justify-center overflow-hidden">
@@ -276,10 +276,10 @@ export const LawyerRegister = (): React.JSX.Element => {
               </div>
               {/* 분야선택 필드 */}
               <div className="flex flex-col gap-5 pc:gap-6">
-                <label className="text-[#656565] text-[16px] pc:text-[18px] font-bold text-nowrap">
+                <label className="text-[#656565] text-[17px] pc:text-[20px] font-bold text-nowrap">
                   분야
                 </label>
-                <span className="block text-center bg-[#F5F7F2] py-3 rounded-md text-[#A9BE8C] text-[16px] font-bold pc:text-[18px] mt-5">
+                <span className="block text-center bg-[#F5F7F2] py-3 rounded-md text-[#A9BE8C] text-[14px] font-bold pc:text-[18px] mt-5">
                   해당하는 분야들을 모두 체크하세요.
                 </span>
                 <div className="grid grid-cols-2 pc:grid-cols-3 gap-x-8 gap-y-4">
@@ -290,11 +290,11 @@ export const LawyerRegister = (): React.JSX.Element => {
                         id={key}
                         checked={checkedList.includes(key)}
                         onChange={(e) => checkHandler(e, key)}
-                        className="transition-colors w-4 h-4 text-[#A9BE8C] border-[#E2E4E5] rounded focus:ring-[#A9BE8C] focus:ring-offset-0"
+                        className="transition-colors w-3 h-3 pc:w-4 pc:h-4 text-[#A9BE8C] border-[#E2E4E5] rounded focus:ring-[#A9BE8C] focus:ring-offset-0"
                       />
                       <label
                         htmlFor={key}
-                        className={`transition-colors text-[14px] pc:text-[16px] cursor-pointer text-nowrap hover:text-[#A9BE8C] ${
+                        className={`transition-colors text-[14px] pc:text-[20px] cursor-pointer text-nowrap hover:text-[#A9BE8C] ${
                           checkedList.includes(key)
                             ? "text-[#A9BE8C]"
                             : "text-[#656565]"
@@ -308,7 +308,7 @@ export const LawyerRegister = (): React.JSX.Element => {
               </div>
               {/* 자기소개 입력 필드 */}
               <div className="flex flex-col gap-5 pc:gap-6">
-                <label className="text-[#656565] text-[16px] pc:text-[18px] font-bold">
+                <label className="text-[#656565] text-[17px] pc:text-[20px] font-bold">
                   자기소개
                 </label>
                 <textarea
@@ -317,15 +317,15 @@ export const LawyerRegister = (): React.JSX.Element => {
                   rows={1}
                   value={description}
                   onChange={(e) => setDescription(e.target.value)}
-                  className="transition-colors bg-[#C9D8B7] rounded-md pl-[10px] pc:pl-4 text-[#5C6E56] text-[15px] pc:text-[17px] placeholder:text-[#5C6E56] placeholder:text-[15px] pc:placeholder:text-[17px] py-[10px] pc:py-4 focus:outline-none  focus:border-[#A9BE8C] border-2 border-transparent"
+                  className="transition-colors bg-[#C9D8B7] rounded-md pl-[10px] pc:pl-4 text-[#5C6E56] text-[15px] pc:text-[19px] placeholder:text-[#5C6E56] placeholder:text-[15px] pc:placeholder:text-[17px] py-[10px] pc:py-4 focus:outline-none  focus:border-[#A9BE8C] border-2 border-transparent"
                 />
               </div>
-              <span className="block text-center bg-[#F5F7F2] py-3 rounded-md text-[#A9BE8C] text-[16px] font-bold pc:text-[18px]">
+              <span className="block text-center bg-[#F5F7F2] py-3 rounded-md text-[#A9BE8C] text-[14px] font-bold pc:text-[18px]">
                 경력 및 학력은 엔터를 기준으로 나눠집니다.
               </span>
               {/* 경력 입력 필드 */}
               <div className="flex flex-col gap-5 pc:gap-6">
-                <label className="text-[#656565] text-[16px] pc:text-[18px] font-bold">
+                <label className="text-[#656565] text-[17px] pc:text-[20px] font-bold">
                   경력
                 </label>
                 <textarea
@@ -334,12 +334,12 @@ export const LawyerRegister = (): React.JSX.Element => {
                   rows={4}
                   value={career}
                   onChange={(e) => setCareer(e.target.value)}
-                  className="transition-colors bg-[#C9D8B7] rounded-md pl-[10px] pc:pl-4 text-[#5C6E56] text-[15px] pc:text-[17px] placeholder:text-[#5C6E56] placeholder:text-[15px] pc:placeholder:text-[17px] py-[10px] pc:py-4 focus:outline-none  focus:border-[#A9BE8C] border-2 border-transparent"
+                  className="transition-colors bg-[#C9D8B7] rounded-md pl-[10px] pc:pl-4 text-[#5C6E56] text-[15px] pc:text-[19px] placeholder:text-[#5C6E56] placeholder:text-[15px] pc:placeholder:text-[17px] py-[10px] pc:py-4 focus:outline-none  focus:border-[#A9BE8C] border-2 border-transparent"
                 />
               </div>
               {/* 학력 입력 필드 */}
               <div className="flex flex-col gap-5 pc:gap-6">
-                <label className="text-[#656565] text-[16px] pc:text-[18px] font-bold">
+                <label className="text-[#656565] text-[17px] pc:text-[20px] font-bold">
                   학력
                 </label>
                 <textarea
@@ -348,33 +348,33 @@ export const LawyerRegister = (): React.JSX.Element => {
                   rows={4}
                   value={education}
                   onChange={(e) => setEducation(e.target.value)}
-                  className="transition-colors bg-[#C9D8B7] rounded-md pl-[10px] pc:pl-4 text-[#5C6E56] text-[15px] pc:text-[17px] placeholder:text-[#5C6E56] placeholder:text-[15px] pc:placeholder:text-[17px] py-[10px] pc:py-4 focus:outline-none  focus:border-[#A9BE8C] border-2 border-transparent"
+                  className="transition-colors bg-[#C9D8B7] rounded-md pl-[10px] pc:pl-4 text-[#5C6E56] text-[15px] pc:text-[19px] placeholder:text-[#5C6E56] placeholder:text-[15px] pc:placeholder:text-[17px] py-[10px] pc:py-4 focus:outline-none  focus:border-[#A9BE8C] border-2 border-transparent"
                 />
               </div>
             </div>
           </div>
           <div className="flex flex-col gap-y-10">
-            <div className="bg-[#D9D9D9] rounded-md px-4 py-2 text-[18px] font-bold">
+            <div className="bg-[#D9D9D9] rounded-md px-4 py-2 text-[15px] pc:text-[16px] font-bold">
               사무실 정보
             </div>
             <div className="flex flex-col px-6 gap-y-14">
               {/* 사무실 이름 입력 필드 */}
               <div className="flex flex-col gap-5 pc:gap-6">
-                <label className="text-[#656565] text-[16px] pc:text-[18px] font-bold">
+                <label className="text-[#656565] text-[17px] pc:text-[20px] font-bold">
                   이름
                 </label>
                 <input
                   required
                   type="text"
                   placeholder="사무실 이름을 입력해주세요."
-                  className="transition-colors border-b-2 pl-[10px] pc:pl-4 text-[15px] pc:text-[17px] placeholder:text-[15px] pc:placeholder:text-[17px] border-[#E2E4E5] py-[10px] pc:py-4 focus:outline-none focus:border-[#A9BE8C] placeholder-[#E2E4E5]"
+                  className="transition-colors border-b-2 pl-[10px] pc:pl-4 text-[15px] pc:text-[19px] placeholder:text-[15px] pc:placeholder:text-[17px] border-[#E2E4E5] py-[10px] pc:py-4 focus:outline-none focus:border-[#A9BE8C] placeholder-[#E2E4E5]"
                   value={officeName}
                   onChange={(e) => setOfficeName(e.target.value)}
                 />
               </div>
               {/* 사무실 주소 입력 필드 */}
               <div className="flex flex-col gap-5 pc:gap-6">
-                <label className="text-[#656565] text-[16px] pc:text-[18px] font-bold text-nowrap">
+                <label className="text-[#656565] text-[17px] pc:text-[20px] font-bold text-nowrap">
                   주소
                 </label>
                 <div className="relative group">
@@ -396,7 +396,7 @@ export const LawyerRegister = (): React.JSX.Element => {
                     required
                     type="text"
                     placeholder="사무실 주소를 입력해주세요."
-                    className="transition-colors border-b-2 w-full pl-14 pc:pl-16 text-[15px] pc:text-[17px] placeholder:text-[15px] pc:placeholder:text-[17px] border-[#E2E4E5] py-[10px] pc:py-4 focus:outline-none focus:border-[#A9BE8C] placeholder-[#E2E4E5]"
+                    className="transition-colors border-b-2 w-full pl-14 pc:pl-16 text-[15px] pc:text-[19px] placeholder:text-[15px] pc:placeholder:text-[17px] border-[#E2E4E5] py-[10px] pc:py-4 focus:outline-none focus:border-[#A9BE8C] placeholder-[#E2E4E5]"
                     value={officeAddress}
                     onChange={(e) => setOfficeAddress(e.target.value)}
                   />
@@ -404,7 +404,7 @@ export const LawyerRegister = (): React.JSX.Element => {
               </div>
               {/* 사무실 전화번호 입력 필드 */}
               <div className="flex flex-col gap-5 pc:gap-6">
-                <label className="text-[#656565] text-[16px] pc:text-[18px] font-bold text-nowrap">
+                <label className="text-[#656565] text-[17px] pc:text-[20px] font-bold text-nowrap">
                   전화번호
                 </label>
                 <div className="relative group">
@@ -427,7 +427,7 @@ export const LawyerRegister = (): React.JSX.Element => {
                     type="text"
                     inputMode="numeric"
                     placeholder="사무실 연락처를 입력해주세요."
-                    className="transition-colors border-b-2 w-full pl-14 pc:pl-16 text-[15px] pc:text-[17px] placeholder:text-[15px] pc:placeholder:text-[17px] border-[#E2E4E5] py-[10px] pc:py-4 focus:outline-none focus:border-[#A9BE8C] placeholder-[#E2E4E5]"
+                    className="transition-colors border-b-2 w-full pl-14 pc:pl-16 text-[15px] pc:text-[19px] placeholder:text-[15px] pc:placeholder:text-[17px] border-[#E2E4E5] py-[10px] pc:py-4 focus:outline-none focus:border-[#A9BE8C] placeholder-[#E2E4E5]"
                     value={officePhone}
                     onChange={(e) => {
                       const value = e.target.value.replace(/[^0-9]/g, "");

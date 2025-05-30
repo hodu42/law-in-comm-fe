@@ -211,6 +211,8 @@ export const QuestionDetailPage = (): React.JSX.Element => {
           chatWidgetActions.setChatroomId(error.response.data.data.chatRoomId) // 이미 존재하는 채팅방 id로 설정
         );
         dispatch(chatWidgetActions.openChat());
+      } else {
+        alert("로그인시 채팅을 신청할 수 있습니다.");
       }
     }
   };
@@ -357,7 +359,7 @@ export const QuestionDetailPage = (): React.JSX.Element => {
                 key={answer.answerId}
                 className="flex flex-col gap-4 bg-white p-8 rounded-[10px] shadow-sm border-2 border-[#9CB395] mb-20"
               >
-                <div className="flex items-center gap-6 mb-4 px-4">
+                <div className="flex items-center gap-6 mb-4 pc:px-4">
                   {/* 프로필 사진 존재 할 시 프로필 사진 출력, 없을 시 기본 프로필 아이콘 출력 */}
                   <Link
                     className={
@@ -555,26 +557,28 @@ export const QuestionDetailPage = (): React.JSX.Element => {
                     </button>
                   </div>
                   {/* AI 답변이 아니고 해당 답변의 작성자가 아닐 때 */}
-                  {answer.authorId !== AI_ASSISTANT_ID && !answer.author && (
-                    <button
-                      onClick={() => handleChatRequest(answer.authorId)}
-                      className="flex items-center gap-2 bg-[#9CB395] hover:bg-[#8AA082] transition-colors p-2 rounded-[10px] text-white"
-                    >
-                      <svg
-                        className="w-6 h-6 pc:w-6 pc:h-6"
-                        fill="none"
-                        viewBox="0 0 50 50"
+                  {answer.authorId !== AI_ASSISTANT_ID &&
+                    !answer.author &&
+                    userRole && (
+                      <button
+                        onClick={() => handleChatRequest(answer.authorId)}
+                        className="flex items-center gap-2 bg-[#9CB395] hover:bg-[#8AA082] transition-colors p-2 rounded-[10px] text-white"
                       >
-                        <path
-                          fill="currentColor"
-                          d="M25 6.25c11.459 0 20.834 7.458 20.834 16.667 0 9.208-9.375 16.666-20.834 16.666-2.583 0-5.062-.375-7.354-1.041C11.563 43.75 4.167 43.75 4.167 43.75c4.854-4.854 5.625-8.125 5.73-9.375-3.543-2.98-5.73-7.02-5.73-11.458C4.167 13.708 13.542 6.25 25 6.25Z"
-                        />
-                      </svg>
-                      <span className="text-[14px] pc:text-[16px]">
-                        채팅 신청
-                      </span>
-                    </button>
-                  )}
+                        <svg
+                          className="w-6 h-6 pc:w-6 pc:h-6"
+                          fill="none"
+                          viewBox="0 0 50 50"
+                        >
+                          <path
+                            fill="currentColor"
+                            d="M25 6.25c11.459 0 20.834 7.458 20.834 16.667 0 9.208-9.375 16.666-20.834 16.666-2.583 0-5.062-.375-7.354-1.041C11.563 43.75 4.167 43.75 4.167 43.75c4.854-4.854 5.625-8.125 5.73-9.375-3.543-2.98-5.73-7.02-5.73-11.458C4.167 13.708 13.542 6.25 25 6.25Z"
+                          />
+                        </svg>
+                        <span className="text-[14px] pc:text-[16px]">
+                          채팅 신청
+                        </span>
+                      </button>
+                    )}
                 </div>
               </div>
             ))}
@@ -633,14 +637,14 @@ export const QuestionDetailPage = (): React.JSX.Element => {
                 id="content"
                 rows={8}
                 placeholder="답변을 입력하세요."
-                className="w-full px-4 py-3 text-[18px] border border-gray-300 rounded-2xl bg-white focus:outline-none focus:ring-2 focus:ring-[#9CB395]"
+                className="w-full px-4 py-3 text-[16px] pc:text-[18px] border border-gray-300 rounded-2xl bg-white focus:outline-none focus:ring-2 focus:ring-[#9CB395]"
                 value={answerContent}
                 onChange={(e) => setAnswerContent(e.target.value)}
               ></textarea>
             </div>
             <button
               type="submit"
-              className="bg-[#9CB395] hover:bg-[#8AA082] text-white text-[14px] pc:text-[16px] p-3 rounded-lg m-4"
+              className="bg-[#9CB395] hover:bg-[#8AA082] text-white font-bold pc:text-[16px] p-3 rounded-lg m-4"
             >
               답변 작성
             </button>
