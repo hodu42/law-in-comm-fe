@@ -167,11 +167,15 @@ export const LawyerMyPageModify = (): React.JSX.Element => {
                     </svg>
                   </div>
                   <input
+                    required
                     type="text"
                     placeholder="휴대폰 번호를 입력해주세요."
                     className="transition-colors border-b-2 w-full pl-14 pc:pl-16 text-[15px] pc:text-[17px] placeholder:text-[15px] pc:placeholder:text-[17px] border-[#E2E4E5] py-[10px] pc:py-4 focus:outline-none focus:border-[#A9BE8C] placeholder-[#E2E4E5]"
                     value={phoneNumber}
-                    onChange={(e) => setPhoneNumber(e.target.value)}
+                    onChange={(e) => {
+                      const value = e.target.value.replace(/[^0-9]/g, "");
+                      setPhoneNumber(value);
+                    }}
                   />
                 </div>
               </div>
@@ -218,6 +222,7 @@ export const LawyerMyPageModify = (): React.JSX.Element => {
                   자기소개
                 </label>
                 <textarea
+                  required
                   placeholder="자기소개를 입력해주세요."
                   rows={1}
                   value={description}
@@ -267,6 +272,7 @@ export const LawyerMyPageModify = (): React.JSX.Element => {
                   경력
                 </label>
                 <textarea
+                  required
                   placeholder="경력을 입력해주세요."
                   rows={4}
                   value={careers}
@@ -280,6 +286,7 @@ export const LawyerMyPageModify = (): React.JSX.Element => {
                   학력
                 </label>
                 <textarea
+                  required
                   placeholder="학력을 입력해주세요."
                   rows={4}
                   value={educations}
@@ -300,6 +307,7 @@ export const LawyerMyPageModify = (): React.JSX.Element => {
                   이름
                 </label>
                 <input
+                  required
                   type="text"
                   placeholder="사무실 이름을 입력해주세요."
                   className="transition-colors border-b-2 pl-[10px] pc:pl-4 text-[15px] pc:text-[17px] placeholder:text-[15px] pc:placeholder:text-[17px] border-[#E2E4E5] py-[10px] pc:py-4 focus:outline-none focus:border-[#A9BE8C] placeholder-[#E2E4E5]"
@@ -328,6 +336,7 @@ export const LawyerMyPageModify = (): React.JSX.Element => {
                     </svg>
                   </div>
                   <input
+                    required
                     type="text"
                     placeholder="사무실 주소를 입력해주세요."
                     className="transition-colors border-b-2 w-full pl-14 pc:pl-16 text-[15px] pc:text-[17px] placeholder:text-[15px] pc:placeholder:text-[17px] border-[#E2E4E5] py-[10px] pc:py-4 focus:outline-none focus:border-[#A9BE8C] placeholder-[#E2E4E5]"
@@ -357,11 +366,15 @@ export const LawyerMyPageModify = (): React.JSX.Element => {
                     </svg>
                   </div>
                   <input
+                    required
                     type="text"
                     placeholder="사무실 연락처를 입력해주세요."
                     className="transition-colors border-b-2 w-full pl-14 pc:pl-16 text-[15px] pc:text-[17px] placeholder:text-[15px] pc:placeholder:text-[17px] border-[#E2E4E5] py-[10px] pc:py-4 focus:outline-none focus:border-[#A9BE8C] placeholder-[#E2E4E5]"
                     value={officePhone}
-                    onChange={(e) => setOfficePhone(e.target.value)}
+                    onChange={(e) => {
+                      const value = e.target.value.replace(/[^0-9]/g, "");
+                      setOfficePhone(value);
+                    }}
                   />
                 </div>
               </div>
