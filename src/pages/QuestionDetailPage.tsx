@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import { Question } from "@/types/question";
 import { Answer } from "@/types/answer";
 import { PageResponse } from "@/types/page";
@@ -202,12 +202,14 @@ export const QuestionDetailPage = (): React.JSX.Element => {
       dispatch(chatWidgetActions.setChatroomId(response.data.chatRoomId)); // 선택된 채팅방 id 상태 설정
       dispatch(chatWidgetActions.openChat());
     } catch (error: any) {
-      console.log(error);
       if (
         error.response.status === 409 &&
-        error.response.data.code === 4090800
+        error.response.data.code === 4090803
       ) {
-        // 채팅방이 이미 존재하는 경우
+        dispatch(
+          chatWidgetActions.setChatroomId(error.response.data.data.chatRoomId) // 이미 존재하는 채팅방 id로 설정
+        );
+        dispatch(chatWidgetActions.openChat());
       }
     }
   };
@@ -356,23 +358,36 @@ export const QuestionDetailPage = (): React.JSX.Element => {
               >
                 <div className="flex items-center gap-6 mb-4 px-4">
                   {/* 프로필 사진 존재 할 시 프로필 사진 출력, 없을 시 기본 프로필 아이콘 출력 */}
-                  <div className="rounded-full flex w-16 h-16 pc:w-20 pc:h-20 overflow-hidden flex-shrink-0">
-                    {answer.profileImage ? (
-                      <img
-                        src={`${IMAGE_URL}${answer.profileImage.path}`}
-                        alt={answer.profileImage.name}
-                        className="rounded-full object-cover border-2 border-[#9CB395]"
-                      />
-                    ) : (
-                      <svg
-                        className="rounded-full text-[#9CB395]"
-                        viewBox="0 0 24 24"
-                        fill="currentColor"
-                      >
-                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z" />
-                      </svg>
-                    )}
-                  </div>
+                  <Link
+                    className={
+                      answer.authorId === AI_ASSISTANT_ID
+                        ? "pointer-events-none cursor-not-allowed"
+                        : ""
+                    }
+                    to={
+                      answer.authorId === AI_ASSISTANT_ID
+                        ? "#"
+                        : `/users/lawyer/profile/${answer.authorId}`
+                    }
+                  >
+                    <div className="rounded-full flex w-16 h-16 pc:w-20 pc:h-20 overflow-hidden flex-shrink-0">
+                      {answer.profileImage ? (
+                        <img
+                          src={`${IMAGE_URL}${answer.profileImage.path}`}
+                          alt={answer.profileImage.name}
+                          className="rounded-full object-cover border-2 border-[#9CB395]"
+                        />
+                      ) : (
+                        <svg
+                          className="rounded-full text-[#9CB395]"
+                          viewBox="0 0 24 24"
+                          fill="currentColor"
+                        >
+                          <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z" />
+                        </svg>
+                      )}
+                    </div>
+                  </Link>
                   <div className="flex flex-col w-full gap-1 justify-center">
                     <div className="flex justify-between items-center">
                       <h4 className="text-[19px] pc:text-[21px] font-bold">
@@ -538,8 +553,8 @@ export const QuestionDetailPage = (): React.JSX.Element => {
                       </svg>
                     </button>
                   </div>
-                  {/* AI 답변이 아니고 해당 질문의 작성자 일때 */}
-                  {answer.authorId !== AI_ASSISTANT_ID && question?.author && (
+                  {/* AI 답변이 아니고 해당 답변의 작성자가 아닐 때 */}
+                  {answer.authorId !== AI_ASSISTANT_ID && !answer.author && (
                     <button
                       onClick={() => handleChatRequest(answer.authorId)}
                       className="flex items-center gap-2 bg-[#9CB395] hover:bg-[#8AA082] transition-colors p-2 rounded-[10px] text-white"

@@ -1,5 +1,4 @@
 import React from "react";
-import { Logo } from "./Logo";
 import { SearchBoxPC } from "./SearchBoxPC";
 import { HeaderTags } from "./HeaderTags";
 import { Link } from "react-router-dom";
@@ -7,12 +6,12 @@ import { useAppDispatch, useAppSelector } from "@/hooks/reduxHooks";
 import { Role } from "@/types/role";
 import { useLogout } from "@/hooks/useLogout";
 import { searchActions } from "@/store/search";
+import { getCurrentUserId } from "@/hooks/tokenDecoder";
 
 export const MainHeader = (): React.JSX.Element => {
   const dispatch = useAppDispatch();
   const userRole = useAppSelector((state) => state.user.role);
-  const { handleLogout } = useLogout();
-
+  const handleLogout = useLogout();
   return (
     <div className="z-10 shadow-md pc:shadow-sm fixed flex w-full justify-center bg-white border-b-borderGray">
       <header className="flex-col min-w-[355px] max-w-[1350px] w-[70.31%] h-[72px] pc:h-[144px] bg-white justify-between items-center border-b-borderGray">
@@ -52,7 +51,7 @@ export const MainHeader = (): React.JSX.Element => {
                   to={
                     userRole === Role.USER
                       ? "/client/my-page"
-                      : "/lawyer/my-page"
+                      : `/users/lawyer/profile/${getCurrentUserId()}`
                   }
                 >
                   마이페이지

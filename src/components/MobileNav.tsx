@@ -2,6 +2,7 @@ import React from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Role } from "@/types/role";
 import { useAppSelector } from "@/hooks/reduxHooks";
+import { getCurrentUserId } from "@/hooks/tokenDecoder";
 
 export const MobileNav = (): React.JSX.Element => {
   const location = useLocation();
@@ -67,7 +68,11 @@ export const MobileNav = (): React.JSX.Element => {
         </svg>
       </Link>
       <Link
-        to={userRole === Role.USER ? "/client/my-page" : "/lawyer/my-page"}
+        to={
+          userRole === Role.USER
+            ? "/client/my-page"
+            : `/users/lawyer/profile/${getCurrentUserId()}`
+        }
         className="text-[#848484] aria-[current=page]:text-[#9CB395]"
         aria-current={
           location.pathname.includes("my-page") ? "page" : undefined

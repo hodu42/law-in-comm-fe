@@ -1,12 +1,16 @@
 import { api } from "@/api/index";
 import { ImageType } from "@/types/image";
 
-export const getLawyerMypageData = async () => {
-  return api.get<any>("users/my-page/lawyer");
+export const getLawyerMypageData = async (id: number) => {
+  return api.get<any>(`users/my-page/lawyer/${id}`);
 };
 
-export const getLawyerAnswers = async (page: number = 0, size: number = 5) => {
-  return api.get<any>(`/users/my-page/lawyer/answers`, { page, size });
+export const getLawyerAnswers = async (
+  id: number,
+  page: number = 0,
+  size: number = 5
+) => {
+  return api.get<any>(`/users/my-page/lawyer/${id}/answers`, { page, size });
 };
 
 export const updateLawyerMypageData = async (

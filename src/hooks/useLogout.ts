@@ -5,8 +5,8 @@ import { searchActions } from "@/store/search";
 import { userActions } from "@/store/user";
 
 export const useLogout = () => {
-  const navigate = useNavigation();
   const dispatch = useAppDispatch();
+  const navigate = useNavigation();
 
   const handleLogout = () => {
     clearTokens();
@@ -15,5 +15,5 @@ export const useLogout = () => {
     navigate.goToLogin();
   };
 
-  return { handleLogout };
+  return handleLogout;
 };

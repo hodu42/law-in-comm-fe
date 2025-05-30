@@ -1,8 +1,10 @@
 export interface Message {
-  id: number | string;
-  sender: "me" | "other" | "system";
-  content: string;
-  timestamp?: string;
+  messageId?: number;
+  senderId?: string;
+  senderName?: string;
+  message: string;
+  createdAt: string;
+  read?: boolean;
 }
 
 export interface ChatRoom {
@@ -15,6 +17,7 @@ export interface ChatRoom {
     size: number;
     path: string;
   };
+  lastMessage: string;
   lastMessageAt: string;
   unreadMessageCount?: number;
 }

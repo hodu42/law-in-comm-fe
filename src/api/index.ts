@@ -4,6 +4,7 @@ import { BACKEND_URL } from "@/config/Config";
 import { getTokens, updateTokens } from "./auth/token";
 import { userActions } from "@/store/user";
 import { store } from "@/store/index";
+import { useLogout } from "@/hooks/useLogout";
 
 let isRefreshing = false;
 
@@ -79,8 +80,9 @@ export class ApiClient {
             store.dispatch(userActions.login());
             return this.axiosInstance(originalRequest);
           } catch (refreshError) {
-            store.dispatch(userActions.logout());
-            window.location.href = "/login";
+            const goToLogin = useLogout();
+            goToLogin();
+            alert("로그인 상태가 만료되어 로그인 페이지로 이동합니다.");
             return Promise.reject(refreshError);
           } finally {
             isRefreshing = false;

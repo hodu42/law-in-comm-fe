@@ -19,8 +19,8 @@ export const ClientMyPage = (): React.JSX.Element => {
   const [isFirstPage, setIsFirstPage] = useState(true);
   const [isLastPage, setIsLastPage] = useState(false);
   const [currentPage, setCurrentPage] = useState(0);
-  const { handleLogout } = useLogout();
   const [clientMypageData, setClientMypageData] = useState<ClientMypageData>();
+  const handleLogout = useLogout();
 
   const loadQuestions = async (currentPage: number) => {
     const response = await fetchClientQuestionsWithAnswers(currentPage);
