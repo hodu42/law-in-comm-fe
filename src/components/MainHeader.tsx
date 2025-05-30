@@ -47,7 +47,7 @@ export const MainHeader = (): React.JSX.Element => {
             <div className="flex gap-x-5">
               {userRole !== Role.ADMIN && (
                 <Link
-                  className="whitespace-nowrap font-NotoSansKR font-normal text-16px hover:underline hover:text-[#9CB395] transition-colors"
+                  className="whitespace-nowrap font-NotoSansKR font-normal text-[14px] pc:text-[16px] hover:underline hover:text-[#9CB395] transition-colors"
                   to={
                     userRole === Role.USER
                       ? "/client/my-page"
@@ -58,7 +58,7 @@ export const MainHeader = (): React.JSX.Element => {
                 </Link>
               )}
               <button
-                className="whitespace-nowrap font-NotoSansKR font-normal text-16px hover:underline hover:text-[#9CB395] transition-colors"
+                className="whitespace-nowrap font-NotoSansKR font-normal text-[14px] pc:text-[16px] hover:underline hover:text-[#9CB395] transition-colors"
                 onClick={handleLogout}
               >
                 로그아웃
@@ -66,7 +66,7 @@ export const MainHeader = (): React.JSX.Element => {
             </div>
           ) : (
             <Link
-              className="whitespace-nowrap font-NotoSansKR font-normal text-16px underline"
+              className="whitespace-nowrap font-NotoSansKR font-normal text-[16px] underline"
               to="/login"
             >
               로그인 / 회원가입
