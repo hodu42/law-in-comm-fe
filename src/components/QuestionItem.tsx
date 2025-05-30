@@ -4,6 +4,7 @@ import { LegalSpecialityLabels } from "@/types/speciality";
 import { Question } from "@/types/question";
 import { Answer } from "@/types/answer";
 import { formatDate } from "@/utils/dateFormat";
+import { AI_ASSISTANT_ID } from "@/config/Config";
 
 export const QuestionItem: React.FC<{
   question: Question;
@@ -41,7 +42,9 @@ export const QuestionItem: React.FC<{
               <span className="mr-1 text-[0.81rem] pc:text-[1rem] text-[#5C6E56] font-bold">
                 답변
               </span>{" "}
-              {answers[0].authorName}
+              {`${answers[0].authorName} ${
+                answers[0].authorId === AI_ASSISTANT_ID ? "" : "변호사"
+              }`}
             </div>
             <p className="text-[0.81rem] pc:text-[1.06rem] text-[#848484] line-clamp-2 mb-2">
               {answers[0].content}
