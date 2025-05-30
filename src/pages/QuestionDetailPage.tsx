@@ -172,6 +172,7 @@ export const QuestionDetailPage = (): React.JSX.Element => {
     try {
       e.preventDefault();
       await createAnswer(String(questionId), answerContent);
+      window.location.reload();
     } catch (error: any) {
       console.error(error);
     }
