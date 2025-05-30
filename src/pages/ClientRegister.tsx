@@ -43,7 +43,7 @@ export const ClientRegister = (): React.JSX.Element => {
         name: name,
         nickname: nickname,
         password: password,
-        birth: birthDate,
+        birthDate: birthDate,
       };
       await registerGeneral(userData);
       alert("회원가입이 완료되었습니다.");

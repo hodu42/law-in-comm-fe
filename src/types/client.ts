@@ -3,7 +3,7 @@ export interface ClientData {
   name: string;
   nickname: string;
   password: string;
-  birth: string;
+  birthDate: string;
 }
 
 export type ClientMypageData = Omit<ClientData, "username" | "password">;

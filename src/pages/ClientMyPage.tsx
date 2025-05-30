@@ -114,7 +114,7 @@ export const ClientMyPage = (): React.JSX.Element => {
                   생년월일
                 </div>
                 <div className="text-[14px] pc:text-[17px] ml-2 pc:ml-5 break-all">
-                  {clientMypageData?.birth}
+                  {clientMypageData?.birthDate}
                 </div>
               </div>
             </div>
