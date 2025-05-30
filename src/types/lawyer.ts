@@ -15,11 +15,7 @@ export interface RegisterLawyerInfo {
   description: string;
 }
 
-export type LawyerInfo = Omit<
-  RegisterLawyerInfo,
-  "username" | "password" | "birthDate"
-> & {
-  birth: string;
+export type LawyerInfo = Omit<RegisterLawyerInfo, "username" | "password"> & {
   profileImage: {
     id: number;
     name: string;

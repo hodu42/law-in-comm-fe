@@ -149,7 +149,9 @@ export const LawyerMyPage = (): React.JSX.Element => {
                           fill="currentColor"
                         />
                       </svg>
-                      <span className="text-[#555]">{lawyerData?.birth}</span>
+                      <span className="text-[#555]">
+                        {lawyerData?.birthDate}
+                      </span>
                     </div>
                     <div className="flex items-center gap-2">
                       <svg
