@@ -458,7 +458,7 @@ export const QuestionDetailPage = (): React.JSX.Element => {
                     id="content"
                     rows={4}
                     placeholder="내용을 입력하세요."
-                    className="w-full px-4 py-3 text-[18px] border border-gray-300 rounded-2xl bg-white focus:outline-none focus:ring-2 focus:ring-[#9CB395]"
+                    className="w-full px-4 py-3 text-[16px] pc:text-[18px] border border-gray-300 rounded-2xl bg-white focus:outline-none focus:ring-2 focus:ring-[#9CB395]"
                     value={editedAnswer || ""}
                     onChange={(e) => setEditedAnswer(e.target.value)}
                   ></textarea>
@@ -518,13 +518,13 @@ export const QuestionDetailPage = (): React.JSX.Element => {
                 {answer.answerId === editingAnswerId && (
                   <div className="flex justify-end gap-2 mt-3 mb-9">
                     <button
-                      className="px-4 py-2 text-gray-600 bg-gray-100 hover:bg-[#e5e7eb] rounded"
+                      className="px-4 py-2 text-sm pc:text-base text-gray-600 bg-gray-100 hover:bg-[#e5e7eb] rounded"
                       onClick={cancelEdit}
                     >
                       취소
                     </button>
                     <button
-                      className="px-4 py-2 bg-[#9CB395] text-white rounded hover:bg-[#8AA082]"
+                      className="px-4 py-2 text-sm pc:text-base bg-[#9CB395] text-white rounded hover:bg-[#8AA082]"
                       onClick={handleAnswerEdit}
                     >
                       수정
@@ -589,7 +589,7 @@ export const QuestionDetailPage = (): React.JSX.Element => {
             <button
               onClick={() => setCurrentPage(Math.max(0, currentPage - 1))}
               disabled={isFirstPage}
-              className="px-3 py-1 rounded text-gray-700 hover:bg-[#C9D8B7] disabled:opacity-50 disabled:cursor-not-allowed"
+              className="px-3 py-1 rounded text-sm pc:text-base text-gray-700 hover:bg-[#C9D8B7] disabled:opacity-50 disabled:cursor-not-allowed"
             >
               &lt;
             </button>
@@ -598,7 +598,7 @@ export const QuestionDetailPage = (): React.JSX.Element => {
                 <button
                   key={pageNum}
                   onClick={() => setCurrentPage(pageNum)}
-                  className={`px-3 py-1 rounded ${
+                  className={`px-3 py-1 rounded text-sm pc:text-base ${
                     pageNum === currentPage
                       ? "bg-[#C9D8B7] text-gray-700"
                       : "text-gray-700 hover:bg-[#C9D8B7]"
@@ -613,7 +613,7 @@ export const QuestionDetailPage = (): React.JSX.Element => {
                 setCurrentPage(Math.min(totalPages - 1, currentPage + 1))
               }
               disabled={isLastPage}
-              className="px-3 py-1 rounded text-gray-700 hover:bg-[#C9D8B7] disabled:opacity-50 disabled:cursor-not-allowed"
+              className="px-3 py-1 rounded text-sm pc:text-base text-gray-700 hover:bg-[#C9D8B7] disabled:opacity-50 disabled:cursor-not-allowed"
             >
               &gt;
             </button>
