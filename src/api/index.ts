@@ -83,7 +83,7 @@ export class ApiClient {
           } catch (refreshError) {
             clearTokens();
             store.dispatch(searchActions.setKeyword(""));
-            store.dispatch(userActions.logout()); // Redux 스토어의 사용자 상태 업데이트
+            store.dispatch(userActions.logout());
             alert("로그인 상태가 만료되어 로그인 페이지로 이동합니다.");
             window.location.href = "/login";
           } finally {

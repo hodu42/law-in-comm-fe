@@ -72,9 +72,9 @@ export const MobileNav = (): React.JSX.Element => {
       </Link>
       <Link
         to={
-          userRole === Role.USER
-            ? "/client/my-page"
-            : `/users/lawyer/profile/${getCurrentUserId()}`
+          userRole === Role.LAWYER
+            ? `/users/lawyer/profile/${getCurrentUserId()}`
+            : "/client/my-page"
         }
         className="flex flex-col items-center gap-1 text-[#848484] aria-[current=page]:text-[#9CB395]"
         aria-current={
