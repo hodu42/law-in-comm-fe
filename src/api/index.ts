@@ -3,8 +3,9 @@ import axios, { AxiosInstance, AxiosRequestConfig } from "axios";
 import { BACKEND_URL } from "@/config/Config";
 import { getTokens, updateTokens } from "./auth/token";
 import { userActions } from "@/store/user";
+import { searchActions } from "@/store/search";
 import { store } from "@/store/index";
-import { useLogout } from "@/hooks/useLogout";
+import { clearTokens } from "./auth/token";
 
 let isRefreshing = false;
 
@@ -80,10 +81,11 @@ export class ApiClient {
             store.dispatch(userActions.login());
             return this.axiosInstance(originalRequest);
           } catch (refreshError) {
-            const goToLogin = useLogout();
-            goToLogin();
+            clearTokens();
+            store.dispatch(searchActions.setKeyword(""));
+            store.dispatch(userActions.logout()); // Redux 스토어의 사용자 상태 업데이트
             alert("로그인 상태가 만료되어 로그인 페이지로 이동합니다.");
-            return Promise.reject(refreshError);
+            window.location.href = "/login";
           } finally {
             isRefreshing = false;
           }
