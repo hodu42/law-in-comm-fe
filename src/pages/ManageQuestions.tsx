@@ -147,8 +147,10 @@ export const ManageQuestions = (): React.JSX.Element => {
         reportedQuestions.content.map((question) => (
           <article
             key={question.questionId}
-            className={`bg-white my-4 rounded-[10px] shadow-sm transition-colors ${
-              selectedQuestions.has(question.questionId) ? "bg-green-50" : ""
+            className={`my-4 rounded-[10px] shadow-sm transition-colors ${
+              selectedQuestions.has(question.questionId)
+                ? "bg-green-50"
+                : "bg-white"
             }`}
           >
             <div className="flex items-start p-4">

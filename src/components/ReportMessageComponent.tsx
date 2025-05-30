@@ -2,12 +2,17 @@ import { useState, useEffect } from "react";
 import { PageResponse } from "@/types/page";
 import { AnswerReportMessage } from "@/types/report";
 import { formatDate } from "@/utils/dateFormat";
-import { getReportedQuestionsMessages } from "@/api/users/admin";
+import {
+  getReportedAnswersMessages,
+  getReportedQuestionsMessages,
+} from "@/api/users/admin";
 
 export const ReportMessageComponent = ({
   questionId,
+  answerId,
 }: {
-  questionId: number;
+  questionId?: number;
+  answerId?: number;
 }) => {
   const [reportMessages, setReportMessages] =
     useState<PageResponse<AnswerReportMessage>>();
@@ -21,14 +26,33 @@ export const ReportMessageComponent = ({
   };
 
   const loadReportMessages = async () => {
-    const response = await getReportedQuestionsMessages(
-      questionId,
-      currentPage
-    );
-    setReportMessages(response.data);
-    setTotalPages(response.data.totalPages);
-    setIsFirstPage(response.data.first);
-    setIsLastPage(response.data.last);
+    if (questionId) {
+      try {
+        const response = await getReportedQuestionsMessages(
+          questionId,
+          currentPage
+        );
+        setReportMessages(response.data);
+        setTotalPages(response.data.totalPages);
+        setIsFirstPage(response.data.first);
+        setIsLastPage(response.data.last);
+      } catch (error) {
+        console.error(error);
+      }
+    } else if (answerId) {
+      try {
+        const response = await getReportedAnswersMessages(
+          answerId,
+          currentPage
+        );
+        setReportMessages(response.data);
+        setTotalPages(response.data.totalPages);
+        setIsFirstPage(response.data.first);
+        setIsLastPage(response.data.last);
+      } catch (error) {
+        console.error(error);
+      }
+    }
   };
 
   useEffect(() => {

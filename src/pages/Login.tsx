@@ -69,13 +69,13 @@ export const Login = (): React.JSX.Element => {
         >
           {/* 아이디 입력 필드 */}
           <div className="flex flex-col gap-5 pc:gap-6">
-            <label className="text-[#656565] text-[20px] font-bold">
+            <label className="text-[#656565] text-[18px] pc:text-[20px] font-bold">
               아이디
             </label>
             <input
               type="text"
               placeholder="아이디를 입력해주세요."
-              className="font-NotoSansKR border-b-2 pl-[10px] pc:pl-4 placeholder:text-[15px] text-[18px] pc:placeholder:text-[19px] pc:text-[19px] border-[#E2E4E5] py-[10px] pc:py-4 focus:outline-none focus:border-[#A9BE8C] placeholder-[#E2E4E5]"
+              className="font-NotoSansKR border-b-2 pl-[10px] pc:pl-4 text-[15px] pc:text-[19px] border-[#E2E4E5] py-[10px] pc:py-4 focus:outline-none focus:border-[#A9BE8C] placeholder-[#E2E4E5]"
               value={userId}
               onChange={(e) => setUserId(e.target.value)}
             />
@@ -83,13 +83,13 @@ export const Login = (): React.JSX.Element => {
 
           {/* 비밀번호 입력 필드 */}
           <div className="relative flex flex-col gap-5 pc:gap-6">
-            <label className="text-[#656565] text-[20px] font-bold">
+            <label className="text-[#656565] text-[18px] pc:text-[20px] font-bold">
               비밀번호
             </label>
             <input
               type="password"
               placeholder="비밀번호를 입력해주세요."
-              className="font-NotoSansKR border-b-2 pl-[10px] pc:pl-4 placeholder:text-[15px] text-[18px] pc:placeholder:text-[19px] pc:text-[19px] border-[#E2E4E5] py-[10px] pc:py-4 focus:outline-none focus:border-[#A9BE8C] placeholder-[#E2E4E5]"
+              className="font-NotoSansKR border-b-2 pl-[10px] pc:pl-4 text-[15px] pc:text-[19px] border-[#E2E4E5] py-[10px] pc:py-4 focus:outline-none focus:border-[#A9BE8C] placeholder-[#E2E4E5]"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             />

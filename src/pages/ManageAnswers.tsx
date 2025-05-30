@@ -7,6 +7,7 @@ import { IMAGE_URL } from "@/config/Config";
 import ReactMarkdown from "react-markdown";
 import { Answer } from "@/types/answer";
 import { AI_ASSISTANT_ID } from "@/config/Config";
+import { ReportMessageComponent } from "@/components/ReportMessageComponent";
 
 export const ManageAnswers = (): React.JSX.Element => {
   const [threshold, setThreshold] = useState<number>(1);
@@ -145,8 +146,8 @@ export const ManageAnswers = (): React.JSX.Element => {
         reportedAnswers.content.map((answer) => (
           <div
             key={answer.answerId}
-            className={`bg-white my-4 rounded-[10px] shadow-sm transition-colors ${
-              selectedAnswers.has(answer.answerId) ? "bg-green-50" : ""
+            className={`my-4 rounded-[10px] shadow-sm transition-colors ${
+              selectedAnswers.has(answer.answerId) ? "bg-green-50" : "bg-white"
             }`}
           >
             <div className="flex items-start p-4">
@@ -264,6 +265,10 @@ export const ManageAnswers = (): React.JSX.Element => {
                 </div>
               </div>
             </div>
+            {/* 신고 사유 영역 */}
+            {answer.reportCount > 0 && (
+              <ReportMessageComponent answerId={answer.answerId} />
+            )}
           </div>
         ))}
       {/* 질문 페이지네이션 */}
