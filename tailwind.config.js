@@ -39,7 +39,7 @@ const config = {
       NotoSansKR: ["NotoSansKR"],
     },
     screens: {
-      pc: "960px",
+      pc: "768px",
     },
   },
   plugins: [require("@tailwindcss/typography")],

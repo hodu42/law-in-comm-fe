@@ -337,7 +337,7 @@ export const LawyerRegister = (): React.JSX.Element => {
                       />
                       <label
                         htmlFor={key}
-                        className={`transition-colors text-[14px] pc:text-[20px] cursor-pointer text-nowrap hover:text-[#A9BE8C] ${
+                        className={`transition-colors text-[14px] pc:text-[16px] cursor-pointer text-nowrap hover:text-[#A9BE8C] ${
                           checkedList.includes(key)
                             ? "text-[#A9BE8C]"
                             : "text-[#656565]"
