@@ -14,7 +14,7 @@ export const MainHeader = (): React.JSX.Element => {
   const handleLogout = useLogout();
   return (
     <div className="z-10 shadow-md pc:shadow-sm fixed flex w-full justify-center bg-white border-b-borderGray">
-      <header className="flex-col min-w-[355px] max-w-[1350px] w-[70.31%] h-[72px] pc:h-[144px] bg-white justify-between items-center border-b-borderGray">
+      <header className="flex-col max-w-[1350px] w-[70.31%] h-[72px] pc:h-[144px] bg-white justify-between items-center border-b-borderGray">
         <div className="flex w-full h-4.5 items-center">
           <div className="flex w-full">
             <Link

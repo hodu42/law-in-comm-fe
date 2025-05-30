@@ -620,7 +620,7 @@ export const QuestionDetailPage = (): React.JSX.Element => {
             onSubmit={(e: React.FormEvent<HTMLFormElement>) =>
               handleAnswerSubmit(e)
             }
-            className="flex flex-col max-w-3xl mx-auto mt-9 justify-end border-t-[1px] py-10 border-[#CFCFCF]"
+            className="flex flex-col max-w-3xl mx-auto mt-9 mb-9 justify-end border-t-[1px] py-10 border-[#CFCFCF]"
           >
             <div className="mb-6">
               <label
