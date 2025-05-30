@@ -241,7 +241,7 @@ export const LawyerMyPageModify = (): React.JSX.Element => {
                         id={key}
                         checked={checkedList.includes(key)}
                         onChange={(e) => checkHandler(e, key)}
-                        className="transition-colors w-4 h-4 text-[#A9BE8C] border-[#E2E4E5] rounded focus:ring-[#A9BE8C] focus:ring-offset-0"
+                        className="transition-colors w-4 h-4 text-[#A9BE8C] border-[#E2E4E5] rounded focus:ring-[#A9BE8C] focus:ring-offset-0 flex-shrink-0"
                       />
                       <label
                         htmlFor={key}
