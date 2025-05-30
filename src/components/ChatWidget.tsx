@@ -101,7 +101,7 @@ const ChatWidget: React.FC = () => {
 
   const getChatRoomList = async () => {
     const response = await getChatRooms();
-    console.log("채팅방 목록 response : ", response);
+    console.log("API 채팅방 목록 response : ", response);
     setChatRooms(response.data);
   };
 
@@ -172,7 +172,7 @@ const ChatWidget: React.FC = () => {
         onConnect: () => {
           client.subscribe(`/sub/chatRoomList/${username}`, (message) => {
             const receivedMessage = JSON.parse(message.body);
-            console.log("채팅방 목록 receivedMessage : ", receivedMessage);
+            console.log("채팅방 목록 구독 receivedMessage : ", receivedMessage);
             setChatRooms(receivedMessage);
           });
         },
