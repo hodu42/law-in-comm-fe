@@ -44,7 +44,7 @@ export const QuestionWrite = (): React.JSX.Element => {
           <div className="relative w-full min-w-[355px] max-w-[1350px] pc:w-[70.31%] h-full flex items-center">
             <Logo />
           </div>
-          <div className="absolute left-1/2 -translate-x-1/2 text-[21px] font-bold">
+          <div className="absolute left-1/2 -translate-x-1/2 text-[19px] pc:text-[21px] font-bold">
             질문 작성
           </div>
           {/* PC 등록하기 버튼 */}
@@ -85,7 +85,7 @@ export const QuestionWrite = (): React.JSX.Element => {
           <div className="mb-6">
             <label
               htmlFor="title"
-              className="block text-[20px] font-medium mb-2"
+              className="block text-[18px] pc:text-[20px] font-medium mb-2"
             >
               제목
             </label>
@@ -95,14 +95,14 @@ export const QuestionWrite = (): React.JSX.Element => {
               value={title}
               onChange={(e) => setTitle(e.target.value)}
               placeholder="제목을 입력하세요."
-              className="w-full px-4 py-3 border border-gray-300 rounded-2xl focus:outline-none focus:ring-2 focus:ring-[#9CB395] placeholder:text-[18px] text-[18px] transition-colors"
+              className="w-full px-4 py-3 border border-gray-300 rounded-2xl focus:outline-none focus:ring-2 focus:ring-[#9CB395] text-[16px] pc:text-[18px] transition-colors"
             />
           </div>
 
           <div className="mb-6">
             <label
               htmlFor="category"
-              className="block text-[20px] font-medium mb-2"
+              className="block text-[18px] pc:text-[20px] font-medium mb-2"
             >
               분야
             </label>
@@ -111,7 +111,7 @@ export const QuestionWrite = (): React.JSX.Element => {
                 id="category"
                 value={legalSpeciality}
                 onChange={(e) => setLegalSpeciality(e.target.value)}
-                className="appearance-none w-full px-4 py-3 text-[18px] border border-gray-300 rounded-2xl bg-white focus:outline-none focus:ring-2 focus:ring-[#9CB395] transition-colors"
+                className="appearance-none w-full px-4 py-3 text-[16px] pc:text-[18px] border border-gray-300 rounded-2xl bg-white focus:outline-none focus:ring-2 focus:ring-[#9CB395] transition-colors"
               >
                 {Object.entries(LegalSpecialityLabels).map(([key, label]) => (
                   <option key={key} value={key}>
@@ -139,7 +139,7 @@ export const QuestionWrite = (): React.JSX.Element => {
           <div className="mb-6">
             <label
               htmlFor="eventDate"
-              className="block text-[20px] font-medium mb-2"
+              className="block text-[18px] pc:text-[20px] font-medium mb-2"
             >
               최초 사건 발생일자
             </label>
@@ -150,7 +150,7 @@ export const QuestionWrite = (): React.JSX.Element => {
                 ref={dateInputRef}
                 value={occurenceDate}
                 onChange={(e) => setEventDate(e.target.value)}
-                className="w-full px-4 py-3 text-[18px] border border-gray-300 rounded-2xl bg-white focus:outline-none focus:ring-2 focus:ring-[#9CB395] cursor-pointer transition-colors"
+                className="w-full px-4 py-3 text-[16px] pc:text-[18px] border border-gray-300 rounded-2xl bg-white focus:outline-none focus:ring-2 focus:ring-[#9CB395] cursor-pointer transition-colors"
                 onClick={() => dateInputRef.current?.showPicker()}
               />
             </div>
@@ -159,7 +159,7 @@ export const QuestionWrite = (): React.JSX.Element => {
           <div className="mb-6">
             <label
               htmlFor="content"
-              className="block text-[20px] font-medium mb-2"
+              className="block text-[18px] pc:text-[20px] font-medium mb-2"
             >
               내용
             </label>
@@ -167,14 +167,17 @@ export const QuestionWrite = (): React.JSX.Element => {
               id="content"
               rows={8}
               placeholder="내용을 입력하세요."
-              className="w-full px-4 py-3 text-[18px] border border-gray-300 rounded-2xl bg-white focus:outline-none focus:ring-2 focus:ring-[#9CB395] transition-colors"
+              className="w-full px-4 py-3 text-[16px] pc:text-[18px] border border-gray-300 rounded-2xl bg-white focus:outline-none focus:ring-2 focus:ring-[#9CB395] transition-colors"
               value={content}
               onChange={(e) => setContent(e.target.value)}
             ></textarea>
           </div>
 
           <div className="flex justify-start items-center mb-6">
-            <label htmlFor="anonymous" className="mr-2 text-[18px]">
+            <label
+              htmlFor="anonymous"
+              className="mr-2 text-[16px] pc:text-[18px]"
+            >
               익명으로 작성
             </label>
             <input
@@ -182,7 +185,7 @@ export const QuestionWrite = (): React.JSX.Element => {
               id="anonymous"
               checked={isAnonymous}
               onChange={() => setIsAnonymous(!isAnonymous)}
-              className="w-5 h-5 accent-[#9CB395]"
+              className="w-4 h-4 pc:w-5 pc:h-5 accent-[#9CB395]"
             />
           </div>
         </form>

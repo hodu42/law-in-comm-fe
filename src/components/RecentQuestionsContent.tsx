@@ -19,7 +19,7 @@ export const RecentQuestionsContent = ({
   return (
     <Link
       to={`/question/${questionId}`}
-      className="block w-[350px] min-h-[250px] pc:w-[848px] pc:h-[396px] bg-white hover:bg-[#F5F5F5] rounded-[10px] mx-auto p-[20px] pc:p-[30px] border-2 border-[#5C6E56] transition-all relative"
+      className="block w-full min-h-[250px] pc:max-w-[848px] pc:h-[396px] bg-white hover:bg-[#F5F5F5] rounded-[10px] mx-auto p-[20px] pc:p-[30px] border-2 border-[#5C6E56] transition-all relative"
     >
       <div className="flex flex-col gap-[15px] h-full">
         <div className="flex items-center justify-between text-sm px-2">

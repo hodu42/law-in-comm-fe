@@ -51,7 +51,7 @@ export const Login = (): React.JSX.Element => {
           <Logo />
           <div className="flex items-center justify-between w-full">
             {/* 타이틀 */}
-            <div className="absolute left-1/2 -translate-x-1/2 text-[21px] font-bold">
+            <div className="absolute left-1/2 -translate-x-1/2 text-[19px] pc:text-[21px] font-bold">
               로그인
             </div>
 
@@ -69,7 +69,7 @@ export const Login = (): React.JSX.Element => {
         >
           {/* 아이디 입력 필드 */}
           <div className="flex flex-col gap-5 pc:gap-6">
-            <label className="text-[#656565] text-[18px] pc:text-[20px] font-bold">
+            <label className="text-[#656565] text-[17px] pc:text-[20px] font-bold">
               아이디
             </label>
             <input
@@ -83,7 +83,7 @@ export const Login = (): React.JSX.Element => {
 
           {/* 비밀번호 입력 필드 */}
           <div className="relative flex flex-col gap-5 pc:gap-6">
-            <label className="text-[#656565] text-[18px] pc:text-[20px] font-bold">
+            <label className="text-[#656565] text-[17px] pc:text-[20px] font-bold">
               비밀번호
             </label>
             <input
@@ -103,7 +103,7 @@ export const Login = (): React.JSX.Element => {
           {/* 로그인 버튼 */}
           <button
             type="submit"
-            className="inline-block bg-[#CBD8B7] text-black font-bold text-[20px] py-3 rounded-md hover:bg-[#A9BE8C] transition-colors"
+            className="inline-block bg-[#CBD8B7] text-black font-bold text-[16px] pc:text-[20px] py-3 rounded-md hover:bg-[#A9BE8C] transition-colors"
           >
             로그인
           </button>

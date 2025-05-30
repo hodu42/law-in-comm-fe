@@ -11,13 +11,13 @@ export const MobileNav = (): React.JSX.Element => {
     <nav className="fixed bottom-0 flex justify-between items-center pc:hidden w-full h-[80px] px-[30px] border-t border-t-[#CFCFCF] bg-white">
       <Link
         to="/main"
-        className="text-[#848484] aria-[current=page]:text-[#9CB395]"
+        className="flex flex-col items-center gap-1 text-[#848484] aria-[current=page]:text-[#9CB395]"
         aria-current={location.pathname === "/main" ? "page" : undefined}
       >
         <svg
-          className="text-current"
-          width="48"
-          height="48"
+          className="text-current w-9 h-9"
+          width="100%"
+          height="100%"
           viewBox="0 0 48 48"
         >
           <path
@@ -25,18 +25,19 @@ export const MobileNav = (): React.JSX.Element => {
             fill="currentColor"
           />
         </svg>
+        <span className="whitespace-nowrap text-xs">홈</span>
       </Link>
       <Link
         to="/questions?keyword=&category=&page=0"
-        className="text-[#848484] aria-[current=page]:text-[#9CB395]"
+        className="flex flex-col items-center gap-1 text-[#848484] aria-[current=page]:text-[#9CB395]"
         aria-current={
           location.pathname.includes("/questions") ? "page" : undefined
         }
       >
         <svg
-          className="text-current"
-          width="48"
-          height="48"
+          className="text-current w-9 h-9"
+          width="100%"
+          height="100%"
           viewBox="0 0 49 48"
         >
           <path
@@ -44,10 +45,11 @@ export const MobileNav = (): React.JSX.Element => {
             fill="currentColor"
           />
         </svg>
+        <span className="whitespace-nowrap text-xs">검색</span>
       </Link>
       <Link
         to="/question/write"
-        className="text-[#848484] aria-[current=page]:text-[#9CB395]"
+        className="flex flex-col items-center gap-1 text-[#848484] aria-[current=page]:text-[#9CB395]"
         aria-current={
           location.pathname === "/question/write" ||
           location.pathname.includes("question/modify")
@@ -56,9 +58,9 @@ export const MobileNav = (): React.JSX.Element => {
         }
       >
         <svg
-          className="text-current"
-          width="48"
-          height="48"
+          className="text-current w-9 h-9"
+          width="100%"
+          height="100%"
           viewBox="0 0 49 48"
         >
           <path
@@ -66,6 +68,7 @@ export const MobileNav = (): React.JSX.Element => {
             fill="currentColor"
           />
         </svg>
+        <span className="whitespace-nowrap text-xs">글 작성</span>
       </Link>
       <Link
         to={
@@ -73,15 +76,15 @@ export const MobileNav = (): React.JSX.Element => {
             ? "/client/my-page"
             : `/users/lawyer/profile/${getCurrentUserId()}`
         }
-        className="text-[#848484] aria-[current=page]:text-[#9CB395]"
+        className="flex flex-col items-center gap-1 text-[#848484] aria-[current=page]:text-[#9CB395]"
         aria-current={
           location.pathname.includes("my-page") ? "page" : undefined
         }
       >
         <svg
-          className="text-current"
-          width="48"
-          height="48"
+          className="text-current w-9 h-9"
+          width="100%"
+          height="100%"
           viewBox="0 0 48 48"
         >
           <path
@@ -89,6 +92,7 @@ export const MobileNav = (): React.JSX.Element => {
             fill="currentColor"
           />
         </svg>
+        <span className="whitespace-nowrap text-xs">마이페이지</span>
       </Link>
     </nav>
   );

@@ -66,7 +66,7 @@ export const MainHeader = (): React.JSX.Element => {
             </div>
           ) : (
             <Link
-              className="whitespace-nowrap font-NotoSansKR font-normal text-[16px] underline"
+              className="whitespace-nowrap font-NotoSansKR font-normal text-[14px] pc:text-[16px] underline"
               to="/login"
             >
               로그인 / 회원가입

@@ -32,7 +32,7 @@ export const MobileSearch = (): React.JSX.Element => {
         />
       </svg>
       <input
-        className=" flex w-[100%] h-11 pr-3.5 pl-[61px] rounded-10px placeholder:text-[#E2E4E5] border-2 border-transparent focus:border-[#9CB395] focus:outline-none"
+        className=" flex w-[100%] text-sm pc:text-base h-11 pr-3.5 pl-[61px] rounded-10px placeholder:text-[#E2E4E5] border-2 border-transparent focus:border-[#9CB395] focus:outline-none"
         type="search"
         value={keyword}
         onChange={(e) => setKeyword(e.target.value)}

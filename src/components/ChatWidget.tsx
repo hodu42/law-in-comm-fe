@@ -163,25 +163,33 @@ const ChatWidget: React.FC = () => {
         tokenType: localStorage.getItem("tokenType") || "",
         tokenHeader: localStorage.getItem("tokenHeader") || "",
       };
-      const client = new Client({
-        webSocketFactory: () => new SockJS(WEBSOCKET_URL),
-        reconnectDelay: 5000,
-        connectHeaders: {
-          [token.tokenHeader]: `${token.tokenType}${token.accessToken}`,
-        },
-        onConnect: () => {
-          client.subscribe(`/sub/chatRoomList/${username}`, (message) => {
-            const receivedMessage = JSON.parse(message.body);
-            console.log("채팅방 목록 구독 receivedMessage : ", receivedMessage);
-            setChatRooms(receivedMessage);
-          });
-        },
-        onStompError: (frame) => {
-          console.error("STOMP ERROR: ", frame.headers.message);
-        },
-      });
-      clientRef.current = client;
-      client.activate();
+      try {
+        const client = new Client({
+          webSocketFactory: () => new SockJS(WEBSOCKET_URL),
+          reconnectDelay: 5000,
+          connectHeaders: {
+            [token.tokenHeader]: `${token.tokenType}${token.accessToken}`,
+          },
+          onConnect: () => {
+            client.subscribe(`/sub/chatRoomList/${username}`, (message) => {
+              const receivedMessage = JSON.parse(message.body);
+              console.log(
+                "채팅방 목록 구독 receivedMessage : ",
+                receivedMessage
+              );
+              setChatRooms(receivedMessage);
+            });
+          },
+          onStompError: (frame) => {
+            console.error("STOMP ERROR: ", frame.headers.message);
+          },
+        });
+        clientRef.current = client;
+        client.activate();
+      } catch (error) {
+        disconnectStomp();
+        console.error(error);
+      }
     };
 
     if (userRole) {
@@ -291,7 +299,7 @@ const ChatWidget: React.FC = () => {
         <button
           onClick={toggleChat}
           aria-label="채팅 열기"
-          className="fixed bottom-28 pc:bottom-10 right-5 pc:right-10 z-[10000] bg-[#C9D8B7] hover:bg-[#7D9277] text-gray-800 pc:text-black font-semibold py-3 px-5 rounded-full shadow-lg flex items-center gap-2 cursor-pointer transition-all duration-200 ease-in-out hover:scale-105"
+          className="fixed bottom-40 pc:bottom-10 right-5 pc:right-10 z-[10000] bg-[#C9D8B7] hover:bg-[#7D9277] text-gray-800 pc:text-black font-semibold py-3 px-5 rounded-full shadow-lg flex items-center gap-2 cursor-pointer transition-all duration-200 ease-in-out hover:scale-105"
         >
           <span role="img" aria-label="chat">
             💬
@@ -384,10 +392,10 @@ const ChatWidget: React.FC = () => {
                     ) : null;
                     // 프로필 이미지 JSX (상대방 메시지일 경우에만), 없을시 기본 프로필 아이콘 출력
                     const profileImage = !isMe ? (
-                      <div className="w-12 h-12 object-cover rounded-full">
+                      <div className="rounded-full w-12 h-12 overflow-hidden shrink-0">
                         {activeChatRoom?.otherMemberProfileImage?.path ? (
                           <img
-                            className="w-12 h-12 object-cover rounded-full shrink-0" // 크기 조정 및 shrink-0 추가
+                            className="w-full h-full object-cover" // 크기 조정 및 shrink-0 추가
                             src={
                               IMAGE_URL +
                               activeChatRoom.otherMemberProfileImage.path
@@ -475,16 +483,16 @@ const ChatWidget: React.FC = () => {
                         )
                       }
                     >
-                      <div className="w-12 h-12 object-cover rounded-full">
+                      <div className="w-12 h-12 flex rounded-full overflow-hidden flex-shrink-0">
                         {room.otherMemberProfileImage?.path ? (
                           <img
-                            className="rounded-full"
+                            className="rounded-full object-cover"
                             src={IMAGE_URL + room.otherMemberProfileImage.path}
                             alt={room.otherMemberProfileImage.name}
                           />
                         ) : (
                           <svg
-                            className="rounded-full text-[#9CB395]"
+                            className="w-full h-full rounded-full text-[#9CB395]"
                             viewBox="0 0 24 24"
                             fill="currentColor"
                           >

@@ -106,7 +106,7 @@ export const QuestionListPage = (): React.JSX.Element => {
           <div className="my-6">
             <label
               htmlFor="speciality"
-              className="block text-[1.5rem] font-bold text-[#9CB395] mb-3 pl-4"
+              className="block text-xl pc:text-[1.5rem] font-bold text-[#9CB395] mb-3 pl-4"
             >
               분야 선택
             </label>
@@ -115,7 +115,7 @@ export const QuestionListPage = (): React.JSX.Element => {
                 id="speciality"
                 value={category}
                 onChange={(e) => handleCategoryChange(e.target.value)}
-                className="appearance-none w-full px-4 py-2 border-2 text-[1.1rem] border-[#CFCFCF] rounded-[10px] bg-white focus:outline-none focus:border-[#9CB395] hover:border-[#9CB395] hover:cursor-pointer transition-colors"
+                className="appearance-none w-full px-4 py-2 border-2 text-sm pc:text-[1.1rem] border-[#CFCFCF] rounded-[10px] bg-white focus:outline-none focus:border-[#9CB395] hover:border-[#9CB395] hover:cursor-pointer transition-colors"
               >
                 <option value="">전체</option>
                 {Object.entries(LegalSpecialityLabels).map(([key, label]) => (
@@ -156,7 +156,7 @@ export const QuestionListPage = (): React.JSX.Element => {
               <button
                 onClick={() => handlePageChange(Math.max(0, currentPage - 1))}
                 disabled={isFirstPage}
-                className="px-3 py-1 rounded text-gray-700 hover:bg-[#C9D8B7] disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                className="px-3 py-1 rounded text-sm pc:text-base text-gray-700 hover:bg-[#C9D8B7] disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
               >
                 &lt;
               </button>
@@ -165,7 +165,7 @@ export const QuestionListPage = (): React.JSX.Element => {
                   <button
                     key={pageNum}
                     onClick={() => handlePageChange(pageNum)}
-                    className={`px-3 py-1 rounded ${
+                    className={`px-3 py-1 rounded text-sm pc:text-base ${
                       pageNum === currentPage
                         ? "bg-[#C9D8B7] text-gray-700"
                         : "text-gray-700 hover:bg-[#C9D8B7] transition-colors"
@@ -180,7 +180,7 @@ export const QuestionListPage = (): React.JSX.Element => {
                   handlePageChange(Math.min(totalPages - 1, currentPage + 1))
                 }
                 disabled={isLastPage}
-                className="px-3 py-1 rounded text-gray-700 hover:bg-[#C9D8B7] disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                className="px-3 py-1 rounded text-sm pc:text-base text-gray-700 hover:bg-[#C9D8B7] disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
               >
                 &gt;
               </button>
@@ -190,7 +190,7 @@ export const QuestionListPage = (): React.JSX.Element => {
       </main>
 
       {/* 플로팅 작성 버튼 (모바일) */}
-      <div className="pc:hidden fixed bottom-[100px] left-[20px] z-10">
+      <div className="pc:hidden fixed bottom-40 left-[20px] z-10">
         <Link
           to="/question/write"
           className="flex items-center justify-center w-[60px] h-[60px] bg-[#9CB395] rounded-full shadow-lg"
