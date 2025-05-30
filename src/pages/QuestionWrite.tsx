@@ -173,7 +173,7 @@ export const QuestionWrite = (): React.JSX.Element => {
             ></textarea>
           </div>
 
-          <div className="flex justify-end items-center mb-6">
+          <div className="flex justify-start items-center mb-6">
             <label htmlFor="anonymous" className="mr-2 text-[18px]">
               익명으로 작성
             </label>
