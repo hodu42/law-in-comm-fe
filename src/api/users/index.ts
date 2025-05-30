@@ -4,6 +4,10 @@ export const checkNicknameDuplication = async (nickname: string) => {
   return api.get<any>("/users/join/nickname/dupe-check", { nickname });
 };
 
+export const checkUsernameDuplication = async (id: string) => {
+  return api.get<any>("/users/join/id/dupe-check", { id });
+};
+
 export const getLegalSpecialities = async () => {
   return api.get<any>("/users/legal-speciality");
 };

@@ -3,7 +3,10 @@ import { Link } from "react-router-dom";
 import { Logo } from "@/components/Logo";
 import { MobileNav } from "@/components/MobileNav";
 import { registerGeneral } from "@/api/auth/register";
-import { checkNicknameDuplication } from "@/api/users";
+import {
+  checkNicknameDuplication,
+  checkUsernameDuplication,
+} from "@/api/users";
 import { useNavigation } from "@/hooks/useNavigation";
 import { ClientData } from "@/types/client";
 import { MobileBackButton } from "@/components/MobileBackButton";
@@ -18,6 +21,8 @@ export const ClientRegister = (): React.JSX.Element => {
   const [error, setError] = useState<string>("");
   const [nicknameDuplicateMessage, setNicknameDuplicateMessage] =
     useState<string>("");
+  const [usernameDuplicateMessage, setUsernameDuplicateMessage] =
+    useState<string>("");
   const dateInputRef = useRef<HTMLInputElement>(null);
 
   // 아이디 또는 비밀번호가 입력되면 에러 메시지 초기화
@@ -26,12 +31,15 @@ export const ClientRegister = (): React.JSX.Element => {
       setError("");
     }
   }, [userId, password]);
-  // 닉네임 입력 시 에러 메시지 초기화
+
+  // 닉네임 또는 아이디 입력 시 에러 메시지 초기화
   useEffect(() => {
-    if (nickname) {
-      setNicknameDuplicateMessage("");
-    }
+    setNicknameDuplicateMessage("");
   }, [nickname]);
+
+  useEffect(() => {
+    setUsernameDuplicateMessage("");
+  }, [userId]);
 
   const handleRegister = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -60,6 +68,7 @@ export const ClientRegister = (): React.JSX.Element => {
   const checkNicknameDuplicate = async () => {
     try {
       const response = await checkNicknameDuplication(nickname);
+      console.log("닉네임 중복 확인 응답 : ", response);
       if (response.data) {
         setNicknameDuplicateMessage(
           `${nickname}은 이미 사용중인 닉네임입니다.`
@@ -73,6 +82,24 @@ export const ClientRegister = (): React.JSX.Element => {
         setNicknameDuplicateMessage(errorMessage);
       } else {
         setNicknameDuplicateMessage("알 수 없는 오류가 발생했습니다.");
+      }
+    }
+  };
+
+  const checkUsernameDuplicate = async () => {
+    try {
+      const response = await checkUsernameDuplication(userId);
+      if (response.data.isDup) {
+        setUsernameDuplicateMessage(`${userId}은 이미 사용중인 아이디입니다.`);
+      } else {
+        setUsernameDuplicateMessage(`${userId}은 사용 가능한 아이디입니다.`);
+      }
+    } catch (error: any) {
+      if (error.response.data.code === 4000009) {
+        const errorMessage = error.response.data.message.split(": ")[1];
+        setUsernameDuplicateMessage(errorMessage);
+      } else {
+        setUsernameDuplicateMessage("알 수 없는 오류가 발생했습니다.");
       }
     }
   };
@@ -127,6 +154,24 @@ export const ClientRegister = (): React.JSX.Element => {
               value={userId}
               onChange={(e) => setUserId(e.target.value)}
             />
+            {usernameDuplicateMessage && (
+              <div
+                className={`text-sm pl-4 ${
+                  usernameDuplicateMessage.includes("사용 가능한")
+                    ? "text-green-500"
+                    : "text-red-500"
+                }`}
+              >
+                {usernameDuplicateMessage}
+              </div>
+            )}
+            <button
+              type="button"
+              onClick={() => checkUsernameDuplicate()}
+              className="transition-colors inline-block w-[120px] mx-auto mt-6 bg-[#CBD8B7] text-black font-bold text-[16px] py-2 rounded-md hover:bg-[#A9BE8C]"
+            >
+              중복확인
+            </button>
           </div>
 
           {/* 비밀번호 입력 필드 */}

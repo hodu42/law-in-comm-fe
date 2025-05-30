@@ -34,6 +34,7 @@ export class ApiClient {
           config.url?.includes("/register-lawyer") ||
           config.url?.includes("/auth/token/refresh") ||
           config.url?.includes("/users/join/nickname/dupe-check") ||
+          config.url?.includes("/users/join/id/dupe-check") ||
           config.url?.includes("/question/:questionId/answers") ||
           config.url?.includes("/questions/:id")
         ) {

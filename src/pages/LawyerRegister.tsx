@@ -6,6 +6,7 @@ import { LegalSpecialityLabels } from "@/types/speciality";
 import { RegisterLawyerInfo } from "@/types/lawyer";
 import { registerLawyer } from "@/api/auth/register";
 import { MobileBackButton } from "@/components/MobileBackButton";
+import { checkUsernameDuplication } from "@/api/users";
 
 export const LawyerRegister = (): React.JSX.Element => {
   const { goToLogin } = useNavigation();
@@ -26,6 +27,8 @@ export const LawyerRegister = (): React.JSX.Element => {
   const [officeAddress, setOfficeAddress] = useState<string>("");
   const [officePhone, setOfficePhone] = useState<string>("");
   const [description, setDescription] = useState<string>("");
+  const [usernameDuplicateMessage, setUsernameDuplicateMessage] =
+    useState<string>("");
 
   // 아이디 또는 비밀번호가 입력되면 에러 메시지 초기화
   useEffect(() => {
@@ -33,6 +36,10 @@ export const LawyerRegister = (): React.JSX.Element => {
       setError("");
     }
   }, [userId, password]);
+
+  useEffect(() => {
+    setUsernameDuplicateMessage("");
+  }, [userId]);
 
   const handleRegister = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -110,6 +117,24 @@ export const LawyerRegister = (): React.JSX.Element => {
     checkedItemHandler(value, e.target.checked);
   };
 
+  const checkUsernameDuplicate = async () => {
+    try {
+      const response = await checkUsernameDuplication(userId);
+      if (response.data.isDup) {
+        setUsernameDuplicateMessage(`${userId}은 이미 사용중인 아이디입니다.`);
+      } else {
+        setUsernameDuplicateMessage(`${userId}은 사용 가능한 아이디입니다.`);
+      }
+    } catch (error: any) {
+      if (error.response.data.code === 4000009) {
+        const errorMessage = error.response.data.message.split(": ")[1];
+        setUsernameDuplicateMessage(errorMessage);
+      } else {
+        setUsernameDuplicateMessage("알 수 없는 오류가 발생했습니다.");
+      }
+    }
+  };
+
   return (
     <div className="flex flex-col min-h-screen items-center bg-white overflow-x-hidden">
       {/* 헤더 영역 */}
@@ -155,6 +180,24 @@ export const LawyerRegister = (): React.JSX.Element => {
                   value={userId}
                   onChange={(e) => setUserId(e.target.value)}
                 />
+                {usernameDuplicateMessage && (
+                  <div
+                    className={`text-sm pl-4 ${
+                      usernameDuplicateMessage.includes("사용 가능한")
+                        ? "text-green-500"
+                        : "text-red-500"
+                    }`}
+                  >
+                    {usernameDuplicateMessage}
+                  </div>
+                )}
+                <button
+                  type="button"
+                  onClick={() => checkUsernameDuplicate()}
+                  className="transition-colors inline-block w-[120px] mx-auto mt-6 bg-[#CBD8B7] text-black font-bold text-[16px] py-2 rounded-md hover:bg-[#A9BE8C]"
+                >
+                  중복확인
+                </button>
               </div>
 
               {/* 비밀번호 입력 필드 */}
