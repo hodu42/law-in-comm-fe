@@ -38,10 +38,10 @@ export const QuestionWrite = (): React.JSX.Element => {
     <div className="flex flex-col min-h-screen bg-gray-50 question-form-container">
       {/* 헤더 */}
       <header className="fixed shadow-md top-0 left-0 right-0 w-full h-[72px] flex items-center justify-center bg-white z-20">
-        <div className="container mx-auto px-4 py-4 flex justify-between items-center">
+        <div className="flex container mx-auto justify-between items-center">
           {/* 모바일 뒤로가기 버튼 */}
           <MobileBackButton />
-          <div className="relative w-full min-w-[355px] max-w-[1350px] pc:w-[70.31%] h-full flex items-center">
+          <div className="hidden pc:flex relative w-full min-w-[355px] max-w-[1350px] pc:w-[70.31%] h-full items-center">
             <Logo />
           </div>
           <div className="absolute left-1/2 -translate-x-1/2 text-[19px] pc:text-[21px] font-bold">
@@ -72,7 +72,7 @@ export const QuestionWrite = (): React.JSX.Element => {
           {/* 모바일 등록하기 버튼 */}
           <button
             onClick={handleSubmit}
-            className="pc:hidden items-center bg-[#C9D8B7] text-black px-4 py-2 rounded-[10px] text-nowrap text-[16px] hover:bg-[#A9BE8C] font-medium transition-colors"
+            className="pc:hidden mr-6 items-center bg-[#C9D8B7] text-black px-4 py-2 rounded-[10px] text-nowrap text-[16px] hover:bg-[#A9BE8C] font-medium transition-colors"
           >
             등록
           </button>
