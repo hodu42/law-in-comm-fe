@@ -16,7 +16,7 @@ export const CategoryItem = ({
       className="flex gap-[11px] pc:gap-[28px] flex-col items-center group"
       to={`/questions?keyword=&category=${value}&page=0`}
     >
-      <div className="w-9 h-9 pc:w-[72px] pc:h-[72px]">
+      <div className="w-9 h-9 pc:w-16 pc:h-16">
         <CategoryIcon
           type={title}
           className="text-[#656565] group-hover:text-[#9CB395]"
