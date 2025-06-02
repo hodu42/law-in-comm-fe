@@ -66,6 +66,10 @@ export const ClientRegister = (): React.JSX.Element => {
   };
 
   const checkNicknameDuplicate = async () => {
+    if (nickname.trim() === "") {
+      setNicknameDuplicateMessage("닉네임을 입력하세요");
+      return;
+    }
     try {
       const response = await checkNicknameDuplication(nickname);
       if (response.data) {
@@ -86,6 +90,10 @@ export const ClientRegister = (): React.JSX.Element => {
   };
 
   const checkUsernameDuplicate = async () => {
+    if (userId.trim() === "") {
+      setUsernameDuplicateMessage("아이디를 입력하세요");
+      return;
+    }
     try {
       const response = await checkUsernameDuplication(userId);
       if (response.data.isDup) {
@@ -143,7 +151,7 @@ export const ClientRegister = (): React.JSX.Element => {
           {/* 아이디 입력 필드 */}
           <div className="flex flex-col gap-5 pc:gap-6">
             <label className="text-[#656565] text-[17px] pc:text-[20px] font-bold text-nowrap">
-              아이디
+              아이디 <span className="text-red-500">*</span>
             </label>
             <input
               required
@@ -176,7 +184,7 @@ export const ClientRegister = (): React.JSX.Element => {
           {/* 비밀번호 입력 필드 */}
           <div className="relative flex flex-col gap-5 pc:gap-6">
             <label className="text-[#656565] text-[17px] pc:text-[20px] font-bold text-nowrap">
-              비밀번호
+              비밀번호 <span className="text-red-500">*</span>
             </label>
             <input
               required
@@ -196,7 +204,7 @@ export const ClientRegister = (): React.JSX.Element => {
           {/* 이름 입력 필드 */}
           <div className="flex flex-col gap-5 pc:gap-6">
             <label className="text-[#656565] text-[17px] pc:text-[20px] font-bold">
-              이름
+              이름 <span className="text-red-500">*</span>
             </label>
             <input
               required
@@ -211,7 +219,7 @@ export const ClientRegister = (): React.JSX.Element => {
           <div className="flex flex-col gap-5 pc:gap-6">
             <div className="flex items-center gap-6">
               <label className="text-[#656565] text-[17px] pc:text-[20px] font-bold text-nowrap">
-                닉네임
+                닉네임 <span className="text-red-500">*</span>
               </label>
               <div className="text-[14px] pc:text-[16px] text-[#A9BE8C]">
                 2~8자의 한글, 영문 대소문자, 숫자로 이루어져야 합니다.
@@ -249,18 +257,19 @@ export const ClientRegister = (): React.JSX.Element => {
           {/* 생년월일 입력 필드 */}
           <div className="flex flex-col gap-5 pc:gap-6">
             <label className="text-[#656565] text-[17px] pc:text-[20px] font-bold text-nowrap">
-              생년월일
+              생년월일 <span className="text-red-500">*</span>
             </label>
             <input
               required
               type="date"
               ref={dateInputRef}
-              className={`transition-colors border-b-2 pl-[10px] pc:pl-4 py-[10px] pc:py-4 text-[15px] pc:text-[19px] border-[#E2E4E5] focus:outline-none focus:border-[#A9BE8C] placeholder-[#A9BE8C] hover:cursor-pointer [&::-webkit-calendar-picker-indicator]:cursor-pointer ${
+              className={`appearance-none bg-white transition-colors border-b-2 pl-[10px] pc:pl-4 py-[10px] pc:py-4 text-[15px] pc:text-[19px] border-[#E2E4E5] focus:outline-none focus:border-[#A9BE8C] placeholder-[#A9BE8C] hover:cursor-pointer [&::-webkit-calendar-picker-indicator]:cursor-pointer ${
                 birthDate ? "text-black" : "text-[#E2E4E5]"
               }`}
               value={birthDate}
               onChange={(e) => setBirthDate(e.target.value)}
               onClick={() => dateInputRef.current?.showPicker()}
+              placeholder="연도-월-일"
             />
           </div>
           {/* 회원가입 버튼 */}
