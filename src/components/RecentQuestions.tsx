@@ -38,7 +38,7 @@ export const RecentQuestions = ({
       <h1 className="w-full pc:text-center text-left text-[20px] pc:text-[26px] text-[#1F2225] font-bold">
         최근 질문
       </h1>
-      <div className="recentQuestion-slider-container min-w-[100%]">
+      <div className="recentQuestion-slider-container w-full">
         {recentQuestions.length === 0 ? (
           <div className="flex items-center justify-center font-bold text-[#5C6E56] text-[20px] pc:text-[26px] w-[350px] min-h-[250px] pc:w-[848px] pc:h-[396px] bg-white rounded-[10px] mx-auto p-[20px] pc:p-[30px] border-2 border-[#5C6E56] transition-all relative">
             최근 질문이 없습니다.

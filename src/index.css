@@ -23,10 +23,6 @@
   width: 33px !important;
   height: 66px !important;
 }
-.recentQuestion-slider-container .slick-current {
-  display: flex !important;
-  justify-content: center !important;
-}
 .dots_custom {
   position: absolute;
   bottom: 20px;
