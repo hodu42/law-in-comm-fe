@@ -31,7 +31,7 @@ export const AnswerItem: React.FC<{
         <h3 className="text-[1.12rem] pc:text-[1.31rem]">
           {answer.questionTitle}
         </h3>
-        <p className="text-[0.81rem] pc:text-[1.06rem] text-[#333333] line-clamp-2 mb-2">
+        <p className="text-[0.81rem] pc:text-[1.06rem] text-[#333333] line-clamp-2 break-words mb-2">
           {answer.content}
         </p>
         <div className="flex justify-end items-center text-xs text-[#B4B4B4]">

@@ -78,7 +78,11 @@ export const MobileNav = (): React.JSX.Element => {
         }
         className="flex flex-col items-center gap-1 text-[#848484] aria-[current=page]:text-[#9CB395]"
         aria-current={
-          location.pathname.includes("my-page") ? "page" : undefined
+          location.pathname.includes("my-page") ||
+          (location.pathname.includes("lawyer/profile") &&
+            userRole === Role.LAWYER)
+            ? "page"
+            : undefined
         }
       >
         <svg

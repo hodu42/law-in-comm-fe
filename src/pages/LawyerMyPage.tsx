@@ -246,7 +246,7 @@ export const LawyerMyPage = (): React.JSX.Element => {
             </div>
           </div>
           <div className="my-10 pl-4">
-            <h1 className="text-[1.4rem] pc:text-[1.8rem] font-bold">
+            <h1 className="text-[1.3rem] pc:text-[1.6rem] font-bold">
               작성한 답변{" "}
               <span className="text-[#9CB395]">{totalElements}</span>개
             </h1>

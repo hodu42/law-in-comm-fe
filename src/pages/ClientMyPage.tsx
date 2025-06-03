@@ -117,7 +117,7 @@ export const ClientMyPage = (): React.JSX.Element => {
           </div>
           <Link
             to="/client/my-page/modify"
-            className="w-28 text-center mx-auto bg-[#CBD8B7] text-black font-bold text-[14px] pc:text-[18px] py-2 mt-5 rounded-md hover:bg-[#A9BE8C] transition-colors"
+            className="w-28 text-center mx-auto bg-[#CBD8B7] text-black font-bold text-[14px] pc:text-[16px] py-2 mt-5 rounded-md hover:bg-[#A9BE8C] transition-colors"
           >
             내 정보 수정
           </Link>
