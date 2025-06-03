@@ -15,6 +15,7 @@ export const ClientRegister = (): React.JSX.Element => {
   const { goToLogin } = useNavigation();
   const [userId, setUserId] = useState<string>("");
   const [password, setPassword] = useState<string>("");
+  const [passwordConfirm, setPasswordConfirm] = useState<string>("");
   const [name, setName] = useState<string>("");
   const [nickname, setNickname] = useState<string>("");
   const [birthDate, setBirthDate] = useState<string>("");
@@ -24,13 +25,16 @@ export const ClientRegister = (): React.JSX.Element => {
   const [usernameDuplicateMessage, setUsernameDuplicateMessage] =
     useState<string>("");
   const dateInputRef = useRef<HTMLInputElement>(null);
+  const [isPasswordShow, setIsPasswordShow] = useState<boolean>(false);
+  const [isPasswordConfirmShow, setIsPasswordConfirmShow] =
+    useState<boolean>(false);
 
   // 아이디 또는 비밀번호가 입력되면 에러 메시지 초기화
   useEffect(() => {
     if (userId || password) {
       setError("");
     }
-  }, [userId, password]);
+  }, [userId, password, passwordConfirm]);
 
   // 닉네임 또는 아이디 입력 시 에러 메시지 초기화
   useEffect(() => {
@@ -44,7 +48,10 @@ export const ClientRegister = (): React.JSX.Element => {
   const handleRegister = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     setError("");
-
+    if (password && passwordConfirm !== passwordConfirm) {
+      setError("입력한 비밀번호가 서로 일치하지 않습니다.");
+      return;
+    }
     try {
       const userData: ClientData = {
         username: userId,
@@ -186,14 +193,80 @@ export const ClientRegister = (): React.JSX.Element => {
             <label className="text-[#656565] text-[16px] pc:text-[18px] font-bold text-nowrap">
               비밀번호 <span className="text-red-500">*</span>
             </label>
-            <input
-              required
-              type="password"
-              placeholder="비밀번호를 입력해주세요."
-              className="transition-colors border-b-2 pl-[10px] pc:pl-4 text-[15px] pc:text-[17px] border-[#E2E4E5] py-[10px] pc:py-4 focus:outline-none focus:border-[#A9BE8C] placeholder-[#E2E4E5]"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-            />
+            <div className="relative">
+              <input
+                required
+                type={isPasswordShow ? "text" : "password"}
+                placeholder="비밀번호를 입력해주세요."
+                className="transition-colors border-b-2 w-full pl-[10px] pc:pl-4 pr-9 text-[15px] pc:text-[17px] border-[#E2E4E5] py-[10px] pc:py-4 focus:outline-none focus:border-[#A9BE8C] placeholder-[#E2E4E5]"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+              />
+              <button
+                className="absolute w-6 h-6 pc:w-7 pc:h-7 top-1/2 -translate-y-1/2 right-0 "
+                onClick={(e) => {
+                  e.preventDefault();
+                  setIsPasswordShow(!isPasswordShow);
+                }}
+              >
+                <svg
+                  className="w-full h-full text-[#A9BE8C]"
+                  viewBox="0 0 24 24"
+                >
+                  {isPasswordShow ? (
+                    <path
+                      fill="currentColor"
+                      d="M12 9a3 3 0 1 0 0 6 3 3 0 0 0 0-6Zm0 8a5 5 0 1 1 0-10 5 5 0 0 1 0 10Zm0-12.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5Z"
+                    />
+                  ) : (
+                    <path
+                      fill="currentColor"
+                      d="M12 17.5c-3.8 0-7.2-2.1-8.8-5.5H1c1.7 4.4 6 7.5 11 7.5s9.3-3.1 11-7.5h-2.2c-1.6 3.4-5 5.5-8.8 5.5Z"
+                    />
+                  )}
+                </svg>
+              </button>
+            </div>
+          </div>
+          {/* 비밀번호 확인 입력 필드 */}
+          <div className="relative flex flex-col gap-2">
+            <label className="text-[#656565] text-[16px] pc:text-[18px] font-bold text-nowrap">
+              비밀번호 확인 <span className="text-red-500">*</span>
+            </label>
+            <div className="relative">
+              <input
+                required
+                type={isPasswordConfirmShow ? "text" : "password"}
+                placeholder="비밀번호를 다시 입력해주세요."
+                className="transition-colors border-b-2 w-full pl-[10px] pc:pl-4 pr-9 text-[15px] pc:text-[17px] border-[#E2E4E5] py-[10px] pc:py-4 focus:outline-none focus:border-[#A9BE8C] placeholder-[#E2E4E5]"
+                value={passwordConfirm}
+                onChange={(e) => setPasswordConfirm(e.target.value)}
+              />
+              <button
+                className="absolute w-6 h-6 pc:w-7 pc:h-7 top-1/2 -translate-y-1/2 right-0 "
+                onClick={(e) => {
+                  e.preventDefault();
+                  setIsPasswordConfirmShow(!isPasswordConfirmShow);
+                }}
+              >
+                <svg
+                  className="w-full h-full text-[#A9BE8C]"
+                  viewBox="0 0 24 24"
+                >
+                  {isPasswordConfirmShow ? (
+                    <path
+                      fill="currentColor"
+                      d="M12 9a3 3 0 1 0 0 6 3 3 0 0 0 0-6Zm0 8a5 5 0 1 1 0-10 5 5 0 0 1 0 10Zm0-12.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5Z"
+                    />
+                  ) : (
+                    <path
+                      fill="currentColor"
+                      d="M12 17.5c-3.8 0-7.2-2.1-8.8-5.5H1c1.7 4.4 6 7.5 11 7.5s9.3-3.1 11-7.5h-2.2c-1.6 3.4-5 5.5-8.8 5.5Z"
+                    />
+                  )}
+                </svg>
+              </button>
+            </div>
             {/* 에러 메시지 표시 */}
             {error && (
               <div className="absolute text-red-500 text-sm bottom-[-1.8rem]">

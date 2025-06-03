@@ -12,6 +12,7 @@ export const LawyerRegister = (): React.JSX.Element => {
   const { goToLogin } = useNavigation();
   const [userId, setUserId] = useState<string>("");
   const [password, setPassword] = useState<string>("");
+  const [passwordConfirm, setPasswordConfirm] = useState<string>("");
   const [name, setName] = useState<string>("");
   const [phoneNumber, setPhoneNumber] = useState<string>("");
   const [birthDate, setBirthDate] = useState<string>("");
@@ -29,6 +30,9 @@ export const LawyerRegister = (): React.JSX.Element => {
   const [description, setDescription] = useState<string>("");
   const [usernameDuplicateMessage, setUsernameDuplicateMessage] =
     useState<string>("");
+  const [isPasswordShow, setIsPasswordShow] = useState<boolean>(false);
+  const [isPasswordConfirmShow, setIsPasswordConfirmShow] =
+    useState<boolean>(false);
 
   // 아이디 또는 비밀번호가 입력되면 에러 메시지 초기화
   useEffect(() => {
@@ -44,6 +48,10 @@ export const LawyerRegister = (): React.JSX.Element => {
   const handleRegister = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     setError("");
+    if (password && passwordConfirm !== passwordConfirm) {
+      setError("입력한 비밀번호가 서로 일치하지 않습니다.");
+      return;
+    }
     const educationList = education.split("\n");
     const careerList = career.split("\n");
     if (!licenseImage) {
@@ -75,7 +83,7 @@ export const LawyerRegister = (): React.JSX.Element => {
     multiPartFormData.append("licenseImage", licenseImage);
 
     try {
-      const response = await registerLawyer(multiPartFormData);
+      await registerLawyer(multiPartFormData);
       alert("관리자가 승인시 로그인 할 수 있습니다.");
       goToLogin();
     } catch (error: any) {
@@ -172,7 +180,7 @@ export const LawyerRegister = (): React.JSX.Element => {
             </div>
             <div className="flex flex-col px-6 gap-y-10">
               {/* 아이디 입력 필드 */}
-              <div className="flex flex-col gap-5 pc:gap-6">
+              <div className="flex flex-col gap-2 pc:gap-6">
                 <label className="text-[#656565] text-[16px] pc:text-[18px] font-bold text-nowrap">
                   아이디 <span className="text-red-500">*</span>
                 </label>
@@ -205,21 +213,87 @@ export const LawyerRegister = (): React.JSX.Element => {
               </div>
 
               {/* 비밀번호 입력 필드 */}
-              <div className="relative flex flex-col gap-5 pc:gap-6">
+              <div className="relative flex flex-col gap-2">
                 <label className="text-[#656565] text-[16px] pc:text-[18px] font-bold text-nowrap">
                   비밀번호 <span className="text-red-500">*</span>
                 </label>
-                <input
-                  required
-                  type="password"
-                  placeholder="비밀번호를 입력해주세요."
-                  className="transition-colors border-b-2 pl-[10px] pc:pl-4 text-[15px] pc:text-[17px] border-[#E2E4E5] py-[10px] pc:py-4 focus:outline-none focus:border-[#A9BE8C] placeholder-[#E2E4E5]"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                />
+                <div className="relative">
+                  <input
+                    required
+                    type={isPasswordShow ? "text" : "password"}
+                    placeholder="비밀번호를 입력해주세요."
+                    className="transition-colors border-b-2 w-full pl-[10px] pc:pl-4 pr-9 text-[15px] pc:text-[17px] border-[#E2E4E5] py-[10px] pc:py-4 focus:outline-none focus:border-[#A9BE8C] placeholder-[#E2E4E5]"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                  />
+                  <button
+                    className="absolute w-6 h-6 pc:w-7 pc:h-7 top-1/2 -translate-y-1/2 right-0 "
+                    onClick={(e) => {
+                      e.preventDefault();
+                      setIsPasswordShow(!isPasswordShow);
+                    }}
+                  >
+                    <svg
+                      className="w-full h-full text-[#A9BE8C]"
+                      viewBox="0 0 24 24"
+                    >
+                      {isPasswordShow ? (
+                        <path
+                          fill="currentColor"
+                          d="M12 9a3 3 0 1 0 0 6 3 3 0 0 0 0-6Zm0 8a5 5 0 1 1 0-10 5 5 0 0 1 0 10Zm0-12.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5Z"
+                        />
+                      ) : (
+                        <path
+                          fill="currentColor"
+                          d="M12 17.5c-3.8 0-7.2-2.1-8.8-5.5H1c1.7 4.4 6 7.5 11 7.5s9.3-3.1 11-7.5h-2.2c-1.6 3.4-5 5.5-8.8 5.5Z"
+                        />
+                      )}
+                    </svg>
+                  </button>
+                </div>
+              </div>
+              {/* 비밀번호 확인 입력 필드 */}
+              <div className="relative flex flex-col gap-2">
+                <label className="text-[#656565] text-[16px] pc:text-[18px] font-bold text-nowrap">
+                  비밀번호 확인 <span className="text-red-500">*</span>
+                </label>
+                <div className="relative">
+                  <input
+                    required
+                    type={isPasswordConfirmShow ? "text" : "password"}
+                    placeholder="비밀번호를 다시 입력해주세요."
+                    className="transition-colors border-b-2 w-full pl-[10px] pc:pl-4 pr-9 text-[15px] pc:text-[17px] border-[#E2E4E5] py-[10px] pc:py-4 focus:outline-none focus:border-[#A9BE8C] placeholder-[#E2E4E5]"
+                    value={passwordConfirm}
+                    onChange={(e) => setPasswordConfirm(e.target.value)}
+                  />
+                  <button
+                    className="absolute w-6 h-6 pc:w-7 pc:h-7 top-1/2 -translate-y-1/2 right-0 "
+                    onClick={(e) => {
+                      e.preventDefault();
+                      setIsPasswordConfirmShow(!isPasswordConfirmShow);
+                    }}
+                  >
+                    <svg
+                      className="w-full h-full text-[#A9BE8C]"
+                      viewBox="0 0 24 24"
+                    >
+                      {isPasswordConfirmShow ? (
+                        <path
+                          fill="currentColor"
+                          d="M12 9a3 3 0 1 0 0 6 3 3 0 0 0 0-6Zm0 8a5 5 0 1 1 0-10 5 5 0 0 1 0 10Zm0-12.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5Z"
+                        />
+                      ) : (
+                        <path
+                          fill="currentColor"
+                          d="M12 17.5c-3.8 0-7.2-2.1-8.8-5.5H1c1.7 4.4 6 7.5 11 7.5s9.3-3.1 11-7.5h-2.2c-1.6 3.4-5 5.5-8.8 5.5Z"
+                        />
+                      )}
+                    </svg>
+                  </button>
+                </div>
               </div>
               {/* 이름 입력 필드 */}
-              <div className="flex flex-col gap-5 pc:gap-6">
+              <div className="flex flex-col gap-2 pc:gap-6">
                 <label className="text-[#656565] text-[16px] pc:text-[18px] font-bold text-nowrap">
                   이름 <span className="text-red-500">*</span>
                 </label>
@@ -233,7 +307,7 @@ export const LawyerRegister = (): React.JSX.Element => {
                 />
               </div>
               {/* 휴대폰 번호 입력 필드 */}
-              <div className="flex flex-col gap-5 pc:gap-6">
+              <div className="flex flex-col gap-2 pc:gap-6">
                 <label className="text-[#656565] text-[16px] pc:text-[18px] font-bold text-nowrap">
                   휴대폰 번호 <span className="text-red-500">*</span>
                 </label>
@@ -261,13 +335,13 @@ export const LawyerRegister = (): React.JSX.Element => {
                     value={phoneNumber}
                     onChange={(e) => {
                       const value = e.target.value.replace(/[^0-9]/g, "");
-                      setPhoneNumber(value);
+                      if (value.length <= 11) setPhoneNumber(value);
                     }}
                   />
                 </div>
               </div>
               {/* 생년월일 입력 필드 */}
-              <div className="flex flex-col gap-5 pc:gap-6">
+              <div className="flex flex-col gap-2 pc:gap-6">
                 <label className="text-[#656565] text-[16px] pc:text-[18px] font-bold text-nowrap">
                   생년월일 <span className="text-red-500">*</span>
                 </label>
@@ -285,7 +359,7 @@ export const LawyerRegister = (): React.JSX.Element => {
                 />
               </div>
               {/* 증명서 첨부 필드 */}
-              <div className="flex flex-col gap-5 pc:gap-6">
+              <div className="flex flex-col gap-2 pc:gap-6">
                 <label className="text-[#656565] text-[16px] pc:text-[18px] font-bold text-nowrap">
                   합격 증명서 첨부 <span className="text-red-500">*</span>
                 </label>
@@ -323,7 +397,7 @@ export const LawyerRegister = (): React.JSX.Element => {
                 </button>
               </div>
               {/* 분야선택 필드 */}
-              <div className="flex flex-col gap-5 pc:gap-6">
+              <div className="flex flex-col gap-2 pc:gap-6">
                 <label className="text-[#656565] text-[16px] pc:text-[18px] font-bold text-nowrap">
                   분야 <span className="text-red-500">*</span>
                 </label>
@@ -355,7 +429,7 @@ export const LawyerRegister = (): React.JSX.Element => {
                 </div>
               </div>
               {/* 자기소개 입력 필드 */}
-              <div className="flex flex-col gap-5 pc:gap-6">
+              <div className="flex flex-col gap-2 pc:gap-6">
                 <label className="text-[#656565] text-[16px] pc:text-[18px] font-bold text-nowrap">
                   자기소개 <span className="text-red-500">*</span>
                 </label>
@@ -374,7 +448,7 @@ export const LawyerRegister = (): React.JSX.Element => {
                 엔터를 기준으로 나눠집니다.
               </span>
               {/* 경력 입력 필드 */}
-              <div className="flex flex-col gap-5 pc:gap-6">
+              <div className="flex flex-col gap-2 pc:gap-6">
                 <label className="text-[#656565] text-[16px] pc:text-[18px] font-bold text-nowrap">
                   경력 <span className="text-red-500">*</span>
                 </label>
@@ -388,7 +462,7 @@ export const LawyerRegister = (): React.JSX.Element => {
                 />
               </div>
               {/* 학력 입력 필드 */}
-              <div className="flex flex-col gap-5 pc:gap-6">
+              <div className="flex flex-col gap-2 pc:gap-6">
                 <label className="text-[#656565] text-[16px] pc:text-[18px] font-bold text-nowrap">
                   학력 <span className="text-red-500">*</span>
                 </label>
@@ -409,7 +483,7 @@ export const LawyerRegister = (): React.JSX.Element => {
             </div>
             <div className="flex flex-col px-6 gap-y-10">
               {/* 사무실 이름 입력 필드 */}
-              <div className="flex flex-col gap-5 pc:gap-6">
+              <div className="flex flex-col gap-2 pc:gap-6">
                 <label className="text-[#656565] text-[16px] pc:text-[18px] font-bold text-nowrap">
                   이름 <span className="text-red-500">*</span>
                 </label>
@@ -423,7 +497,7 @@ export const LawyerRegister = (): React.JSX.Element => {
                 />
               </div>
               {/* 사무실 주소 입력 필드 */}
-              <div className="flex flex-col gap-5 pc:gap-6">
+              <div className="flex flex-col gap-2 pc:gap-6">
                 <label className="text-[#656565] text-[16px] pc:text-[18px] font-bold text-nowrap">
                   주소 <span className="text-red-500">*</span>
                 </label>
@@ -453,7 +527,7 @@ export const LawyerRegister = (): React.JSX.Element => {
                 </div>
               </div>
               {/* 사무실 전화번호 입력 필드 */}
-              <div className="flex flex-col gap-5 pc:gap-6">
+              <div className="flex flex-col gap-2 pc:gap-6">
                 <label className="text-[#656565] text-[16px] pc:text-[18px] font-bold text-nowrap">
                   전화번호 <span className="text-red-500">*</span>
                 </label>
@@ -481,7 +555,7 @@ export const LawyerRegister = (): React.JSX.Element => {
                     value={officePhone}
                     onChange={(e) => {
                       const value = e.target.value.replace(/[^0-9]/g, "");
-                      setOfficePhone(value);
+                      if (value.length <= 10) setOfficePhone(value);
                     }}
                   />
                 </div>
