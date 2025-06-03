@@ -98,6 +98,7 @@ export const Login = (): React.JSX.Element => {
                   onChange={(e) => setPassword(e.target.value)}
                 />
                 <button
+                  type="button"
                   className="absolute w-6 h-6 pc:w-7 pc:h-7 top-1/2 -translate-y-1/2 right-0 "
                   onClick={(e) => {
                     e.preventDefault();
@@ -142,13 +143,6 @@ export const Login = (): React.JSX.Element => {
             <span className="font-NotoSansKR text-[16px] pc:text-[20px]">
               아직 회원이 아니신가요?
             </span>
-            {/* <Link
-              to="/users/join/general"
-              className="font-NotoSansKR text-[16px] pc:text-[20px] text-[#A9BE8C] hover:text-[#9CB395] hover:underline transition-colors font-bold"
-            >
-              회원가입
-            </Link> */}
-            {/* TODO: 회원가입 방식 변경하기  */}
             <button
               onClick={() => setShowRegisterModal(!showRegisterModal)}
               className="font-NotoSansKR text-[16px] pc:text-[20px] text-[#A9BE8C] hover:text-[#9CB395] hover:underline transition-colors font-bold"
