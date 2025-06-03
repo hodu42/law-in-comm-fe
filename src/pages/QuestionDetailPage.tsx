@@ -506,7 +506,9 @@ export const QuestionDetailPage = (): React.JSX.Element => {
                           <strong className="font-bold">{children}</strong>
                         ),
                         p: ({ children }) => (
-                          <span className="my-2">{children}</span>
+                          <p className="my-2 whitespace-pre-wrap break-words">
+                            {children}
+                          </p>
                         ),
                       }}
                     >
