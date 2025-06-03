@@ -28,7 +28,7 @@ export const QuestionCategories = (): React.JSX.Element => {
         <h1 className="text-[#1F2225] text-[20px] pc:text-[28px] font-bold">
           분야별 질문글 찾기
         </h1>
-        <ul className="question-categories-container flex w-full gap-[20px] justify-between px-[19px] pc:pt-5 pb-5 pc:pb-0 overflow-auto">
+        <ul className="question-categories-container flex w-full gap-[20px] justify-between px-[19px] pc:pt-5 pb-5 pc:pb-10 overflow-auto">
           {categories.map((category, index) => (
             <CategoryItem
               key={index}

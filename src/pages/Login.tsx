@@ -114,19 +114,19 @@ export const Login = (): React.JSX.Element => {
             <span className="font-NotoSansKR text-[16px] pc:text-[20px]">
               아직 회원이 아니신가요?
             </span>
-            <Link
+            {/* <Link
               to="/users/join/general"
               className="font-NotoSansKR text-[16px] pc:text-[20px] text-[#A9BE8C] hover:text-[#9CB395] hover:underline transition-colors font-bold"
             >
               회원가입
-            </Link>
+            </Link> */}
             {/* TODO: 회원가입 방식 변경하기  */}
-            {/* <button
-            onClick={() => setShowRegisterModal(!showRegisterModal)}
-            className="font-NotoSansKR text-[16px] pc:text-[20px] text-[#A9BE8C] hover:text-[#9CB395] hover:underline transition-colors font-bold"
-          >
-            회원가입
-          </button> */}
+            <button
+              onClick={() => setShowRegisterModal(!showRegisterModal)}
+              className="font-NotoSansKR text-[16px] pc:text-[20px] text-[#A9BE8C] hover:text-[#9CB395] hover:underline transition-colors font-bold"
+            >
+              회원가입
+            </button>
           </div>
         </div>
       </div>
@@ -140,24 +140,39 @@ export const Login = (): React.JSX.Element => {
           }}
           className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50"
         >
-          <div className="relative bg-white flex flex-col rounded-lg w-[40%] h-[70%]">
-            <h1 className="text-center text-[35px] font-bold my-10">
-              회원가입
-            </h1>
-            <div className="flex justify-evenly">
-              <Link
-                className="bg-[#A9BE8C] font-bold text-5xl p-10 rounded-lg"
-                to="/users/join/general"
+          <div className="relative bg-white flex items-center justify-evenly rounded-lg w-[90%] h-[40%] pc:w-[30%] pc:h-[40%]">
+            <Link
+              className="flex flex-col w-[35%] items-center gap-4 bg-[#CBD8B7] hover:bg-[#A9BE8C] font-bold text-[20px] pc:text-[25px] text-[#5C6E56] p-5 pc:p-8 rounded-lg transition-colors"
+              to="/users/join/general"
+            >
+              <svg
+                className="w-14 h-14 pc:w-16 pc:h-16"
+                fill="none"
+                viewBox="0 0 14 14"
               >
-                의뢰인
-              </Link>
-              <Link
-                className="bg-[#A9BE8C] font-bold text-5xl p-10 rounded-lg"
-                to="/users/join/lawyer"
-              >
-                변호사
-              </Link>
-            </div>
+                <path
+                  fill="currentColor"
+                  fill-rule="evenodd"
+                  d="M1.573 1.573A.25.25 0 0 1 1.75 1.5h1.5a.75.75 0 0 0 0-1.5h-1.5A1.75 1.75 0 0 0 0 1.75v1.5a.75.75 0 1 0 1.5 0v-1.5a.25.25 0 0 1 .073-.177ZM14 10.75a.75.75 0 1 0-1.5 0v1.5a.25.25 0 0 1-.25.25h-1.5a.75.75 0 1 0 0 1.5h1.5A1.75 1.75 0 0 0 14 12.25v-1.5ZM.75 10a.75.75 0 0 1 .75.75v1.5a.25.25 0 0 0 .25.25h1.5a.75.75 0 1 1 0 1.5h-1.5A1.75 1.75 0 0 1 0 12.25v-1.5A.75.75 0 0 1 .75 10Zm10-10a.75.75 0 1 0 0 1.5h1.5a.25.25 0 0 1 .25.25v1.5a.75.75 0 1 0 1.5 0v-1.5A1.75 1.75 0 0 0 12.25 0h-1.5ZM7 7.776a4.42 4.42 0 0 0-4.145 2.879c-.112.299.127.595.446.595h7.397c.319 0 .557-.296.445-.595A4.42 4.42 0 0 0 7 7.776Zm2.208-3.315a2.21 2.21 0 1 1-4.421 0 2.21 2.21 0 0 1 4.421 0Z"
+                  clip-rule="evenodd"
+                />
+              </svg>
+              <p className="text-nowrap">의뢰인</p>
+            </Link>
+            <Link
+              className="flex flex-col w-[35%] items-center gap-4 bg-[#CBD8B7] hover:bg-[#A9BE8C] font-bold text-[20px] pc:text-[25px] text-[#5C6E56] p-5 pc:p-8 rounded-lg transition-colors"
+              to="/users/join/lawyer"
+            >
+              <svg className="w-14 h-14 pc:w-16 pc:h-16" viewBox="0 0 48 49">
+                <path
+                  fill="currentColor"
+                  fillRule="evenodd"
+                  d="M41.95 3.029a2.25 2.25 0 0 1-1.729 2.67l-13.97 2.994V39.5h7.5a2.25 2.25 0 0 1 0 4.5h-19.5a2.25 2.25 0 0 1 0-4.5h7.5V9.659l-13.03 2.79a2.251 2.251 0 1 1-.942-4.398l31.5-6.75a2.25 2.25 0 0 1 2.67 1.728Zm-7.02 20.175.02.054a4.362 4.362 0 0 0 8.1 0l.021-.054-4.07-8.142-4.072 8.142ZM39 9.5c-1.38 0-2.64.78-3.255 2.01L30.6 21.797a3 3 0 0 0-.102 2.457l.27.678a8.862 8.862 0 0 0 16.458 0l.27-.678a3 3 0 0 0-.102-2.457l-5.142-10.281A3.63 3.63 0 0 0 39 9.5ZM4.93 29.204l.02.054a4.362 4.362 0 0 0 8.1 0l.021-.054-4.07-8.142-4.072 8.142ZM9 15.5c-1.38 0-2.64.78-3.255 2.01L.6 27.797a3 3 0 0 0-.102 2.457l.27.678a8.862 8.862 0 0 0 16.458 0l.27-.678a3 3 0 0 0-.102-2.457l-5.139-10.284A3.63 3.63 0 0 0 9 15.5Z"
+                  clipRule="evenodd"
+                />
+              </svg>
+              <p className="text-nowrap">변호사</p>
+            </Link>
           </div>
         </div>
       )}
