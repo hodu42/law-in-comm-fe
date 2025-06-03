@@ -3,6 +3,7 @@ import { useAppDispatch } from "@/hooks/reduxHooks";
 import { clearTokens } from "@/api/auth/token";
 import { searchActions } from "@/store/search";
 import { userActions } from "@/store/user";
+import { chatWidgetActions } from "@/store/chatWidget";
 
 export const useLogout = () => {
   const dispatch = useAppDispatch();
@@ -11,6 +12,8 @@ export const useLogout = () => {
   const handleLogout = () => {
     clearTokens();
     dispatch(searchActions.setKeyword(""));
+    dispatch(chatWidgetActions.clearChatroomId());
+    dispatch(chatWidgetActions.closeChat());
     dispatch(userActions.logout());
     navigate.goToLogin();
   };

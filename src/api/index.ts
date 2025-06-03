@@ -4,6 +4,7 @@ import { BACKEND_URL } from "@/config/Config";
 import { getTokens, updateTokens } from "./auth/token";
 import { userActions } from "@/store/user";
 import { searchActions } from "@/store/search";
+import { chatWidgetActions } from "@/store/chatWidget";
 import { store } from "@/store/index";
 import { clearTokens } from "./auth/token";
 
@@ -84,6 +85,8 @@ export class ApiClient {
           } catch (refreshError) {
             clearTokens();
             store.dispatch(searchActions.setKeyword(""));
+            store.dispatch(chatWidgetActions.clearChatroomId());
+            store.dispatch(chatWidgetActions.closeChat());
             store.dispatch(userActions.logout());
             alert("로그인 상태가 만료되어 로그인 페이지로 이동합니다.");
             window.location.href = "/login";
