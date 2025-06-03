@@ -373,12 +373,12 @@ export const QuestionDetailPage = (): React.JSX.Element => {
                         : `/users/lawyer/profile/${answer.authorId}`
                     }
                   >
-                    <div className="rounded-full flex w-16 h-16 pc:w-20 pc:h-20 overflow-hidden flex-shrink-0">
+                    <div className="rounded-full flex w-16 h-16 pc:w-20 pc:h-20 overflow-hidden flex-shrink-0 border-2 border-[#9CB395]">
                       {answer.profileImage ? (
                         <img
                           src={`${IMAGE_URL}${answer.profileImage.path}`}
                           alt={answer.profileImage.name}
-                          className="rounded-full object-cover border-2 border-[#9CB395]"
+                          className="w-full h-full rounded-full object-cover"
                         />
                       ) : (
                         <svg
