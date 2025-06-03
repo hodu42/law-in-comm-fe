@@ -1,9 +1,14 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Logo } from "@/components/Logo";
 import { Link, useParams } from "react-router-dom";
 import { useLogout } from "@/hooks/useLogout";
 import { MobileNav } from "@/components/MobileNav";
-import { getLawyerMypageData, getLawyerAnswers } from "@/api/users/lawyer";
+import {
+  getLawyerMypageData,
+  getLawyerAnswers,
+  addLawyerProfileImage,
+  deleteLawyerProfileImage,
+} from "@/api/users/lawyer";
 import { LawyerInfo } from "@/types/lawyer";
 import { AnswerItem } from "@/components/AnswerItem";
 import { PageResponse } from "@/types/page";
@@ -14,6 +19,7 @@ import { getUserProfileImage } from "@/api/users";
 import { IMAGE_URL } from "@/config/Config";
 import { MobileBackButton } from "@/components/MobileBackButton";
 import { getCurrentUserId } from "@/hooks/tokenDecoder";
+import { ImageType } from "@/types/image";
 
 export const LawyerMyPage = (): React.JSX.Element => {
   const { id: paramsUserId } = useParams();
@@ -25,6 +31,8 @@ export const LawyerMyPage = (): React.JSX.Element => {
   const [totalPages, setTotalPages] = useState(0);
   const [isFirstPage, setIsFirstPage] = useState(false);
   const [isLastPage, setIsLastPage] = useState(false);
+  const fileInputRef = useRef<HTMLInputElement>(null);
+  const [profileImage, setProfileImage] = useState<File | string>("");
   const handleLogout = useLogout();
 
   const loadLawyerMypageData = async () => {
@@ -54,6 +62,12 @@ export const LawyerMyPage = (): React.JSX.Element => {
     setCurrentPage(newPage);
   };
 
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files[0]) {
+      setProfileImage(e.target.files[0]);
+    }
+  };
+
   useEffect(() => {
     loadLawyerMypageData();
   }, []);
@@ -61,6 +75,24 @@ export const LawyerMyPage = (): React.JSX.Element => {
   useEffect(() => {
     loadAnswers(currentPage);
   }, [currentPage]);
+
+  useEffect(() => {
+    const uploadImage = async () => {
+      try {
+        if (profileImage && typeof profileImage !== "string") {
+          if (lawyerData?.profileImage) {
+            await deleteLawyerProfileImage(lawyerData?.profileImage.id);
+          }
+          await addLawyerProfileImage(profileImage, ImageType.PROFILE);
+          alert("프로필 사진이 변경되었습니다.");
+        }
+        loadLawyerMypageData();
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    uploadImage();
+  }, [profileImage]);
 
   return (
     <div className="flex flex-col min-h-screen bg-gray-50">
@@ -98,7 +130,7 @@ export const LawyerMyPage = (): React.JSX.Element => {
           {/* 프로필 상단 영역 */}
           <div className="flex flex-col items-center w-full gap-10">
             {/* 프로필 이미지 + 자기소개 */}
-            <div className="w-full relative">
+            <div className="w-full relative group">
               {/* 프로필 이미지 존재여부에 따라 이미지 렌더링 */}
               {lawyerData?.profileImage ? (
                 <img
@@ -119,6 +151,26 @@ export const LawyerMyPage = (): React.JSX.Element => {
                   {lawyerData?.description}
                 </div>
               </div>
+              {/* "사진 등록하기" 오버레이 (Hover 시 표시) */}
+              {currentUserId === Number(paramsUserId) && (
+                <div
+                  className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-50 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 ease-in-out rounded-lg cursor-pointer"
+                  onClick={() => fileInputRef.current?.click()}
+                  role="button"
+                  tabIndex={0}
+                >
+                  <span className="text-white text-2xl font-semibold p-4 bg-opacity-30 rounded-md">
+                    사진 등록하기
+                  </span>
+                  <input
+                    type="file"
+                    className="hidden"
+                    ref={fileInputRef}
+                    accept="image/*"
+                    onChange={(e) => handleFileChange(e)}
+                  />
+                </div>
+              )}
             </div>
             {/* 정보 카드 */}
             <div className="w-full flex flex-col gap-10 pc:flex-row justify-between bg-white rounded-lg border border-[#E0E0E0] p-10">
