@@ -284,16 +284,14 @@ export const QuestionDetailPage = (): React.JSX.Element => {
                   {question.title}
                 </h2>
                 <div className="flex flex-col pl-3">
-                  {question.authorName && (
-                    <div className="flex text-[12px] pc:text-[14px]">
-                      <span className="font-bold text-[#5C6E56] mr-2">
-                        작성자
-                      </span>
-                      <h1 className="font-bold text-[#555]">
-                        {question.authorName}
-                      </h1>
-                    </div>
-                  )}
+                  <div className="flex text-[12px] pc:text-[14px]">
+                    <span className="font-bold text-[#5C6E56] mr-2">
+                      작성자
+                    </span>
+                    <h1 className="font-bold text-[#555]">
+                      {question.authorName || "익명"}
+                    </h1>
+                  </div>
                   <div className="flex text-[14px] pc:text-[16px] text-[#999]">
                     <span className="mr-6">최초 사건 발생일</span>
                     <p>{question.firstOccurrenceDate}</p>

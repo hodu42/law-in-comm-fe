@@ -30,13 +30,10 @@ export const RecentQuestionsContent = ({
             {updatedAt ? formatDate(updatedAt) : formatDate(createdAt)}
           </span>
         </div>
-
-        {!isAnonymous && authorName && (
-          <div className="text-[0.9rem] pc:text-[1.06rem] font-bold text-[#555555]">
-            <span className="mr-1 text-[#5C6E56]">작성자</span> {authorName}
-          </div>
-        )}
-
+        <div className="text-[0.9rem] pc:text-[1.06rem] font-bold text-[#555555]">
+          <span className="mr-1 text-[#5C6E56]">작성자</span>{" "}
+          {isAnonymous ? "익명" : authorName}
+        </div>
         <h3 className="text-[1rem] pc:text-[1.31rem] font-medium break-words line-clamp-1">
           {title}
         </h3>

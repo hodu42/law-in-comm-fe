@@ -27,12 +27,10 @@ export const QuestionItem: React.FC<{
           </span>
         </div>
 
-        {!question.anonymous && question.authorName && (
-          <div className="text-[14px] pc:text-[1.06rem] font-bold text-[#555555]">
-            <span className="mr-1 text-[#5C6E56]">작성자</span>{" "}
-            {question.authorName}
-          </div>
-        )}
+        <div className="text-[14px] pc:text-[1.06rem] font-bold text-[#555555]">
+          <span className="mr-1 text-[#5C6E56]">작성자</span>{" "}
+          {question.anonymous ? "익명" : question.authorName}
+        </div>
 
         <h3 className="text-[1.12rem] pc:text-[1.31rem]">{question.title}</h3>
         {/* 답변 있는 경우 */}
