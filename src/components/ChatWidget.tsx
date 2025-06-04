@@ -353,7 +353,7 @@ const ChatWidget: React.FC = () => {
             <>
               <div className="flex-grow relative">
                 <div
-                  className="absolute inset-0 p-4 overflow-y-auto bg-slate-50 space-y-3"
+                  className="absolute inset-0 px-2 pt-2 overflow-y-auto bg-slate-50 space-y-3"
                   ref={messageAreaRef}
                 >
                   {messages.map((msg) => {
@@ -374,7 +374,7 @@ const ChatWidget: React.FC = () => {
                     const isMe = msg.senderId === username;
                     const messageBubble = (
                       <div
-                        className={`max-w-[70%] p-3 rounded-lg break-words ${
+                        className={`max-w-[70%] text-sm p-3 rounded-lg break-words ${
                           isMe
                             ? "bg-[#C9D8B7] text-gray-800 rounded-br-none"
                             : "bg-gray-200 text-gray-800 rounded-bl-none"
