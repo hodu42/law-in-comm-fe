@@ -500,7 +500,7 @@ const ChatWidget: React.FC = () => {
                           </svg>
                         )}
                       </div>
-                      <div className="flex flex-col flex-grow">
+                      <div className="flex flex-col flex-grow min-w-0">
                         <div className="flex justify-between items-start">
                           <h3 className="font-semibold text-gray-700 text-md">
                             {room.otherMemberName}
