@@ -49,10 +49,8 @@ const ChatWidget: React.FC = () => {
   // STOMP 연결 해제 함수
   const disconnectStomp = useCallback(async () => {
     if (clientRef.current && clientRef.current.active) {
-      console.log("STOMP 연결 해제 중...");
       await clientRef.current.deactivate();
       clientRef.current = null;
-      console.log("STOMP 연결 해제 완료.");
     }
   }, []);
 
@@ -69,7 +67,6 @@ const ChatWidget: React.FC = () => {
   const handleGoBackToRoomList = async () => {
     if (clientRef.current && selectedChatroomId) {
       await clientRef.current.unsubscribe(`/sub/chat/${selectedChatroomId}`); // 기존 채팅방 구독 해제
-      console.log(`${selectedChatroomId}번 채팅방 구독 해제 완료`);
     }
     dispatch(chatWidgetActions.clearChatroomId());
     setMessages([]); // 이전 방 메시지 초기화
@@ -101,7 +98,6 @@ const ChatWidget: React.FC = () => {
 
   const getChatRoomList = async () => {
     const response = await getChatRooms();
-    console.log("API 채팅방 목록 response : ", response);
     setChatRooms(response.data);
   };
 
@@ -118,11 +114,7 @@ const ChatWidget: React.FC = () => {
 
     try {
       const nextPageToLoad = currentPage + 1; // 페이지 기반 페이징 예시
-      console.log(
-        `[무한스크롤] 이전 메시지 로드 시도 - Room ID: ${selectedChatroomId}, Page: ${nextPageToLoad}`
-      );
 
-      // getPreviousChatMessages는 (roomId, page, pageSize 등) 인자를 받을 수 있도록 수정 필요
       const response = await getPreviousChatMessages(
         selectedChatroomId,
         nextPageToLoad
@@ -130,15 +122,12 @@ const ChatWidget: React.FC = () => {
       const olderMessages = response.data?.content || []; // API 응답 구조에 맞게 content 배열 추출
 
       if (olderMessages.length > 0) {
-        // API 응답이 최신순이라면 뒤집어서 오래된 것이 배열의 0번 인덱스가 되도록 함
-        // 만약 API가 이미 오래된 순으로 보내준다면 .reverse() 불필요
         const newMessages = olderMessages.slice().reverse();
 
         setMessages((prevMessages) => [...newMessages, ...prevMessages]); // 새 메시지를 기존 메시지 배열의 맨 앞에 추가
         setCurrentPage(nextPageToLoad);
       } else {
         setHasMoreMessages(false); // 더 이상 불러올 메시지가 없음
-        console.log("[무한스크롤] 더 이상 이전 메시지가 없습니다.");
       }
     } catch (error) {
       console.error("[무한스크롤] 이전 메시지 로드 실패:", error);
@@ -173,10 +162,6 @@ const ChatWidget: React.FC = () => {
           onConnect: () => {
             client.subscribe(`/sub/chatRoomList/${username}`, (message) => {
               const receivedMessage = JSON.parse(message.body);
-              console.log(
-                "채팅방 목록 구독 receivedMessage : ",
-                receivedMessage
-              );
               setChatRooms(receivedMessage);
             });
           },
@@ -216,10 +201,6 @@ const ChatWidget: React.FC = () => {
       if (selectedChatroomId === null) return;
       setIsLoadingPrevMsg(true); // 이전 메시지 로딩
       const response = await getPreviousChatMessages(selectedChatroomId);
-      console.log(
-        `${selectedChatroomId}번 채팅방의 이전 메시지 response : `,
-        response.data
-      );
       setMessages(response.data.content.slice().reverse());
       setIsLoadingPrevMsg(false); // 이전 메시지 로딩 끝
     };
@@ -239,12 +220,10 @@ const ChatWidget: React.FC = () => {
           `/sub/chat/${selectedChatroomId}`,
           (message) => {
             const receivedMessage = JSON.parse(message.body);
-            console.log("채팅방 구독 후 receivedMessage : ", receivedMessage);
             setMessages((prevMessages) => [...prevMessages, receivedMessage]);
           }
         );
         subscriptionRef.current = subscription.id;
-        console.log(`${selectedChatroomId}번 채팅방 구독 완료`);
       } catch (error) {
         console.error("채팅방 구독 중 오류 발생:", error);
       }

@@ -1,16 +1,8 @@
 import { RouteObject, Navigate } from "react-router-dom";
 import { MainPage } from "@/pages/MainPage";
-import { Test } from "@/pages/testPages/Test";
-import { RegisterTest } from "@/pages/testPages/RegisterTest";
-import { LawyerRegisterTest } from "@/pages/testPages/LawyerRegisterTest";
-import { PendingLawyersPage } from "@/pages/testPages/PendingLawyersTest";
-import { WriteTest } from "@/pages/testPages/WriteTest";
-import { QuestionsTest } from "@/pages/testPages/QuestionsTest";
-import { TestPage } from "@/pages/testPages/TestPage";
 import { Login } from "@/pages/Login";
 import { QuestionWrite } from "@/pages/QuestionWrite";
 import { QuestionListPage } from "@/pages/QuestionListPage";
-import { AnswerWriteTest } from "@/pages/testPages/AnswerWriteTest";
 import { QuestionDetailPage } from "@/pages/QuestionDetailPage";
 import { QuestionModify } from "@/pages/QuestionModify";
 import { Role } from "@/types/role";
@@ -96,41 +88,6 @@ export const publicRoutes: RouteObject[] = [
   {
     path: "/users/lawyer/profile/:id",
     element: <LawyerMyPage />,
-  },
-];
-
-export const testRoutes: RouteObject[] = [
-  {
-    path: "/test",
-    element: <Test />,
-  },
-  {
-    path: "/register",
-    element: <RegisterTest />,
-  },
-  {
-    path: "/lawyer-register",
-    element: <LawyerRegisterTest />,
-  },
-  {
-    path: "/write",
-    element: <WriteTest />,
-  },
-  {
-    path: "/pending-lawyers",
-    element: <PendingLawyersPage />,
-  },
-  {
-    path: "/question/test",
-    element: <QuestionsTest />,
-  },
-  {
-    path: "/test-page",
-    element: <TestPage />,
-  },
-  {
-    path: "/answer/write",
-    element: <AnswerWriteTest />,
   },
 ];
 
