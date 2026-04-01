@@ -1,8 +1,7 @@
 import { api } from "../index";
 import { AxiosResponse } from "axios";
 import {
-  isAccessTokenExpired,
-  isRefreshTokenExpired,
+  isAccessTokenExpired
 } from "@/hooks/tokenDecoder";
 
 export const setTokens = (

@@ -1,11 +1,11 @@
-import React, { useState } from "react";
+import React from "react";
 import { useSearchParams } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "@/hooks/reduxHooks";
 import { useNavigation } from "@/hooks/useNavigation";
 import { searchActions } from "@/store/search";
 
 export const SearchBoxPC = (): React.JSX.Element => {
-  const [searchParams, setSearchParams] = useSearchParams();
+  const [searchParams] = useSearchParams();
   const dispatch = useAppDispatch();
   const { keyword } = useAppSelector((state) => state.search);
   const currentCategory = searchParams.get("category") || "";
