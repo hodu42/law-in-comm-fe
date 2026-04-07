@@ -1,22 +1,32 @@
-export default interface LawyerSpeciality {
-    legalSpecialtyName: string;
-    legalSpecialtyDescription: string;
+export interface RegisterLawyerInfo {
+  legalSpecialties: string[];
+  officeInfo: {
+    officeName: string;
+    officeAddress: string;
+    officePhoneNumber: string;
+  };
+  educations: string[];
+  name: string;
+  birthDate: string;
+  careers: string[];
+  username: string;
+  phoneNumber: string;
+  password: string;
+  description: string;
 }
 
-export interface LawyerInfo {
-    name: string,
-    nickname: string,
-    profileImage: {
-      id: number,
-      name: string,
-      contentType: string,
-      size: number,
-      path: string
-    }
-}
+export type LawyerInfo = Omit<RegisterLawyerInfo, "username" | "password"> & {
+  profileImage: {
+    id: number;
+    name: string;
+    contentType: string;
+    size: number;
+    path: string;
+  };
+};
 
 export enum ApprovalStatus {
-    WAITING = "WAITING",
-    APPROVED = "APPROVED",
-    REJECTED = "REJECTED"
+  WAITING = "WAITING",
+  APPROVED = "APPROVED",
+  REJECTED = "REJECTED",
 }

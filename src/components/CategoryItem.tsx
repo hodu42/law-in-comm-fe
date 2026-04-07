@@ -1,22 +1,38 @@
 import React from "react";
 import { CategoryIcon } from "./CategoryIcon";
+import { Link } from "react-router-dom";
 
 interface CategoryItemProps {
   title: string;
-  link: string;
+  value: string;
 }
 
-export const CategoryItem = ({ title, link }: CategoryItemProps): React.JSX.Element => {
+export const CategoryItem = ({
+  title,
+  value,
+}: CategoryItemProps): React.JSX.Element => {
+  const content = (
+    <Link
+      className="flex gap-[11px] pc:gap-[28px] flex-col items-center group"
+      to={`/questions?keyword=&category=${value}&page=0`}
+    >
+      <div className="w-9 h-9 pc:w-16 pc:h-16">
+        <CategoryIcon
+          type={title}
+          className="text-[#656565] group-hover:text-[#9CB395]"
+        />
+      </div>
+      <span className="block whitespace-nowrap font-normal pc:font-bold text-[13px] pc:text-[19px] text-[#656565] group-hover:text-[#9CB395] transition-colors">
+        {title}
+      </span>
+    </Link>
+  );
+
   return (
     <li>
-      <a className="flex gap-[11px] mobile:gap-[28px] flex-col items-center group" href={link}>
-        <div className="w-[48px] h-[48px] mobile:w-[72px] mobile:h-[72px]">
-          <CategoryIcon type={title} className="text-[#656565] group-hover:text-[#9CB395]" />
-        </div>
-        <span className="block whitespace-nowrap font-normal mobile:font-bold text-[13px] mobile:text-[19px] text-[#656565] group-hover:text-[#9CB395]">
-          {title}
-        </span>
-      </a>
+      <div className="flex gap-[11px] pc:gap-[28px] flex-col items-center group hover:cursor-pointer">
+        {content}
+      </div>
     </li>
   );
-}; 
+};

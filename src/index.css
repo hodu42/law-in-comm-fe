@@ -1,12 +1,12 @@
-@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap");
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 @font-face {
-  font-family: 'NotoSansKR';
-  src: url('../public/fonts/NotoSansKR-VariableFont_wght.ttf');
+  font-family: "NotoSansKR";
+  src: url("../public/fonts/NotoSansKR-VariableFont_wght.ttf");
 }
 @layer base {
   * {
@@ -14,16 +14,14 @@
   }
 }
 
-.recentQuestion-slider-container .slick-arrow:before, .slick-arrow:after {
-  @apply hidden
+.recentQuestion-slider-container .slick-arrow:before,
+.slick-arrow:after {
+  @apply hidden;
 }
-.recentQuestion-slider-container .slick-prev, .slick-next {
+.recentQuestion-slider-container .slick-prev,
+.slick-next {
   width: 33px !important;
   height: 66px !important;
-}
-.recentQuestion-slider-container .slick-current {
-  display: flex !important;
-  justify-content: center !important;
 }
 .dots_custom {
   position: absolute;
@@ -50,7 +48,7 @@
   padding: 0;
 }
 .dots_custom li button {
-  border: 1px solid #5C6E56;
+  border: 1px solid #5c6e56;
   background: none;
   color: transparent;
   cursor: pointer;
@@ -61,7 +59,7 @@
   padding: 0;
 }
 .dots_custom li.slick-active button {
-  background-color: #5C6E56;
+  background-color: #5c6e56;
 }
 .questionContents {
   display: -webkit-box;
@@ -78,9 +76,55 @@
   }
 }
 
+/* 숫자 입력 필드 화살표 숨기기 */
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type="number"] {
+  -moz-appearance: textfield;
+}
+
 /* 모바일에서 하단 네비게이션의 여백을 위한 패딩 추가 */
 @media (max-width: 768px) {
   .question-form-container {
     padding-bottom: 4rem;
+  }
+}
+
+ol {
+  margin-block-start: 0;
+  margin-block-end: 0;
+  padding-inline-start: 0;
+}
+
+#animated-scale {
+  /* 애니메이션 정의 */
+  animation: sway 5s ease-in-out infinite;
+  /* 회전 중심축 설정: SVG의 viewBox(0 0 48 49)를 기준으로 대략적인 중심점입니다.
+     X축은 중앙(24), Y축은 저울의 받침대 상단 부근(39.5)으로 설정합니다.
+     필요에 따라 이 값을 미세 조정하여 자연스러운 움직임을 만드세요. */
+  transform-origin: 24px 39.5px; /* viewBox 단위 기준 */
+  /* 또는 퍼센트로 transform-origin: 50% 80.6%; (39.5/49 * 100) */
+}
+
+/* 저울이 흔들리는 애니메이션 키프레임 */
+@keyframes sway {
+  0% {
+    transform: rotate(0deg);
+  }
+  25% {
+    transform: rotate(10deg); /* 오른쪽으로 살짝 기울임 */
+  }
+  50% {
+    transform: rotate(0deg);
+  }
+  75% {
+    transform: rotate(-10deg); /* 왼쪽으로 살짝 기울임 */
+  }
+  100% {
+    transform: rotate(0deg);
   }
 }
